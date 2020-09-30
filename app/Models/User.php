@@ -10,13 +10,15 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    
+    protected $guard = 'user';
 
     /**
      * The attributes that are mass assignable.
@@ -58,4 +60,23 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function customer() {
+        return $this->hasMany('App\Models\CustomerModel', 'user_id', 'id');
+    }
+
+    public function order() {
+        return $this->hasMany('App\Models\ShopOrderModel', 'user_id', 'id');
+    }
+
+    public function comment() {
+        return $this->hasMany('App\Models\CommentModel', 'user_id', 'id');
+    }
+
+    public function comment_blog() {
+        return $this->hasMany('App\Models\BlogCommentModel', 'user_id', 'id');
+    }
+    public function wishlist() {
+        return $this->hasMany('App\Models\WishListModel', 'user_id', 'id');
+    }
 }
