@@ -5,6 +5,9 @@ namespace App\Http\Middleware;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\URL;
 
 class RedirectIfAuthenticated
 {
@@ -16,16 +19,24 @@ class RedirectIfAuthenticated
      * @param  string|null  ...$guards
      * @return mixed
      */
-    public function handle($request, Closure $next, ...$guards)
+    public function handle($request, Closure $next, $guard = null)
     {
-        $guards = empty($guards) ? [null] : $guards;
+        Session::put('url.intended', URL::previous());
+        switch ($guard) {
+            case 'admin':
+                if (Auth::guard($guard)->check()) {
+                    \Toastr::success('Xin chào');
+                    return redirect()->route('admin.dashboard');
+                }
+                break;
+            default:
 
-        foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
-            }
+                if (Auth::guard($guard)->check()) {
+                    \Toastr::success('Xin chào');
+                    return Redirect::to(Session::get('url.intended'));
+                }
+                break;
         }
-
         return $next($request);
     }
 }

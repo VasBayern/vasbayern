@@ -105,6 +105,66 @@
         "homepage": "https://github.com/Bacon/BaconQrCode"
     },
     {
+        "name": "brian2694/laravel-toastr",
+        "version": "5.54",
+        "version_normalized": "5.54.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/brian2694/laravel-toastr.git",
+            "reference": "e543a8a6953be6b25706da4c7ae48600666a70dc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/brian2694/laravel-toastr/zipball/e543a8a6953be6b25706da4c7ae48600666a70dc",
+            "reference": "e543a8a6953be6b25706da4c7ae48600666a70dc",
+            "shasum": ""
+        },
+        "require": {
+            "illuminate/session": ">=5.2.7",
+            "illuminate/support": ">=5.2.7",
+            "php": ">=5.5.0"
+        },
+        "time": "2020-07-13T22:18:02+00:00",
+        "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "Brian2694\\Toastr\\ToastrServiceProvider"
+                ],
+                "aliases": {
+                    "Toastr": "Brian2694\\Toastr\\Facades\\Toastr"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Brian2694\\Toastr\\": "src/"
+            },
+            "files": [
+                "src/helper.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "brian2694",
+                "email": "briansanchez2694@gmail.com"
+            }
+        ],
+        "description": "toastr.js for laravel 5.5",
+        "homepage": "https://github.com/brian2694/laravel-toastr",
+        "keywords": [
+            "laravel",
+            "notification",
+            "php",
+            "toastr"
+        ]
+    },
+    {
         "name": "brick/math",
         "version": "0.9.1",
         "version_normalized": "0.9.1.0",
@@ -150,6 +210,143 @@
             "bignum",
             "brick",
             "math"
+        ]
+    },
+    {
+        "name": "cocur/slugify",
+        "version": "v4.0.0",
+        "version_normalized": "4.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/cocur/slugify.git",
+            "reference": "3f1ffc300f164f23abe8b64ffb3f92d35cec8307"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/cocur/slugify/zipball/3f1ffc300f164f23abe8b64ffb3f92d35cec8307",
+            "reference": "3f1ffc300f164f23abe8b64ffb3f92d35cec8307",
+            "shasum": ""
+        },
+        "require": {
+            "ext-mbstring": "*",
+            "php": ">=7.0"
+        },
+        "conflict": {
+            "symfony/config": "<3.4 || >=4,<4.3",
+            "symfony/dependency-injection": "<3.4 || >=4,<4.3",
+            "symfony/http-kernel": "<3.4 || >=4,<4.3",
+            "twig/twig": "<2.12.1"
+        },
+        "require-dev": {
+            "laravel/framework": "~5.1",
+            "latte/latte": "~2.2",
+            "league/container": "^2.2.0",
+            "mikey179/vfsstream": "~1.6.8",
+            "mockery/mockery": "^1.3",
+            "nette/di": "~2.4",
+            "phpunit/phpunit": "^5.7.27",
+            "pimple/pimple": "~1.1",
+            "plumphp/plum": "~0.1",
+            "symfony/config": "^3.4 || ^4.3 || ^5.0",
+            "symfony/dependency-injection": "^3.4 || ^4.3 || ^5.0",
+            "symfony/http-kernel": "^3.4 || ^4.3 || ^5.0",
+            "twig/twig": "^2.12.1 || ~3.0",
+            "zendframework/zend-modulemanager": "~2.2",
+            "zendframework/zend-servicemanager": "~2.2",
+            "zendframework/zend-view": "~2.2"
+        },
+        "time": "2019-12-14T13:04:14+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Cocur\\Slugify\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Florian Eckerstorfer",
+                "email": "florian@eckerstorfer.co",
+                "homepage": "https://florian.ec"
+            },
+            {
+                "name": "Ivo Bathke",
+                "email": "ivo.bathke@gmail.com"
+            }
+        ],
+        "description": "Converts a string into a slug.",
+        "keywords": [
+            "slug",
+            "slugify"
+        ]
+    },
+    {
+        "name": "cviebrock/eloquent-sluggable",
+        "version": "8.0.1",
+        "version_normalized": "8.0.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/cviebrock/eloquent-sluggable.git",
+            "reference": "a86500442ae8b1e2d965acb0340a1b867bf6c0f5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/cviebrock/eloquent-sluggable/zipball/a86500442ae8b1e2d965acb0340a1b867bf6c0f5",
+            "reference": "a86500442ae8b1e2d965acb0340a1b867bf6c0f5",
+            "shasum": ""
+        },
+        "require": {
+            "cocur/slugify": "^4.0",
+            "illuminate/config": "^8.0",
+            "illuminate/database": "^8.0",
+            "illuminate/support": "^8.0",
+            "php": "^7.3"
+        },
+        "require-dev": {
+            "limedeck/phpunit-detailed-printer": "^6.0",
+            "mockery/mockery": "^1.4.2",
+            "orchestra/database": "^6.0",
+            "orchestra/testbench": "^6.0",
+            "phpunit/phpunit": "^9.3"
+        },
+        "time": "2020-09-28T15:38:25+00:00",
+        "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "Cviebrock\\EloquentSluggable\\ServiceProvider"
+                ]
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Cviebrock\\EloquentSluggable\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Colin Viebrock",
+                "email": "colin@viebrock.ca"
+            }
+        ],
+        "description": "Easy creation of slugs for your Eloquent models in Laravel",
+        "homepage": "https://github.com/cviebrock/eloquent-sluggable",
+        "keywords": [
+            "eloquent",
+            "eloquent-sluggable",
+            "laravel",
+            "lumen",
+            "slug",
+            "sluggable"
         ]
     },
     {
@@ -2075,17 +2272,17 @@
     },
     {
         "name": "livewire/livewire",
-        "version": "v2.2.8",
-        "version_normalized": "2.2.8.0",
+        "version": "v2.2.9",
+        "version_normalized": "2.2.9.0",
         "source": {
             "type": "git",
             "url": "https://github.com/livewire/livewire.git",
-            "reference": "cddda1536c3c1d3b3a7e57eb471cf9ba57117f37"
+            "reference": "c01b331e7fcbccdffd63e49ce86c05a50fcb68ea"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/livewire/livewire/zipball/cddda1536c3c1d3b3a7e57eb471cf9ba57117f37",
-            "reference": "cddda1536c3c1d3b3a7e57eb471cf9ba57117f37",
+            "url": "https://api.github.com/repos/livewire/livewire/zipball/c01b331e7fcbccdffd63e49ce86c05a50fcb68ea",
+            "reference": "c01b331e7fcbccdffd63e49ce86c05a50fcb68ea",
             "shasum": ""
         },
         "require": {
@@ -2104,7 +2301,7 @@
             "phpunit/phpunit": "^8.4|^9.0",
             "psy/psysh": "@stable"
         },
-        "time": "2020-09-29T13:53:53+00:00",
+        "time": "2020-09-30T16:19:54+00:00",
         "type": "library",
         "extra": {
             "laravel": {
@@ -2132,7 +2329,13 @@
                 "email": "calebporzio@gmail.com"
             }
         ],
-        "description": "A front-end framework for Laravel."
+        "description": "A front-end framework for Laravel.",
+        "funding": [
+            {
+                "url": "https://github.com/calebporzio",
+                "type": "github"
+            }
+        ]
     },
     {
         "name": "mobiledetect/mobiledetectlib",
