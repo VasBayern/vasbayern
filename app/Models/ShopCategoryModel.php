@@ -16,14 +16,7 @@ class ShopCategoryModel extends Model
      *
      * @return array
      */
-    public function sluggable()
-    {
-        return [
-            'slug' => [
-                'source' => 'name'
-            ]
-        ];
-    }
+    
     public $table = 'shop_categories';
 
     public function product() {
@@ -86,5 +79,14 @@ class ShopCategoryModel extends Model
         self::outputLevelCategoriesExcept($source, $result, 0, 1, $except);
 
         return $result;
+    }
+
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name',
+            ]
+        ];
     }
 }

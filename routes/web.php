@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ShopCouponController;
 use App\Http\Controllers\Admin\ShopFeedbackController;
 use App\Http\Controllers\Admin\ShopProductController;
 use App\Http\Controllers\Admin\ShopSizeController;
+use App\Models\ShopCategoryModel;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Route;
@@ -84,10 +85,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('category', [ShopCategoryController::class, 'index'])->name('category');
         Route::get('category/create', [ShopCategoryController::class, 'create']);
         Route::get('category/{id}/edit', [ShopCategoryController::class, 'edit']);
+        Route::get('category/checkSlug', [ShopCategoryController::class, 'checkSlug'])->name('category.checkSlug');
 
         Route::post('category', [ShopCategoryController::class, 'store']);
         Route::post('category/{id}', [ShopCategoryController::class, 'update']);
-        Route::delete('category/{id}/delete', [ShopCategoryController::class, 'delete']);
+        Route::delete('category/{id}/delete', [ShopCategoryController::class, 'destroy']);
 
         /**
          * Shop Brand
@@ -149,6 +151,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('media', function () {
             return view('admin.content.media.index');
         });
+        
     });
 });
 

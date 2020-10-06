@@ -4,6 +4,7 @@ Danh mục sản phẩm
 @endsection
 
 @section('content')
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
@@ -37,10 +38,12 @@ Danh mục sản phẩm
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
+                                    <th>Id</th>
                                     <th>Tên</th>
                                     <th>Slug</th>
                                     <th>Ảnh</th>
                                     <th>Cha</th>
+                                    <th>Hiển thị</th>
                                     <th>Hành động</th>
                                 </tr>
                             </thead>
@@ -74,15 +77,14 @@ Danh mục sản phẩm
                                 </td>
                                 <td>
                                     @if($category->homepage == 1)
-                                    {{ "Hiển thị" }}
+                                    {{ "Có" }}
                                     @else
-                                    {{ "Không hiển thị" }}
+                                    {{ "Không" }}
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ url('admin/category/'.$category->id.'/edit') }}" class="btn btn-primary" title="Sửa"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                                    <a href="#myModal{{$category->id}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-
+                                    <a href="{{ url('admin/category/'.$category->id.'/edit') }}" class="btn btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="#myModal{{$category->id}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                                 </tr>
                                 <?php $stt++; ?>
@@ -100,6 +102,33 @@ Danh mục sản phẩm
     </div>
     <!-- /.container-fluid -->
 </section>
+<!-- Modal HTML -->
+@foreach($categories as $category)
+<div id="myModal{{$category->id}}" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header flex-column">
+                <div class="icon-box">
+                    <i class="fas fa-exclamation"></i>
+                </div>
+                <h4 class="modal-title w-100">Bạn có muốn xóa?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Lưu ý : Hành động này không thể hoàn tác</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <form name="category" action="{{ url('admin/category/'.$category->id.'/delete') }}" method="post" class="form-horizontal">
+                @method('DELETE')
+                    @csrf
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection
 
 <!-- jQuery -->
