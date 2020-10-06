@@ -28,10 +28,10 @@
       <div class="card-body register-card-body">
         <p class="login-box-msg">Đăng kí tài khoản Admin</p>
 
-        <form method="POST" action="{{ route('admin.register') }}">
+        <form method="POST" action="{{ route('admin.register') }}" id="quickForm">
           @csrf
-          <div class="input-group mb-3">
-            <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Tên" name="name" value="{{ old('name') }}" required autofocus>
+          <div class="input-group mb-3 form-group">
+            <input type="text" class="form-control" placeholder="Tên" name="name" value="{{ old('name') }}">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -43,8 +43,8 @@
             </span>
             @enderror
           </div>
-          <div class="input-group mb-3">
-            <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Email" name="email" value="{{ old('email') }}" required autofocus>
+          <div class="input-group mb-3 form-group">
+            <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -56,20 +56,15 @@
             </span>
             @enderror
           </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Mật khẩu" name="password" required autocomplete="new-password">
+          <div class="input-group mb-3 form-group">
+            <input type="password" class="form-control" placeholder="Password" name="password" id="password">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
-            @error('password')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-            @enderror
           </div>
-          <div class="input-group mb-3">
+          <div class="input-group mb-3 form-group">
             <input type="password" class="form-control" placeholder="Nhập lại mật khẩu" name="password_confirmation" required autocomplete="new-password">
             <div class="input-group-append">
               <div class="input-group-text">
@@ -78,13 +73,11 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-8">
-              <div class="icheck-primary">
-                <input type="checkbox" id="agreeTerms" name="terms" value="agree" required="required">
-                <label for="agreeTerms">
-                  I agree to the <a href="#">terms</a>
-                </label>
-              </div>
+            <div class="col-8 form-group mb-0">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
+                  <label class="custom-control-label" for="exampleCheck1">Tôi đồng ý với <a href="#">điều khoản dịch vụ</a>.</label>
+                </div>
             </div>
             <!-- /.col -->
             <div class="col-4">
@@ -119,6 +112,66 @@
   <script src="{{asset('admin_assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <!-- AdminLTE App -->
   <script src="{{asset('admin_assets/dist/js/adminlte.min.js')}}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{{asset('admin_assets/dist/js/demo.js')}}"></script>
+  <!-- jquery-validation -->
+  <script src="{{asset('admin_assets/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#quickForm').validate({
+        rules: {
+          name: {
+            required: true,
+          },
+          email: {
+            required: true,
+            email: true,
+          },
+          password: {
+            required: true,
+            minlength: 8
+          },
+          password_confirmation: {
+            minlength: 8,
+            equalTo: '#password'
+          },
+          terms: {
+            required: true
+          },
+        },
+        messages: {
+          name: {
+            required: "Vui lòng nhập tên",
+          },
+          email: {
+            required: "Vui lòng nhập địa chỉ email",
+            email: "Định dạng email không đúng"
+          },
+          password: {
+            required: "Vui lòng nhập mật khẩu",
+            minlength: "Mật khẩu chứa ít nhất 8 kí tự"
+          },
+          password_confirmation: {
+            required: "Vui lòng nhập mật khẩu",
+            minlength: "Mật khẩu chứa ít nhất 8 kí tự",
+            equalTo: "Mật khẩu xác thực không trùng khớp",
+          },
+          terms: "Vui lòng chấp nhận điều khoản"
+        },
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+          error.addClass('invalid-feedback');
+          element.closest('.form-group').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+          $(element).addClass('is-invalid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+          $(element).removeClass('is-invalid');
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

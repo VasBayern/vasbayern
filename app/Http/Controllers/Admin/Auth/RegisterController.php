@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Auth;
 use App\Actions\Fortify\PasswordValidationRules;
 use App\Http\Controllers\Controller;
 use App\Models\AdminModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller {
@@ -19,24 +20,12 @@ class RegisterController extends Controller {
     }
     
     public function register(Request $request) {
-        
-        $this->validate($request, array(
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:admins'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ), [
-            'email.unique' => 'Email đã tồn tại',
-            'password.confirmed' => 'Mật khẩu không khớp',
-            'password.min' => 'Mật khẩu có ít nhất 8 kí tự',
-        ]);
-        $adminModel = new AdminModel();
-
-        $adminModel->name = $request->name;
-        $adminModel->email = $request->email;
-        $adminModel->password = bcrypt($request->password);
-        $adminModel->save();
-
+        $admin = new User();
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        $admin->password = bcrypt($request->password);
+        $admin->role = 0;
+        $admin->save();
         return redirect()->route('admin.login');
-
     }
 }

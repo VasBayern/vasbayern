@@ -8,16 +8,12 @@ use Illuminate\Http\Request;
 
 class ShopCategoryController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
-
+  
     public function index() {
-        $items = ShopCategoryModel::all();
+        $categories = ShopCategoryModel::all();
 
         $data = array();
-        $data['cats'] = $items;
+        $data['categories'] = $categories;
 
         return view('admin.content.shop.category.list', $data);
     }
@@ -25,9 +21,9 @@ class ShopCategoryController extends Controller
     public function create() {
 
         $data = array();
-        $cats = ShopCategoryModel::all();
-        $data['cats'] = $cats;
-        $data['cates'] = ShopCategoryModel::getCategoryRecursive();
+        $categories = ShopCategoryModel::all();
+        $data['categories'] = $categories;
+        $data['parent_categories'] = ShopCategoryModel::getCategoryRecursive();
 
         return view('admin.content.shop.category.add', $data);
     }
@@ -35,8 +31,8 @@ class ShopCategoryController extends Controller
     public function edit($id) {
         $data = array();
         $item = ShopCategoryModel::findOrFail($id);
-        $data['cat'] = $item;
-        $data['cates'] = ShopCategoryModel::getCategoryRecursiveExcept($id);
+        $data['categories'] = $item;
+        $data['parent_categories'] = ShopCategoryModel::getCategoryRecursiveExcept($id);
 
         return view('admin.content.shop.category.edit', $data );
     }

@@ -19,13 +19,6 @@ class LoginController extends Controller
     }
 
     public function login(Request $request) {
-        $this->validate($request, array(
-            'email' => ['required', 'string', 'email', 'max:255'],
-            'password' => ['required', 'string', 'min:8'],
-        ), [
-            'password.min' => 'Mật khẩu có ít nhất 8 kí tự',
-        ]);
-
         if (Auth::guard('admin')->attempt(
             ['email' => $request->email, 'password' => $request->password],  $request->remember
         )) {
@@ -33,15 +26,13 @@ class LoginController extends Controller
             \Toastr::success('Xin chào');
             return redirect()->route('admin.dashboard');
         }
-    
         // Authenticate fail
-        return redirect()->back()->withInput($request->only('email', 'remember'))->with('msg','Email hoặc mật khẩu không chính xác');
+        return redirect()->back()->withInput($request->only('email', 'remember'))->with('msg','Email hoặc Mật khẩu không chính xác');
     }
 
     public function logout() {
         Auth::guard('admin')->logout();
-
-        // chuyển hướng về trang login của admin
+        // Redirect to Admin Login
         \Toastr::success('Đăng xuất thành công');
         return redirect()->route('admin.login');
     }

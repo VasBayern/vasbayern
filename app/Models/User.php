@@ -61,6 +61,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
     ];
 
+    // User
+
     public function customer() {
         return $this->hasMany('App\Models\CustomerModel', 'user_id', 'id');
     }
@@ -78,5 +80,11 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function wishlist() {
         return $this->hasMany('App\Models\WishListModel', 'user_id', 'id');
+    }
+
+    // Admin
+    
+    public function post() {
+        return $this->hasMany('App\Models\BlogPostModel', 'author_id', 'id');
     }
 }

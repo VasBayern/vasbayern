@@ -27,8 +27,7 @@
     <div class="card">
       <div class="card-body login-card-body">
         <p class="login-box-msg">Đăng nhập để truy cập Admin</p>
-
-        <form action="{{ route('admin.login') }}" method="post">
+        <form action="{{ route('admin.login') }}" method="post" id="quickForm">
           @csrf
           @if(session('msg'))
           <div class="alert alert-danger">
@@ -36,8 +35,8 @@
             {{session('msg')}}
           </div>
           @endif
-          <div class="input-group mb-3">
-            <input type="email" class="form-control @error('name') is-invalid @enderror" placeholder="Email" name="email" value="{{ old('email') }}" required autofocus>
+          <div class="input-group mb-3 form-group">
+            <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}" required autofocus>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -49,8 +48,8 @@
             </span>
             @enderror
           </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password" required>
+          <div class="input-group mb-3 form-group">
+            <input type="password" class="form-control" placeholder="Password" name="password" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -111,7 +110,68 @@
   <script src="{{asset('admin_assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <!-- AdminLTE App -->
   <script src="{{asset('admin_assets/dist/js/adminlte.min.js')}}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{{asset('admin_assets/dist/js/demo.js')}}"></script>
+  <!-- jquery-validation -->
+  <script src="{{asset('admin_assets/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#quickForm').validate({
+        rules: {
+          name: {
+            required: true,
+          },
+          email: {
+            required: true,
+            email: true,
+          },
+          password: {
+            required: true,
+            minlength: 8
+          },
+          password_confirmation: {
+            minlength: 8,
+            equalTo: '#password'
+          },
+          terms: {
+            required: true
+          },
+        },
+        messages: {
+          name: {
+            required: "Vui lòng nhập tên",
+          },
+          email: {
+            required: "Vui lòng nhập địa chỉ email",
+            email: "Định dạng email không đúng"
+          },
+          password: {
+            required: "Vui lòng nhập mật khẩu",
+            minlength: "Mật khẩu chứa ít nhất 8 kí tự"
+          },
+          password_confirmation: {
+            required: "Vui lòng nhập mật khẩu",
+            minlength: "Mật khẩu chứa ít nhất 8 kí tự",
+            equalTo: "Mật khẩu xác thực không trùng khớp",
+          },
+          terms: "Vui lòng chấp nhận điều khoản"
+        },
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+          error.addClass('invalid-feedback');
+          element.closest('.form-group').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+          $(element).addClass('is-invalid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+          $(element).removeClass('is-invalid');
+        }
+      });
+    });
+  </script>
 
+  
 </body>
 
 </html>

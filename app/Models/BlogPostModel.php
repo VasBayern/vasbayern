@@ -16,9 +16,9 @@ class BlogPostModel extends Model
         return $this->belongsTo('App\Models\BlogCategoryModel','category_id','id');
     }
 
-    public function admin()
+    public function user()
     {
-        return $this->belongsTo('App\Models\AdminModel','author_id','id');
+        return $this->belongsTo('App\Models\User','author_id','id');
     }
 
     public function comment()
