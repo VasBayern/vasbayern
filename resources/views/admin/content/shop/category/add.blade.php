@@ -40,7 +40,7 @@ Thêm danh mục
                         <div class="form-group">
                             <div class="alert alert-danger">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                <ul>
+                                <ul style="margin-bottom:0px">
                                     @foreach ($errors->all() as $error)
                                     <li style="list-style: none">{{ $error }}</li>
                                     @endforeach
@@ -121,7 +121,7 @@ Thêm danh mục
 
         <div class="row">
             <div class="col-12">
-                <a href="{{ url('admin/category') }}" class="btn btn-secondary">Hủy</a>
+                <a href="{{ route('admin.category') }}" class="btn btn-secondary">Hủy</a>
                 <input type="submit" value="Thêm" class="btn btn-success">
             </div>
         </div>

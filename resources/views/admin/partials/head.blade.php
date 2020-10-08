@@ -22,4 +22,9 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('admin_assets/plugins/summernote/summernote-bs4.css')}}">
   <link rel="stylesheet" href="{{asset('css/modalDelete.css')}}">
+
+  <!-- Toastr-->
+  <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+  <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+
 </head>

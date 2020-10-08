@@ -30,7 +30,6 @@ Sửa thương hiệu
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Thông tin</h3>
-
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                                 <i class="fas fa-minus"></i></button>
@@ -41,7 +40,7 @@ Sửa thương hiệu
                         <div class="form-group">
                             <div class="alert alert-danger">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                <ul>
+                                <ul style="margin-bottom:0px">
                                     @foreach ($errors->all() as $error)
                                     <li style="list-style: none">{{ $error }}</li>
                                     @endforeach

@@ -30,7 +30,7 @@ Danh mục sản phẩm
                 <div class="card">
                     <div class="card-header">
                         <div class="col-lg-1">
-                            <a href="{{ url('admin/category/create') }}"><button type="button" class="btn btn-block bg-gradient-primary">Thêm</button></a>
+                            <a href="{{ url('admin/category') }}"><button type="button" class="btn btn-block bg-gradient-primary">Thêm</button></a>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -83,7 +83,7 @@ Danh mục sản phẩm
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ url('admin/category/'.$category->id.'/edit') }}" class="btn btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="{{ url('admin/category/'.$category->slug) }}" class="btn btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
                                     <a href="#myModal{{$category->id}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                                 </tr>
@@ -118,8 +118,8 @@ Danh mục sản phẩm
                 <p>Lưu ý : Hành động này không thể hoàn tác</p>
             </div>
             <div class="modal-footer justify-content-center">
-                <form name="category" action="{{ url('admin/category/'.$category->id.'/delete') }}" method="post" class="form-horizontal">
-                @method('DELETE')
+                <form name="category" action="{{ url('admin/category/'.$category->slug) }}" method="post" class="form-horizontal">
+                    @method('DELETE')
                     @csrf
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                     <button type="submit" class="btn btn-danger">Xóa</button>

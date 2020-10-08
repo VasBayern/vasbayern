@@ -22,26 +22,25 @@ Sửa danh mục
 
 <!-- Main content -->
 <section class="content">
-    <form action="{{ url('admin/category/'.$category->id) }}" method="post" enctype="multipart/form-data" id="quickForm">
+    <form action="{{ url('admin/category/'.$category->slug) }}" method="post" enctype="multipart/form-data" id="quickForm">
+        @method('PUT')
         @csrf
         <div class="row">
             <div class="col-md-6">
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Thông tin</h3>
-
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                                 <i class="fas fa-minus"></i></button>
                         </div>
                     </div>
                     <div class="card-body">
-
                         @if ($errors->any())
                         <div class="form-group">
                             <div class="alert alert-danger">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                <ul>
+                                <ul style="margin-bottom:0px">
                                     @foreach ($errors->all() as $error)
                                     <li style="list-style: none">{{ $error }}</li>
                                     @endforeach
@@ -126,7 +125,7 @@ Sửa danh mục
         </div>
         <div class="row">
             <div class="col-12">
-                <a href="{{ url('admin/category') }}" class="btn btn-secondary">Hủy</a>
+                <a href="{{ route('admin.category') }}" class="btn btn-secondary">Hủy</a>
                 <input type="submit" value="Sửa" class="btn btn-success">
             </div>
         </div>

@@ -30,11 +30,29 @@
             rules: {
                 name: {
                     required: true,
-                }
+                },
+                value: {
+                    required: true,
+                },
+                pecent_off: {
+                    required: true,
+                },
+                code: {
+                    required: true,
+                },
             },
             messages: {
                 name: {
                     required: "Vui lòng nhập tên",
+                },
+                value: {
+                    required: "Vui lòng nhập giá tiền",
+                },
+                code: {
+                    required: "Vui lòng nhập mã",
+                },
+                pecent_off: {
+                    required: "Vui lòng nhập % giảm giá",
                 },
             },
             errorElement: 'span',

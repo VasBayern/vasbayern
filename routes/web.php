@@ -82,12 +82,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         /**
          * Shop category
          */
-        Route::get('category', [ShopCategoryController::class, 'index'])->name('category');
-        Route::get('category/create', [ShopCategoryController::class, 'create']);
-        Route::get('category/{id}/edit', [ShopCategoryController::class, 'edit']);
+        Route::get('category/list', [ShopCategoryController::class, 'index'])->name('category');
+        Route::get('category', [ShopCategoryController::class, 'create']);
+        Route::get('category/{slug}', [ShopCategoryController::class, 'edit']);
         Route::post('category', [ShopCategoryController::class, 'store']);
-        Route::post('category/{id}', [ShopCategoryController::class, 'update']);
-        Route::delete('category/{id}/delete', [ShopCategoryController::class, 'destroy']);
+        Route::put('category/{slug}', [ShopCategoryController::class, 'update']);
+        Route::delete('category/{slug}', [ShopCategoryController::class, 'destroy']);
 
         /**
          * Shop Brand
@@ -110,17 +110,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         /**
          * Shop Product
          */
-        Route::get('product', [ShopProductController::class, 'index'])->name('product');
-        Route::get('product/create', [ShopProductController::class, 'create']);
-        Route::get('product/{id}/edit', [ShopProductController::class, 'edit']);
-
+        Route::get('product/list', [ShopProductController::class, 'index'])->name('product');
+        Route::get('product', [ShopProductController::class, 'create']);
+        Route::get('product/{slug}', [ShopProductController::class, 'edit']);
         Route::post('product', [ShopProductController::class, 'store']);
-        Route::post('product/{id}', [ShopProductController::class, 'update']);
-        Route::delete('product/{id}/delete', [ShopProductController::class, 'destroy']);
+        Route::put('product/{slug}', [ShopProductController::class, 'update']);
+        Route::delete('product/{id}', [ShopProductController::class, 'destroy']);
 
-        Route::post('product/{id}/edit/properties',  [ShopProductController::class, 'storeProperties']);
-        Route::post('product/{id}/edit/properties/{size}', [ShopProductController::class, 'editProperties']);
-        Route::delete('product/{id}/edit/properties/{size}/delete',  [ShopProductController::class, 'destroyProperties']);
+        Route::post('product/{slug}/properties',  [ShopProductController::class, 'storeProperties']);
+        Route::put('product/{slug}/properties/{id}', [ShopProductController::class, 'updateProperties']);
+        Route::delete('product/{slug}/properties/{id}',  [ShopProductController::class, 'destroyProperties']);
 
         //Route::view('/product/{id}/properties', 'admin.content.shop.product.edit');
         /**

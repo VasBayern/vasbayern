@@ -4,20 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
 
 class ShopCategoryModel extends Model
 {
     use HasFactory;
-    use Sluggable;
-
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
     
     public $table = 'shop_categories';
+
+    protected $fillable = [
+        'name', 'slug', 'parent_id', 'image', 'intro', 'desc', 'homepage',
+    ];
 
     public function product() {
         return $this->hasMany('App\Model\ShopProductModel','cat_id','id');
@@ -81,12 +77,4 @@ class ShopCategoryModel extends Model
         return $result;
     }
 
-    public function sluggable()
-    {
-        return [
-            'slug' => [
-                'source' => 'name',
-            ]
-        ];
-    }
 }

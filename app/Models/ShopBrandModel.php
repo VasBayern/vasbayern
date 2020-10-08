@@ -11,6 +11,10 @@ class ShopBrandModel extends Model
 
     public $table = 'shop_brands';
 
+    protected $fillable = [
+        'name', 'slug', 'image', 'link', 'intro', 'desc',
+    ];
+
     public function product() {
         return $this->hasMany('App\Models\ShopProductModel','brand_id','id');
     }

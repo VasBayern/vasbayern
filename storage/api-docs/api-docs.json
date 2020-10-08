@@ -190,9 +190,9 @@
                 "scheme": "https",
                 "flows": {
                     "password": {
-                        "authorizationUrl": "http://127.0.0.1:8000/oauth/authorize",
-                        "tokenUrl": "http://127.0.0.1:8000/oauth/token",
-                        "refreshUrl": "http://127.0.0.1:8000/token/refresh",
+                        "authorizationUrl": "localhost/oauth/authorize",
+                        "tokenUrl": "localhost/oauth/token",
+                        "refreshUrl": "localhost/token/refresh",
                         "scopes": []
                     }
                 }

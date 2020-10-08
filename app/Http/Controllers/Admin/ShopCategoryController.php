@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ShopCategoryModel;
+use Brian2694\Toastr\Facades\Toastr;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 
@@ -11,6 +12,7 @@ class ShopCategoryController extends Controller
 {
   
     public function index() {
+
         $categories = ShopCategoryModel::all();
         $data = array();
         $data['categories'] = $categories;
@@ -19,6 +21,7 @@ class ShopCategoryController extends Controller
     }
 
     public function create() {
+
         $data = array();
         $categories = ShopCategoryModel::all();
         $data['categories'] = $categories;
@@ -27,25 +30,25 @@ class ShopCategoryController extends Controller
         return view('admin.content.shop.category.add', $data);
     }
 
-    public function edit($id) {
+    public function edit($slug) {
+
         $data = array();
-        $item = ShopCategoryModel::findOrFail($id);
+        $item = ShopCategoryModel::where('slug', $slug)->first();
         $data['category'] = $item;
-        $data['parent_categories'] = ShopCategoryModel::getCategoryRecursiveExcept($id);
+        $data['parent_categories'] = ShopCategoryModel::getCategoryRecursiveExcept($slug);
 
         return view('admin.content.shop.category.edit', $data );
     }
 
 
     public function store(Request $request) {
+
         $validatedData = $request->validate([
-            'name' => 'required|max:255|unique:shop_categories',
-            'slug' => 'required|max:255|unique:shop_categories',
+            'name' => 'unique:shop_categories',
+            'slug' => 'unique:shop_categories',
 
         ],[
-            'name.required' => 'Bạn chưa nhập tên',
             'name.unique' => 'Danh mục đã tồn tại',
-            'slug.required' => 'Bạn chưa nhập slug',
             'slug.unique' => 'Slug đã tồn tại',
         ]);
 
@@ -61,22 +64,14 @@ class ShopCategoryController extends Controller
         $item->homepage     = $input['homepage'];
         $item->save();
 
-        \Toastr::success('Thêm thành công');
+        Toastr::success('Thêm thành công');
         return redirect()->route('admin.category');
     }
 
-    public function update(Request $request, $id) {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-//             Rule::unique('shop_categories')->where(function ($query) {
-//                return $query->where('id', 1);
-//            })
+    public function update(Request $request, $slug) {
 
-        ],[
-            'name.required' => 'Bạn chưa nhập tên',
-        ]);
         $input = $request->all();
-        $item = ShopCategoryModel::findOrFail($id);
+        $item = ShopCategoryModel::where('slug', $slug)->first();
         $item->name         = $input['name'];
         $item->parent_id    = $input['parent_id'];
         $item->slug         = $input['slug'];
@@ -86,20 +81,15 @@ class ShopCategoryController extends Controller
         $item->homepage     = $input['homepage'];
         $item->save();
 
-        \Toastr::success('Sửa thành công');
+        Toastr::success('Sửa thành công');
         return redirect()->route('admin.category');
     }
 
-    public function destroy($id) {
-        $item = ShopCategoryModel::findOrFail($id);
+    public function destroy($slug) {
+        $item = ShopCategoryModel::where('slug', $slug)->first();
         $item->delete();
 
-        \Toastr::success('Xóa thành công');
+        Toastr::success('Xóa thành công');
         return redirect()->route('admin.category');
-    }
-
-    public function checkSlug(Request $request) {
-        $slug = SlugService::createSlug(ShopCategoryModel::class, 'slug', $request);
-        return response()->json([ 'slug' => $slug ]);
     }
 }

@@ -10,4 +10,11 @@ class ShopCouponModel extends Model
     use HasFactory;
 
     public $table = 'shop_coupons';
+
+    protected $fillable = [
+        'name',
+        'type',
+        'value',
+        'pecent_off'
+    ];
 }

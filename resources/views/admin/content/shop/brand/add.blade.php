@@ -40,7 +40,7 @@ Thêm thương hiệu
                         <div class="form-group">
                             <div class="alert alert-danger">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                <ul>
+                                <ul style="margin-bottom:0px">
                                     @foreach ($errors->all() as $error)
                                     <li style="list-style: none">{{ $error }}</li>
                                     @endforeach

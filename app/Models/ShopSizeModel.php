@@ -11,6 +11,10 @@ class ShopSizeModel extends Model
 
     public $table = 'sizes';
 
+    protected $fillable = [
+        'name',
+    ];
+
     public function product_properties() {
         return $this->hasMany('App\Models\ShopProductProperties','size_id','id');
     }

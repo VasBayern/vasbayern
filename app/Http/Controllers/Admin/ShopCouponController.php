@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ShopCouponModel;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
 class ShopCouponController extends Controller
@@ -33,14 +34,11 @@ class ShopCouponController extends Controller
         $item->percent_off = isset($input['percent_off'])? $input['percent_off'] : 0;
         $item->save();
 
-        \Toastr::success('Thêm thành công');
+        Toastr::success('Thêm thành công');
         return redirect()->route('admin.coupon');
 
     }
 
-    /*
-     * Sửa value, percent-off
-     * */
     public function update(Request $request, $id) {
         
         $input = $request->all();
@@ -60,7 +58,7 @@ class ShopCouponController extends Controller
             $item->save();
         }
 
-        \Toastr::success('Sửa thành công');
+        Toastr::success('Sửa thành công');
         return redirect()->route('admin.coupon');
     }
 
@@ -69,7 +67,7 @@ class ShopCouponController extends Controller
         $item = ShopCouponModel::find($id);
         $item->delete();
 
-        \Toastr::success('Xóa thành công');
+        Toastr::success('Xóa thành công');
         return redirect()->route('admin.coupon');
     }
 }
