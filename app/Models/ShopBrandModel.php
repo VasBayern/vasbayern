@@ -15,4 +15,3 @@ class ShopBrandModel extends Model
         return $this->hasMany('App\Models\ShopProductModel','brand_id','id');
     }
 }
-}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\Auth\LoginController as AuthLoginController;
 use App\Http\Controllers\Admin\Auth\RegisterController as AuthRegisterController;
 use App\Http\Controllers\Admin\HomeController;
@@ -9,7 +10,6 @@ use App\Http\Controllers\Admin\ShopCouponController;
 use App\Http\Controllers\Admin\ShopFeedbackController;
 use App\Http\Controllers\Admin\ShopProductController;
 use App\Http\Controllers\Admin\ShopSizeController;
-use App\Models\ShopCategoryModel;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Route;
@@ -85,8 +85,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('category', [ShopCategoryController::class, 'index'])->name('category');
         Route::get('category/create', [ShopCategoryController::class, 'create']);
         Route::get('category/{id}/edit', [ShopCategoryController::class, 'edit']);
-        Route::get('category/checkSlug', [ShopCategoryController::class, 'checkSlug'])->name('category.checkSlug');
-
         Route::post('category', [ShopCategoryController::class, 'store']);
         Route::post('category/{id}', [ShopCategoryController::class, 'update']);
         Route::delete('category/{id}/delete', [ShopCategoryController::class, 'destroy']);
@@ -94,24 +92,20 @@ Route::prefix('admin')->name('admin.')->group(function () {
         /**
          * Shop Brand
          */
-        Route::get('brand', [ShopBrandController::class, 'index'])->name('brand');
-        Route::get('brand/create', [ShopBrandController::class, 'create']);
-        Route::get('brand/{id}/edit', [ShopBrandController::class, 'edit']);
-
+        Route::get('brand/list', [ShopBrandController::class, 'index'])->name('brand');
+        Route::get('brand', [ShopBrandController::class, 'create']);
+        Route::get('brand/{slug}', [ShopBrandController::class, 'edit']);
         Route::post('brand', [ShopBrandController::class, 'store']);
-        Route::post('brand/{id}', [ShopBrandController::class, 'update']);
-        Route::delete('brand/{id}/delete', [ShopBrandController::class, 'destroy']);
+        Route::put('brand/{slug}', [ShopBrandController::class, 'update']);
+        Route::delete('brand/{slug}', [ShopBrandController::class, 'destroy']);
 
         /**
          * Size
          */
         Route::get('size', [ShopSizeController::class, 'index'])->name('size');
-        Route::get('size/create', [ShopSizeController::class, 'create']);
-        Route::get('size/{id}/edit', [ShopSizeController::class, 'edit']);
-
         Route::post('size', [ShopSizeController::class, 'store']);
-        Route::post('size/{id}', [ShopSizeController::class, 'update']);
-        Route::delete('size/{id}/delete', [ShopSizeController::class, 'destroy']);
+        Route::put('size/{id}', [ShopSizeController::class, 'update']);
+        Route::delete('size/{id}', [ShopSizeController::class, 'destroy']);
 
         /**
          * Shop Product
@@ -133,12 +127,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
          * Shop Coupon
          */
         Route::get('coupon',  [ShopCouponController::class, 'index'])->name('coupon');
-        Route::get('coupon/create',  [ShopCouponController::class, 'create']);
-        Route::get('coupon/{id}/edit',  [ShopCouponController::class, 'edit']);
-
         Route::post('coupon',  [ShopCouponController::class, 'store']);
-        Route::post('coupon/{id}',  [ShopCouponController::class, 'update']);
-        Route::delete('coupon/{id}/delete',  [ShopCouponController::class, 'destroy']);
+        Route::put('coupon/{id}',  [ShopCouponController::class, 'update']);
+        Route::delete('coupon/{id}',  [ShopCouponController::class, 'destroy']);
 
         /**
          * Feedback
@@ -151,6 +142,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('media', function () {
             return view('admin.content.media.index');
         });
+        
+        Route::get('getSlug', [AdminController::class, 'getSlug'])->name('getSlug');
         
     });
 });

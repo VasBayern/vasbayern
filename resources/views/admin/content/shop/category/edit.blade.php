@@ -37,10 +37,16 @@ Sửa danh mục
                     </div>
                     <div class="card-body">
 
-                        @if(session('msg'))
-                        <div class="alert alert-success">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            {{session('msg')}}
+                        @if ($errors->any())
+                        <div class="form-group">
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li style="list-style: none">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
                         @endif
                         <div class="form-group">
@@ -79,7 +85,7 @@ Sửa danh mục
                                     <button type="button" class="btn btn-block bg-gradient-primary"><i class="fas fa-image" style="margin-right:10px"></i>Chọn</button>
                                 </a>
                             </span>
-                            <input id="thumbnail1" type="text" name="image[]" value="{{ $value }}" class="form-control" id="focusedinput">
+                            <input id="thumbnail1" type="text" name="image" value="{{ $value }}" class="form-control" id="focusedinput">
                             <img id="holder1" src="{{ asset($value) }}" style="max-height:100px;">
                         </div>
                         @endforeach
@@ -129,62 +135,5 @@ Sửa danh mục
 </section>
 <!-- /.content -->
 @endsection
-<!-- jQuery -->
-<script src="{{asset('admin_assets/plugins/jquery/jquery.min.js')}}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{asset('admin_assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('admin_assets/dist/js/adminlte.min.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{asset('admin_assets/dist/js/demo.js')}}"></script>
-<!-- jquery-validation -->
-<script src="{{asset('admin_assets/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#quickForm').validate({
-            rules: {
-                name: {
-                    required: true,
-                },
-                slug: {
-                    required: true,
-                },
-            },
-            messages: {
-                name: {
-                    required: "Vui lòng nhập tên",
-                },
-                slug: {
-                    required: "Vui lòng nhập slug",
-                },
-            },
-            errorElement: 'span',
-            errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').append(error);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).removeClass('is-invalid');
-            }
-        });
-    });
-</script>
-<!-- Summernote -->
-<script src="{{asset('admin_assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
-<script>
-    $(function() {
-        // Summernote
-        $('.textarea').summernote()
-    })
-</script>
-<script src="{{ asset('/vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
-<script>
-    $(document).ready(function() {
-        $('.lfm-btn').filemanager('image', {
-            'prefix': '/laravel-filemanager'
-        });
-    });
-</script>
+<!-- Jquery -->
+@include('admin.partials.admin-jquery');

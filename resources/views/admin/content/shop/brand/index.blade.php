@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-Danh mục sản phẩm
+Thương hiệu
 @endsection
 
 @section('content')
@@ -10,12 +10,12 @@ Danh mục sản phẩm
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Danh mục</h1>
+                <h1>Thương hiệu</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">Danh mục</li>
+                    <li class="breadcrumb-item active">Thương hiệu</li>
                 </ol>
             </div>
         </div>
@@ -30,7 +30,7 @@ Danh mục sản phẩm
                 <div class="card">
                     <div class="card-header">
                         <div class="col-lg-1">
-                            <a href="{{ url('admin/category/create') }}"><button type="button" class="btn btn-block bg-gradient-primary">Thêm</button></a>
+                            <a href="{{ url('admin/brand') }}"><button type="button" class="btn btn-primary">Thêm</button></a>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -41,21 +41,21 @@ Danh mục sản phẩm
                                     <th>Id</th>
                                     <th>Tên</th>
                                     <th>Slug</th>
+                                    <th>Link</th>
                                     <th>Ảnh</th>
-                                    <th>Cha</th>
-                                    <th>Hiển thị</th>
                                     <th>Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $stt = 1; ?>
-                                @foreach($categories as $category)
+                                @foreach($brands as $brand)
                                 <th scope="row">{{ $stt }}</th>
-                                <td>{{ $category->name }}</td>
-                                <td>{{ $category->slug }}</td>
+                                <td>{{ $brand->name }}</td>
+                                <td>{{ $brand->slug }}</td>
+                                <td>{{ $brand->link }}</td>
                                 <td>
                                     <?php
-                                    $image = isset($category->image) ? json_decode($category->image) : array();
+                                    $image = isset($brand->image) ? json_decode($brand->image) : array();
                                     ?>
                                     @if(!empty($image))
                                     @foreach($image as $key => $value)
@@ -64,27 +64,9 @@ Danh mục sản phẩm
                                     @endforeach
                                     @endif
                                 </td>
-
                                 <td>
-                                    @if($category->parent_id == 0)
-                                    {{ "Gốc" }}
-                                    @else
-                                    <?php
-                                    $item = DB::table('shop_categories')->where("id", $category->parent_id)->first();
-                                    echo $item->name;
-                                    ?>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($category->homepage == 1)
-                                    {{ "Có" }}
-                                    @else
-                                    {{ "Không" }}
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ url('admin/category/'.$category->id.'/edit') }}" class="btn btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="#myModal{{$category->id}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="{{ url('admin/brand/'.$brand->slug) }}" class="btn btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="#myModal{{$brand->slug}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                                 </tr>
                                 <?php $stt++; ?>
@@ -103,8 +85,8 @@ Danh mục sản phẩm
     <!-- /.container-fluid -->
 </section>
 <!-- Modal HTML -->
-@foreach($categories as $category)
-<div id="myModal{{$category->id}}" class="modal fade">
+@foreach($brands as $brand)
+<div id="myModal{{$brand->slug}}" class="modal fade">
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
             <div class="modal-header flex-column">
@@ -118,7 +100,7 @@ Danh mục sản phẩm
                 <p>Lưu ý : Hành động này không thể hoàn tác</p>
             </div>
             <div class="modal-footer justify-content-center">
-                <form name="category" action="{{ url('admin/category/'.$category->id.'/delete') }}" method="post" class="form-horizontal">
+                <form name="brand" action="{{ url('admin/brand/'.$brand->slug) }}" method="post" class="form-horizontal">
                 @method('DELETE')
                     @csrf
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
@@ -131,27 +113,5 @@ Danh mục sản phẩm
 @endforeach
 @endsection
 
-<!-- jQuery -->
-<script src="{{asset('admin_assets/plugins/jquery/jquery.min.js')}}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{asset('admin_assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- AdminLTE App -->
-<script src="{{asset('admin_assets/dist/js/adminlte.min.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{asset('admin_assets/dist/js/demo.js')}}"></script>
-
-<!-- DataTables -->
-<script src="{{asset('admin_assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('admin_assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('admin_assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{asset('admin_assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-
-<!-- page script -->
-<script>
-    $(function() {
-        $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
-        });
-    });
-</script>
+<!-- Jquery -->
+@include('admin.partials.index-jquery');

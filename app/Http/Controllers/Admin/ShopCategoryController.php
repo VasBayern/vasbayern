@@ -15,7 +15,7 @@ class ShopCategoryController extends Controller
         $data = array();
         $data['categories'] = $categories;
 
-        return view('admin.content.shop.category.list', $data);
+        return view('admin.content.shop.category.index', $data);
     }
 
     public function create() {
@@ -99,7 +99,7 @@ class ShopCategoryController extends Controller
     }
 
     public function checkSlug(Request $request) {
-        $slug = SlugService::createSlug(ShopCategoryModel::class, 'slug', 'My First Post');
+        $slug = SlugService::createSlug(ShopCategoryModel::class, 'slug', $request);
         return response()->json([ 'slug' => $slug ]);
     }
 }
