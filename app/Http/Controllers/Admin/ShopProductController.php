@@ -39,24 +39,17 @@ class ShopProductController extends Controller
             'name' => 'unique:shop_products',
         ], [
             'name.unique' => 'Sản phẩm đã tồn tại',
-            'name.required' => 'Bạn phải nhập tên',
-            'images.unique' => 'Bạn chưa nhập ảnh',
-            'priceCore.required' => 'Bạn chưa nhập giá',
-            'priceCore.numeric' => 'Giá tiền phải là số',
-            'priceSale.numeric' => 'Giá tiền phải là số',
-            'intro.required' => 'Bạn phải nhập mô tả',
-            'desc.required' => 'Bạn phải nhập chi tiết',
         ]);
 
         $input = $request->all();
         $item = new ShopProductModel();
         $item->name         = $input['name'];
         $item->slug         = $input['slug'];
-        $item->images       = isset($input['images'])       ? json_encode($input['images']) : '';
-        $item->intro        = $input['intro'];
-        $item->desc         = $input['desc'];
+        $item->images       = isset($input['images'])   ? json_encode($input['images']) : '';
+        $item->intro        = isset($input['intro'])    ?  $input['intro']              : '';
+        $item->desc         = isset($input['desc'])     ?  $input['desc']               : '';
         $item->priceCore    = $input['priceCore'];
-        $item->priceSale    = isset($input['priceSale'])    ?  $input['priceSale'] : 0;
+        $item->priceSale    = isset($input['priceSale'])?  $input['priceSale']          : 0;
         $item->cat_id       = $input['cat_id'];
         $item->brand_id     = $input['brand_id'];
         $item->new          = $input['new'];

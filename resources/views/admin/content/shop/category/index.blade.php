@@ -30,7 +30,7 @@ Danh mục sản phẩm
                 <div class="card">
                     <div class="card-header">
                         <div class="col-lg-1">
-                            <a href="{{ url('admin/category') }}"><button type="button" class="btn btn-block bg-gradient-primary">Thêm</button></a>
+                            <a href="{{ url('admin/category') }}"><button type="button" class="btn btn-primary">Thêm</button></a>
                         </div>
                     </div>
                     <!-- /.card-header -->
