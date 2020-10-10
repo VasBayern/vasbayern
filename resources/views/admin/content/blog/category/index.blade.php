@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-Mã giảm giá
+Danh mục bài viết
 @endsection
 
 @section('content')
@@ -10,12 +10,12 @@ Mã giảm giá
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Mã giảm giá</h1>
+                <h1>Danh mục</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">Mã giảm giá</li>
+                    <li class="breadcrumb-item active">Danh mục</li>
                 </ol>
             </div>
         </div>
@@ -41,24 +41,20 @@ Mã giảm giá
                             <thead>
                                 <tr>
                                     <th style="width: 30px">Id</th>
-                                    <th>Mã</th>
-                                    <th>Loại</th>
-                                    <th>Giá trị</th>
-                                    <th>% giảm</th>
+                                    <th>Tên</th>
+                                    <th>Slug</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $stt = 1; ?>
-                                @foreach($coupons as $coupon)
+                                @foreach($categories as $category)
                                 <th scope="row">{{ $stt }}</th>
-                                <td>{{ $coupon->code }}</td>
-                                <td>{{ $coupon->type }}</td>
-                                <td>{{ number_format($coupon->value) }} VNĐ</td>
-                                <td>{{ $coupon->percent_off }}%</td>
+                                <td>{{ $category->name }}</td>
+                                <td>{{ $category->slug }}</td>
                                 <td>
-                                    <a href="#myModal" class="btn btn-primary" title="Sửa" data-toggle="modal" data-target="#modal-default-{{ $coupon->id }}"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="#myModal{{$coupon->id}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="#myModal" class="btn btn-primary" title="Sửa" data-toggle="modal" data-target="#modal-default-{{ $category->slug }}"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="#myModal{{$category->slug}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                                 </tr>
                                 <?php $stt++; ?>
@@ -80,10 +76,10 @@ Mã giảm giá
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url('admin/coupon') }}" method="post" enctype="multipart/form-data" id="quickForm">
+            <form action="{{ url('admin/blog/categories') }}" method="post" enctype="multipart/form-data" id="quickForm">
                 @csrf
                 <div class="modal-header">
-                    <h4 class="modal-title">Thêm mã giảm giá</h4>
+                    <h4 class="modal-title">Thêm danh mục</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -103,22 +99,11 @@ Mã giảm giá
                     @endif
                     <div class="form-group">
                         <label for="name">Tên</label>
-                        <input type="text" name="code" value="{{ old('code') }}" class="form-control" id="name" placeholder="Vui lòng nhập mã">
+                        <input type="text" name="name" value="{{ old('name') }}" class="form-control" id="name" placeholder="Vui lòng nhập tên">
                     </div>
                     <div class="form-group">
-                        <label for="type">Loại</label>
-                        <select name="type" class="form-control" id="type">
-                            <option value="percent">Percent</option>
-                            <option value="price">Price</option>
-                        </select>
-                    </div>
-                    <div class="form-group value" style="display: none">
-                        <label for="value">Giảm giá</label>
-                        <input type="number" name="value" value="{{ old('value') }}" class="form-control" id="value" placeholder="Giảm theo giá" min="0" required>
-                    </div>
-                    <div class="form-group percent_off" style="display: none">
-                        <label for="percent_off">Giảm %</label>
-                        <input type="number" name="percent_off" value="{{ old('percent_off') }}" required class="form-control" id="percent_off" placeholder="Giảm theo %" min="0" max="99" onKeyUp="if(this.value>99){this.value='99';}else if(this.value<0){this.value='0';}">
+                        <label for="slug">Slug</label>
+                        <input type="slug" name="slug" value="{{ old('slug') }}" class="form-control" id="slug" placeholder="Vui lòng nhập slug">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -133,16 +118,16 @@ Mã giảm giá
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+@foreach($categories as $category)
 <!-- Modal Edit -->
-@foreach($coupons as $coupon)
-<div class="modal fade" id="modal-default-{{ $coupon->id }}">
+<div class="modal fade" id="modal-default-{{ $category->slug }}">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url('admin/coupon/'.$coupon->id) }}" method="post" enctype="multipart/form-data" id="quickForm">
+            <form action="{{ url('admin/blog/categories/'.$category->slug) }}" method="post" enctype="multipart/form-data" id="quickForm">
                 @method('PUT')
                 @csrf
                 <div class="modal-header">
-                    <h4 class="modal-title">Sửa mã : {{ $coupon->code }}</h4>
+                    <h4 class="modal-title">Sửa danh mục : {{ $category->name }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -162,22 +147,11 @@ Mã giảm giá
                     @endif
                     <div class="form-group">
                         <label for="name">Tên</label>
-                        <input type="text" name="code" value="{{ $coupon->code }}" class="form-control" id="name" placeholder="Vui lòng nhập mã">
+                        <input type="text" name="name" value="{{ $category->name }}" class="form-control" id="name" placeholder="Vui lòng nhập tên">
                     </div>
                     <div class="form-group">
-                        <label for="type">Loại</label>
-                        <select name="type" class="form-control custom-select" id="type">
-                            <option value="percent" <?php echo ($coupon->type == 'percent') ? 'selected' : '' ?>>Percent</option>
-                            <option value="price" <?php echo ($coupon->type == 'price') ? 'selected' : '' ?>>Price</option>
-                        </select>
-                    </div>
-                    <div class="form-group value" style="display: none">
-                        <label for="value">Giảm giá</label>
-                        <input type="number" name="value" value="{{ $coupon->value }}" class="form-control" id="value" placeholder="Giảm theo giá" min="0">
-                    </div>
-                    <div class="form-group percent_off" style="display: none">
-                        <label for="percent_off">Giảm %</label>
-                        <input type="number" name="percent_off" value="{{ $coupon->percent_off }}" class="form-control" id="percent_off" placeholder="Giảm theo %" min="0" max="99" onKeyUp="if(this.value>99){this.value='99';}else if(this.value<0){this.value='0';}">
+                        <label for="slug">Tên</label>
+                        <input type="text" name="slug" value="{{ $category->slug }}" class="form-control" id="slug" placeholder="Vui lòng nhập slug">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -191,22 +165,23 @@ Mã giảm giá
     </div>
     <!-- /.modal-dialog -->
 </div>
+
 <!-- Modal Delete -->
-<div id="myModal{{$coupon->id}}" class="modal fade">
+<div id="myModal{{$category->slug}}" class="modal fade">
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
             <div class="modal-header flex-column">
                 <div class="icon-box">
                     <i class="fas fa-exclamation"></i>
                 </div>
-                <h4 class="modal-title w-100">Bạn có muốn xóa?</h4>
+                <h4 class="modal-title w-100">Bạn có muốn xóa? </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
                 <p>Lưu ý : Hành động này không thể hoàn tác</p>
             </div>
             <div class="modal-footer justify-content-center">
-                <form name="brand" action="{{ url('admin/coupon/'.$coupon->id) }}" method="post" class="form-horizontal">
+                <form name="brand" action="{{ url('admin/blog/categories/'.$category->slug) }}" method="post" class="form-horizontal">
                     @method('DELETE')
                     @csrf
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
@@ -221,27 +196,3 @@ Mã giảm giá
 
 <!-- Jquery -->
 @include('admin.partials.index-jquery');
-<script>
-    $(document).ready(function() {
-        var value = $('#type').val();
-        if (value == 'percent') {
-            $('.percent_off').show();
-            $('.value').hide();
-        } else if (value == 'price') {
-            $('.value').show();
-            $('.percent_off').hide();
-        };
-        $('#type').on('change', function() {
-            var value = $(this).val();
-            if (value == 'percent') {
-                $('.percent_off').show();
-                $('.value').hide();
-                $('#value').val(0);
-            } else if (value == 'price') {
-                $('.value').show();
-                $('.percent_off').hide();
-                $('#percent_off').val(0);
-            };
-        })
-    })
-</script>

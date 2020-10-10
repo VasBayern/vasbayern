@@ -26,12 +26,12 @@ class ShopCouponController extends Controller
             'code.unique' => 'Mã giảm giá đã tồn tại'
         ]);
 
-        $input = $request->all();
-        $item = new ShopCouponModel();
-        $item->code = $input['code'];
-        $item->type = $input['type'];
-        $item->value = isset($input['value'])? $input['value'] : 0;
-        $item->percent_off = isset($input['percent_off'])? $input['percent_off'] : 0;
+        $input              = $request->all();
+        $item               = new ShopCouponModel();
+        $item->code         = $input['code'];
+        $item->type         = $input['type'];
+        $item->value        = isset($input['value'])? $input['value'] : 0;
+        $item->percent_off  = isset($input['percent_off'])? $input['percent_off'] : 0;
         $item->save();
 
         Toastr::success('Thêm thành công');
@@ -43,18 +43,18 @@ class ShopCouponController extends Controller
         
         $input = $request->all();
         if ( $input['type'] == 'percent') {
-            $item = ShopCouponModel::find($id);
-            $item->code = $input['code'];
-            $item->type = $input['type'];
-            $item->value = 0;
-            $item->percent_off = $input['percent_off'];
+            $item               = ShopCouponModel::find($id);
+            $item->code         = $input['code'];
+            $item->type         = $input['type'];
+            $item->value        = 0;
+            $item->percent_off  = $input['percent_off'];
             $item->save();
         } elseif ($input['type'] == 'price') {
-            $item = ShopCouponModel::find($id);
-            $item->code = $input['code'];
-            $item->type = $input['type'];
-            $item->value = $input['value'];
-            $item->percent_off = 0;
+            $item               = ShopCouponModel::find($id);
+            $item->code         = $input['code'];
+            $item->type         = $input['type'];
+            $item->value        = $input['value'];
+            $item->percent_off  = 0;
             $item->save();
         }
 

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-Thương hiệu
+Bài viết
 @endsection
 
 @section('content')
@@ -10,12 +10,12 @@ Thương hiệu
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Thương hiệu</h1>
+                <h1>Bài viết</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">Thương hiệu</li>
+                    <li class="breadcrumb-item active">Bài viết</li>
                 </ol>
             </div>
         </div>
@@ -30,7 +30,7 @@ Thương hiệu
                 <div class="card">
                     <div class="card-header">
                         <div class="col-lg-1">
-                            <a href="{{ url('admin/brand') }}"><button type="button" class="btn btn-primary">Thêm</button></a>
+                            <a href="{{ url('admin/blog/posts') }}"><button type="button" class="btn btn-primary">Thêm</button></a>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -39,26 +39,28 @@ Thương hiệu
                             <thead>
                                 <tr>
                                     <th style="width: 30px">Id</th>
-                                    <th>Tên</th>
-                                    <th>Slug</th>
-                                    <th>Link</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Danh mục</th>
                                     <th>Ảnh</th>
+                                    <th>Giới thiệu</th>
+                                    <th>Tác giả</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $stt = 1; ?>
-                                @foreach($brands as $brand)
+                                @foreach($posts as $post)
                                 <th scope="row">{{ $stt }}</th>
-                                <td>{{ $brand->name }}</td>
-                                <td>{{ $brand->slug }}</td>
-                                <td>{{ $brand->link }}</td>
+                                <td>{{ $post->name }}</td>
+                                <td>{{ $post->category->name }}</td>
                                 <td>
-                                    <img src="{{ asset($brand->image) }}" style="margin-top:10px;max-width:240px;">
+                                    <img src="{{ asset($post->image) }}" style="margin-top:10px;max-height:130px;">
                                 </td>
+                                <td><?php echo $post->intro ?></td>
+                                <td>{{ $post->user->name }}</td>
                                 <td>
-                                    <a href="{{ url('admin/brand/'.$brand->slug) }}" class="btn btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="#myModal{{$brand->slug}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="{{ url('admin/blog/posts/'.$post->slug) }}" class="btn btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="#myModal{{$post->slug}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                                 </tr>
                                 <?php $stt++; ?>
@@ -77,8 +79,8 @@ Thương hiệu
     <!-- /.container-fluid -->
 </section>
 <!-- Modal HTML -->
-@foreach($brands as $brand)
-<div id="myModal{{$brand->slug}}" class="modal fade">
+@foreach($posts as $post)
+<div id="myModal{{$post->slug}}" class="modal fade">
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
             <div class="modal-header flex-column">
@@ -92,7 +94,7 @@ Thương hiệu
                 <p>Lưu ý : Hành động này không thể hoàn tác</p>
             </div>
             <div class="modal-footer justify-content-center">
-                <form name="brand" action="{{ url('admin/brand/'.$brand->slug) }}" method="post" class="form-horizontal">
+                <form name="post" action="{{ url('admin/blog/posts/'.$post->slug) }}" method="post" class="form-horizontal">
                     @method('DELETE')
                     @csrf
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>

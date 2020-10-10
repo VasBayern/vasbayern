@@ -38,15 +38,14 @@ Sản phẩm
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th style="width: 30px">Id</th>
                                     <th>Tên SP</th>
                                     <th>Danh mục</th>
                                     <th>Ảnh</th>
                                     <th>Giá Bán</th>
                                     <th>Giá K.M</th>
                                     <th>Status</th>
-                                    <th>Chi tiết</th>
-                                    <th>Hành động</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,11 +80,9 @@ Sản phẩm
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="#myModal" class="btn btn-success view-properties" data-toggle="modal" data-target="#modal-default" data-view="{{$product->id}}" title="Xem chi tiết"> <i class="fas fa-eye"></i></a>
-                                </td>
-                                <td>
-                                    <a href="{{ url('admin/product/'.$product->slug) }}" class="btn btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="#myModal{{$product->id}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="#myModal" class="btn btn-success btn-action view-properties" data-toggle="modal" data-target="#modal-default" data-view="{{$product->id}}" title="Xem chi tiết"> <i class="fas fa-eye"></i></a>
+                                    <a href="{{ url('admin/product/'.$product->slug) }}" class="btn btn-action btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="#myModal{{$product->id}}" class="btn btn-action btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                                 </tr>
                                 <?php $stt++; ?>

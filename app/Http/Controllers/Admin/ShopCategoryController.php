@@ -44,21 +44,19 @@ class ShopCategoryController extends Controller
     public function store(Request $request) {
 
         $validatedData = $request->validate([
-            'name' => 'unique:shop_categories',
-            'slug' => 'unique:shop_categories',
-
+            'name'          => 'unique:shop_categories',
+            'slug'          => 'unique:shop_categories',
         ],[
-            'name.unique' => 'Danh mục đã tồn tại',
-            'slug.unique' => 'Slug đã tồn tại',
+            'name.unique'   => 'Danh mục đã tồn tại',
+            'slug.unique'   => 'Slug đã tồn tại',
         ]);
 
-        $input = $request->all();
-        $item = new ShopCategoryModel();
-
+        $input              = $request->all();
+        $item               = new ShopCategoryModel();
         $item->name         = $input['name'];
         $item->parent_id    = $input['parent_id'];
         $item->slug         = $input['slug'];
-        $item->image        = isset($input['image'])    ? json_encode($input['image'])  : '';
+        $item->image        = $input['image'];
         $item->intro        = isset($input['intro'])    ? $input['intro']               : '';
         $item->desc         = isset($input['desc'])     ? $input['desc']                : '';
         $item->homepage     = $input['homepage'];
@@ -70,12 +68,12 @@ class ShopCategoryController extends Controller
 
     public function update(Request $request, $slug) {
 
-        $input = $request->all();
-        $item = ShopCategoryModel::where('slug', $slug)->first();
+        $input              = $request->all();
+        $item               = ShopCategoryModel::where('slug', $slug)->first();
         $item->name         = $input['name'];
         $item->parent_id    = $input['parent_id'];
         $item->slug         = $input['slug'];
-        $item->image        = isset($input['image'])    ? json_encode($input['image'])  : '';
+        $item->image        = $input['image'];
         $item->intro        = isset($input['intro'])    ? $input['intro']               : '';
         $item->desc         = isset($input['desc'])     ? $input['desc']                : '';
         $item->homepage     = $input['homepage'];

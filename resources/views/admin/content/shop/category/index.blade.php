@@ -38,13 +38,13 @@ Danh mục sản phẩm
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th style="width: 30px">Id</th>
                                     <th>Tên</th>
                                     <th>Slug</th>
                                     <th>Ảnh</th>
                                     <th>Cha</th>
                                     <th>Hiển thị</th>
-                                    <th>Hành động</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,17 +54,8 @@ Danh mục sản phẩm
                                 <td>{{ $category->name }}</td>
                                 <td>{{ $category->slug }}</td>
                                 <td>
-                                    <?php
-                                    $image = isset($category->image) ? json_decode($category->image) : array();
-                                    ?>
-                                    @if(!empty($image))
-                                    @foreach($image as $key => $value)
-                                    <img src="{{ asset($value) }}" style="margin-top:10px;max-width:240px;">
-                                    @break
-                                    @endforeach
-                                    @endif
+                                    <img src="{{ asset($category->image) }}" style="margin-top:10px;max-width:240px;">
                                 </td>
-
                                 <td>
                                     @if($category->parent_id == 0)
                                     {{ "Gốc" }}
@@ -84,7 +75,7 @@ Danh mục sản phẩm
                                 </td>
                                 <td>
                                     <a href="{{ url('admin/category/'.$category->slug) }}" class="btn btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="#myModal{{$category->id}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="#myModal{{$category->slug}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                                 </tr>
                                 <?php $stt++; ?>
@@ -104,7 +95,7 @@ Danh mục sản phẩm
 </section>
 <!-- Modal HTML -->
 @foreach($categories as $category)
-<div id="myModal{{$category->id}}" class="modal fade">
+<div id="myModal{{$category->slug}}" class="modal fade">
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
             <div class="modal-header flex-column">

@@ -6,13 +6,11 @@
 <script src="{{asset('admin_assets/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('admin_assets/dist/js/demo.js')}}"></script>
-
 <!-- DataTables -->
 <script src="{{asset('admin_assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('admin_assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('admin_assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('admin_assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-
 <!-- page script -->
 <script>
     $(function() {
@@ -31,6 +29,9 @@
                 name: {
                     required: true,
                 },
+                slug: {
+                    required: true,
+                },
                 value: {
                     required: true,
                 },
@@ -44,6 +45,9 @@
             messages: {
                 name: {
                     required: "Vui lòng nhập tên",
+                },
+                slug: {
+                    required: "Vui lòng nhập slug",
                 },
                 value: {
                     required: "Vui lòng nhập giá tiền",
@@ -66,6 +70,25 @@
             unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
             }
+        });
+    });
+</script>
+<!-- getSlug -->
+<script>
+    $(document).ready(function() {
+        $('#name').on('change', function(e) {
+            var name = $(this).val();
+            var url = '<?php echo route('admin.getSlugs') ?>';
+            $.ajax({
+                url: url,
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    name: name
+                }
+            }).done(function(response) {
+                $('#slug').val(response.slug);
+            })
         });
     });
 </script>

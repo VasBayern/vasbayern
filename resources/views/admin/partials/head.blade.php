@@ -28,4 +28,16 @@
   <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
   <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 
+  <style type="text/css">
+    table thead tr th {
+      text-align: center;
+    }
+    table tbody th, td {
+      text-align: center;
+    }
+     .btn-action {
+      display: table;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>

@@ -1,8 +1,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="index3.html" class="brand-link">
+  <a href="{{ url('/') }}" class="brand-link">
     <img src="{{asset('admin_assets/dist/img/AdminLTELogo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-    <span class="brand-text font-weight-light">AdminLTE 3</span>
+    <span class="brand-text font-weight-light">Admin</span>
   </a>
 
   <!-- Sidebar -->
@@ -25,17 +25,17 @@
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-item has-treeview menu-open">
-          <a href="#" class="nav-link active">
+          <a href="{{ route('admin.dashboard') }}" class="nav-link active">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
             </p>
           </a>
         </li>
-        
+
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
-          <i class="fa fa-shopping-bag nav-icon"></i>
+            <i class="fas fa-home nav-icon"></i>
             <p>
               Cửa hàng
               <i class="fas fa-angle-left right"></i>
@@ -73,86 +73,105 @@
                 <p>Mã giảm giá</p>
               </a>
             </li>
-            
           </ul>
         </li>
+
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
+            <i class="nav-icon fab fa-blogger-b"></i>
             <p>
-              Media
+              Tin tức
               <i class="right fas fa-angle-left"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ url('admin/media') }}" class="nav-link">
+              <a href="{{ route('admin.blog.category') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Hình ảnh</p>
+                <p>Danh mục</p>
               </a>
             </li>
-           
+            <li class="nav-item">
+              <a href="{{ route('admin.blog.post') }}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Bài viết</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('admin.blog.comment') }}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Bình luận</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('admin.blog.tag') }}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Thẻ / Nhãn</p>
+              </a>
+            </li>
           </ul>
         </li>
+
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-tree"></i>
+          <i class="nav-icon fas fa-shopping-cart"></i>
             <p>
-              UI Elements
-              <i class="fas fa-angle-left right"></i>
+              Đơn hàng
+              <i class="right fas fa-angle-left"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="pages/UI/general.html" class="nav-link">
+              <a href="{{ route('admin.orders') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>General</p>
+                <p>Đơn hàng</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages/UI/icons.html" class="nav-link">
+              <a href="{{ route('admin.feedbacks') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Icons</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/UI/buttons.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Buttons</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/UI/sliders.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Sliders</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/UI/modals.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Modals & Alerts</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/UI/navbar.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Navbar & Tabs</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/UI/timeline.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Timeline</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="pages/UI/ribbons.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Ribbons</p>
+                <p>Đánh giá</p>
               </a>
             </li>
           </ul>
         </li>
+
+        <li class="nav-item has-treeview">
+          <a href="{{ url('admin/media') }}" class="nav-link">
+            <i class="nav-icon far fa-image"></i>
+            <p>
+              Ảnh
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item has-treeview">
+          <a href="{{ route('admin.banners') }}" class="nav-link">
+            <i class="nav-icon fas fa-chart-pie"></i>
+            <p>
+              Banner
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item has-treeview">
+          <a href="{{ route('admin.newsletters') }}" class="nav-link">
+            <i class="nav-icon far fa-newspaper"></i>
+            <p>
+              Đăng ký bản tin
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item has-treeview">
+          <a href="{{ route('admin.contacts') }}" class="nav-link">
+            <i class="nav-icon fas fa-file-signature"></i>
+            <p>
+              Bình luận khách hàng
+            </p>
+          </a>
+        </li>
+
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-edit"></i>

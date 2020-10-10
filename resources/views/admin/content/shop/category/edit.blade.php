@@ -8,12 +8,12 @@ Sửa danh mục
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Sửa danh mục {{ $category->name }}</h1>
+                <h1>Sửa danh mục : {{ $category->name }}</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('admin.category') }}">Danh mục</a></li>
-                    <li class="breadcrumb-item active">Sửa danh mục</li>
+                    <li class="breadcrumb-item active">Sửa</li>
                 </ol>
             </div>
         </div>
@@ -73,10 +73,6 @@ Sửa danh mục
                                 <option value="1" <?php echo ($category->homepage == 1) ? 'selected' : '' ?>>Có</option>
                             </select>
                         </div>
-                        <?php
-                        $image = $category->image ? json_decode($category->image) : array();
-                        ?>
-                        @foreach ($image as $key=>$value)
                         <div class="form-group">
                             <label for="image">Ảnh</label>
                             <span class="input-group-btn">
@@ -84,10 +80,9 @@ Sửa danh mục
                                     <button type="button" class="btn btn-block bg-gradient-primary"><i class="fas fa-image" style="margin-right:10px"></i>Chọn</button>
                                 </a>
                             </span>
-                            <input id="thumbnail1" type="text" name="image" value="{{ $value }}" class="form-control" id="focusedinput">
-                            <img id="holder1" src="{{ asset($value) }}" style="max-height:100px;">
+                            <input id="thumbnail1" type="text" name="image" value="{{ $category->image }}" class="form-control" id="focusedinput">
+                            <img id="holder1" src="{{ asset($category->image) }}" style="max-height:100px;">
                         </div>
-                        @endforeach
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -107,13 +102,13 @@ Sửa danh mục
                         <div class="form-group">
                             <label for="intro">Mô tả</label>
                             <div class="mb-3">
-                                <textarea class="textarea" id="intro" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                <textarea class="textarea" name="intro" id="intro" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ $category->intro}}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="desc">Chi tiết</label>
                             <div class="mb-3">
-                                <textarea class="textarea" id="desc" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                <textarea class="textareaDesc" name="desc" id="desc" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ $category->desc}}</textarea>
                             </div>
                         </div>
                     </div>

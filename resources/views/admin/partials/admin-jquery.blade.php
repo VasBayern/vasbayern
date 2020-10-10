@@ -21,6 +21,27 @@
                 link: {
                     required: true,
                 },
+                priceCore: {
+                    required: true,
+                },
+                category_id: {
+                    required: true,
+                },
+                cat_id: {
+                    required: true,
+                },
+                brand_id: {
+                    required: true,
+                },
+                location_id: {
+                    required: true,
+                },
+                image: {
+                    required: true,
+                },
+                'images[]': {
+                    required: true,
+                }
             },
             messages: {
                 name: {
@@ -31,6 +52,27 @@
                 },
                 link: {
                     required: "Vui lòng nhập đường dẫn",
+                },
+                priceCore: {
+                    required: "Vui lòng nhập giá bán",
+                },
+                category_id: {
+                    required: "Vui lòng chọn danh mục",
+                },
+                cat_id: {
+                    required: "Vui lòng chọn danh mục",
+                },
+                brand_id: {
+                    required: "Vui lòng chọn thương hiệu",
+                },
+                location_id: {
+                    required: "Vui lòng chọn vị trí",
+                },
+                image: {
+                    required: "Vui lòng nhập ảnh",
+                },
+                'images[]': {
+                    required: "Vui lòng nhập ảnh",
                 },
             },
             errorElement: 'span',
@@ -54,7 +96,16 @@
         // Summernote
         $('.textarea').summernote({
             height: 150
-        })
+        });
+        $('.textareaDesc').summernote({
+            height: 250
+        });
+        $('.textareaDescProduct').summernote({
+            height: 420
+        });
+        $('.textareaPost').summernote({
+            height: 512
+        });
     })
 </script>
 <!-- Page script -->
@@ -115,7 +166,7 @@
     $(document).ready(function() {
         $('#name').on('change', function(e) {
             var name = $(this).val();
-            var url = '<?php echo route('admin.getSlug') ?>';
+            var url = '<?php echo route('admin.getSlugs') ?>';
             $.ajax({
                 url: url,
                 type: 'get',

@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-Thêm danh mục
+Thêm bài viết
 @endsection
 @section('content')
 
@@ -9,11 +9,11 @@ Thêm danh mục
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Thêm danh mục</h1>
+                <h1>Thêm bài viết</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.category') }}">Danh mục</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.blog.category') }}">Danh mục</a></li>
                     <li class="breadcrumb-item active">Thêm</li>
                 </ol>
             </div>
@@ -23,13 +23,13 @@ Thêm danh mục
 
 <!-- Main content -->
 <section class="content">
-    <form action="{{ url('admin/category') }}" method="post" enctype="multipart/form-data" id="quickForm">
+    <form action="{{ url('admin/blog/posts') }}" method="post" enctype="multipart/form-data" id="quickForm">
         @csrf
         <div class="row">
             <div class="col-md-6">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Danh mục</h3>
+                        <h3 class="card-title">Bài viết</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                                 <i class="fas fa-minus"></i></button>
@@ -57,21 +57,12 @@ Thêm danh mục
                             <input type="text" name="slug" value="{{ old('slug') }}" class="form-control" id="slug" placeholder="Vui lòng nhập slug">
                         </div>
                         <div class="form-group">
-                            <label>Danh mục cha</label>
-                            <select class="form-control custom-select" name="parent_id">
-                                <option value="0">Gốc</option>
-                                @foreach($parent_categories as $parent_category)
-                                <option value="{{ $parent_category['id'] }}">
-                                    {{ str_repeat('-', $parent_category['level'] - 1) . ' ' . $parent_category['name'] }}
-                                </option>
+                            <label>Danh mục</label>
+                            <select class="form-control custom-select" name="category_id">
+                                <option value="">-- Chọn danh mục --</option>
+                                @foreach($categories as $category)
+                                <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
                                 @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="homepage">Homepage</label>
-                            <select name="homepage" class="form-control custom-select">
-                                <option value="0">Không</option>
-                                <option value="1">Có</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -84,6 +75,12 @@ Thêm danh mục
                             <input id="thumbnail1" type="text" name="image" value="{{ old('image') }}" class="form-control" id="focusedinput">
                             <img id="holder1" style="max-height:100px;">
                         </div>
+                        <div class="form-group">
+                            <label for="intro">Giới thiệu</label>
+                            <div class="mb-3">
+                                <textarea class="textarea" name="intro" id="intro" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -92,7 +89,7 @@ Thêm danh mục
             <div class="col-md-6">
                 <div class="card card-secondary">
                     <div class="card-header">
-                        <h3 class="card-title">Mô tả</h3>
+                        <h3 class="card-title">Chi tiết</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                                 <i class="fas fa-minus"></i></button>
@@ -100,15 +97,9 @@ Thêm danh mục
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="intro">Mô tả</label>
+                            <label for="desc">Bài viết</label>
                             <div class="mb-3">
-                                <textarea class="textarea" name="intro" id="intro" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="desc">Chi tiết</label>
-                            <div class="mb-3">
-                                <textarea class="textareaDesc" name="desc" id="desc" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                <textarea class="textareaPost" name="desc" id="desc" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                             </div>
                         </div>
                     </div>

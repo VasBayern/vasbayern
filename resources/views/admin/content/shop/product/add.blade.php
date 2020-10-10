@@ -58,7 +58,8 @@ Thêm sản phẩm
                         </div>
                         <div class="form-group">
                             <label>Danh mục</label>
-                            <select class="form-control" name="cat_id">
+                            <select class="form-control custom-select" name="cat_id">
+                                <option value="">-- Chọn danh mục --</option>
                                 @foreach($category_parents as $category_parent)
                                 <option value="{{ $category_parent['id'] }}">{{ str_repeat('-', $category_parent['level'] - 1) . ' ' . $category_parent['name'] }}</option>
                                 @endforeach
@@ -66,7 +67,8 @@ Thêm sản phẩm
                         </div>
                         <div class="form-group">
                             <label>Thương hiệu</label>
-                            <select class="form-control" name="brand_id">
+                            <select class="form-control custom-select" name="brand_id">
+                                <option value="">-- Chọn thương hiệu --</option>
                                 @foreach($brands as $brand)
                                 <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                 @endforeach
@@ -135,13 +137,13 @@ Thêm sản phẩm
                         <div class="form-group">
                             <label for="intro">Mô tả</label>
                             <div class="mb-3">
-                                <textarea class="textarea" id="intro" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                <textarea class="textarea" name="intro" id="intro" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="desc">Chi tiết</label>
                             <div class="mb-3">
-                                <textarea class="textarea" id="desc" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                <textarea class="textareaDescProduct" name="desc" id="desc" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                             </div>
                         </div>
                     </div>
