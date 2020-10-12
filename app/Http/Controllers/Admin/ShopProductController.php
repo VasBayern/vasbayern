@@ -141,7 +141,7 @@ class ShopProductController extends Controller
         $item = ShopProductPropertiesModel::find($id);
         $item->delete();
 
-        \Toastr::success('Xóa thành công');
+        \Toastr::success('Xóa thành công abc');
         return redirect()->back();
     }
     public function viewProperties(Request $request) {
