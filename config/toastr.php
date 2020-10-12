@@ -2,8 +2,8 @@
 
 return [
     'options' => [
-        "closeButton" => false,
-        "debug" => false,
+        "closeButton" => true,
+        "debug" => true,
         "newestOnTop" => false,
         "progressBar" => false,
         "positionClass" => "toast-top-right",
