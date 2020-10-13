@@ -137,7 +137,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
          * Shop Order
          */
         Route::get('orders',  [ShopOrderController::class, 'index'])->name('orders');
-        Route::post('orders',  [ShopOrderController::class, 'viewDetail']);
+        Route::post('orders/view',  [ShopOrderController::class, 'viewDetail']);
         Route::put('orders/{id}',  [ShopOrderController::class, 'update']);
         Route::delete('orders/{id}',  [ShopOrderController::class, 'destroy']);
 
