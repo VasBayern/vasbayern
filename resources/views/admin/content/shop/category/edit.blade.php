@@ -58,7 +58,7 @@ Sửa danh mục
                         </div>
                         <div class="form-group">
                             <label>Danh mục cha</label>
-                            <select class="form-control" name="parent_id">
+                            <select class="form-control custom-select" name="parent_id">
                                 <option value="0">Gốc</option>
                                 @foreach($parent_categories as $parent_category)
                                 <?php $selected = ($parent_category['id'] == $category->parent_id) ? ' selected' : ' ' ?>
@@ -68,7 +68,7 @@ Sửa danh mục
                         </div>
                         <div class="form-group">
                             <label for="homepage">Homepage</label>
-                            <select name="homepage" class="form-control">
+                            <select name="homepage" class="form-control custom-select">
                                 <option value="0" <?php echo ($category->homepage == 0) ? 'selected' : '' ?>>Không </option>
                                 <option value="1" <?php echo ($category->homepage == 1) ? 'selected' : '' ?>>Có</option>
                             </select>
