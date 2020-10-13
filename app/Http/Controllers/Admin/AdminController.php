@@ -16,7 +16,7 @@ class AdminController extends Controller
         return response()->json([ 'slug' => $slug ]);
     }
 
-    public function getNewsletters() {
+    public function getNewsletter() {
         $users = NewsletterModel::all();
         $data = array();
         $data['users'] = $users;
