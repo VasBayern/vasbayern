@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ShopOrderModel;
+use App\Models\ShopProductModel;
 use App\Models\ShopProductPropertiesModel;
 use Exception;
 use Illuminate\Http\Request;
@@ -28,7 +29,8 @@ class ShopOrderController extends Controller
             A.promotion, A.payment_method, A.sub_total, A.ship_price, A.shipment,
             B.id AS orderDetail_id, B.quantity, B.unit_price, B.total_price, 
             C.id AS product_id, C.name AS product_name, C.images,
-            D.email
+            D.email,
+            E.id AS size_id, E.name AS size_name 
             FROM `order` AS A
             INNER JOIN `order_detail` AS B 
             ON A.id = B.order_id
@@ -36,6 +38,8 @@ class ShopOrderController extends Controller
             ON B.product_id = C.id
             INNER JOIN `users` AS D
             ON A.user_id = D.id
+            INNER JOIN `sizes` AS E
+            ON B.size_id = E.id
             WHERE A.id = ' . $id . '
             ORDER BY orderDetail_id, product_id ASC');
 
@@ -55,41 +59,50 @@ class ShopOrderController extends Controller
 
                 if (array_key_exists($row->order_id, $order)) {
                     $order[$row->order_id]['orderDetails'][] = [
-                        'orderDetail_id' => $row->orderDetail_id,
-                        'quantity' => $row->quantity,
-                        'unit_price' => $unit_price,
-                        'total_price' => $total_price,
-                        'product' => [
-                            'id' => $row->product_id,
-                            'name' => $row->product_name,
-                            'image' => $image,
+                        'orderDetail_id'    => $row->orderDetail_id,
+                        'quantity'          => $row->quantity,
+                        'unit_price'        => $unit_price,
+                        'total_price'       => $total_price,
+                        'product'           => [
+                            'id'            => $row->product_id,
+                            'name'          => $row->product_name,
+                            'image'         => $image,
+                        ],
+                        'size'              => [
+                            'id'            => $row->size_id,
+                            'name'          => $row->size_name
                         ]
                     ];
                     continue;
                 }
-                $order[$row->order_id] = [
-                    'order_id' => $row->order_id,
-                    'name' => $row->user_name,
-                    'phone' => $row->phone,
-                    'address' => $row->address,
-                    'note' => $row->note,
-                    'sub_total' => $sub_total,
-                    'ship_price' => $ship_price,
-                    'promotion' => $promotion,
-                    'total' => $total,
-                    'shipment' => $row->shipment,
-                    'payment_method' => $row->payment_method,
-                    'status' => $row->status,
-                    'orderDetails' => [
+                $order[$row->order_id]  = [
+                    'order_id'          => $row->order_id,
+                    'email'             => $row->email,
+                    'name'              => $row->user_name,
+                    'phone'             => $row->phone,
+                    'address'           => $row->address,
+                    'note'              => $row->note,
+                    'sub_total'         => $sub_total,
+                    'ship_price'        => $ship_price,
+                    'promotion'         => $promotion,
+                    'total'             => $total,
+                    'shipment'          => $row->shipment,
+                    'payment_method'    => $row->payment_method,
+                    'status'            => $row->status,
+                    'orderDetails'      => [
                         [
-                            'orderDetail_id' => $row->orderDetail_id,
-                            'quantity' => $row->quantity,
-                            'unit_price' => $unit_price,
-                            'total_price' => $total_price,
-                            'product' => [
-                                'id' => $row->product_id,
-                                'name' => $row->product_name,
-                                'image' => $image,
+                            'orderDetail_id'    => $row->orderDetail_id,
+                            'quantity'          => $row->quantity,
+                            'unit_price'        => $unit_price,
+                            'total_price'       => $total_price,
+                            'product'           => [
+                                'id'            => $row->product_id,
+                                'name'          => $row->product_name,
+                                'image'         => $image,
+                            ],
+                            'size'              => [
+                                'id'            => $row->size_id,
+                                'name'          => $row->size_name
                             ]
                         ]
                     ]
@@ -97,38 +110,52 @@ class ShopOrderController extends Controller
             }
         }
         $response = [
-            'order' => $order,
-        ];
-
-        $returnHTML = view('admin.content.order.detail', $response)->render();
-        return response()->json( array('success' => true, 'html'=>$returnHTML) );
-
-        // $returnHTML = view('admin.content.order.detail')->with('order', $order)->render();
-        // return response()->json(array('success' => true, 'html'=>$returnHTML));
-        //return response($response);
-    }
-
-    public function update(Request $request)
-    {
-        $input = $request->all();
-        DB::beginTransaction();
-        try {
-            $order = ShopOrderModel::findOrFail($input['id']);
-            $order->shipment = $input['shipment'];
-            $order->status = $input['status'];
-            $order->save();
-
-        } catch (Exception $e) {
-            throw "Update failed";
-        }
-        $response = [
-            'status' => 'success',
+            'order' => array_values($order),
         ];
         return response($response);
+
+        // $returnHTML = view('admin.content.order.detail', $response)->render();
+        // return response()->json(array('success' => true, 'html' => $returnHTML));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $input = $request->all();
+        $status = $input['status'];
+        $products = $input['product_id'];
+        $sizes = $input['size_id'];
+        $quantities = $input['quantity'];
+        $order = ShopOrderModel::findOrFail($id);
+        $statusOrigin = $order->status;
+        if (isset($input['shipment'])) {
+            $order->shipment = $input['shipment'];
+        }
+        $order->status = $status;
+        $order->save();
+        DB::beginTransaction();
+        try {
+            if ($statusOrigin == 1) {
+                if ($status == 2 || $status == 3) {
+                    foreach ($products as $key => $product_id) {
+                        ShopProductPropertiesModel::where('product_id', $product_id)->where('size_id', $sizes[$key])->decrement('quantity', $quantities[$key]);
+                    }
+                }
+            } elseif ($statusOrigin == 2) {
+                if ($status == 0) {
+                    foreach ($products as $key => $product_id) {
+                        ShopProductPropertiesModel::where('product_id', $product_id)->where('size_id', $sizes[$key])->increment('quantity', $quantities[$key]);
+                    }
+                }
+            }
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+        }
+        \Toastr::success('Cập nhật thành công');
+        return redirect()->route('admin.orders');
     }
     public function destroy($id)
     {
-
         $item = ShopOrderModel::find($id);
         $item->delete();
 
