@@ -13,6 +13,13 @@ use App\Http\Controllers\Admin\ShopCouponController;
 use App\Http\Controllers\Admin\ShopOrderController;
 use App\Http\Controllers\Admin\ShopProductController;
 use App\Http\Controllers\Admin\ShopSizeController;
+use App\Http\Controllers\Frontend\BlogController;
+use App\Http\Controllers\Frontend\CustomerController;
+use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Frontend\ShopCartController;
+use App\Http\Controllers\Frontend\ShopCategoryController as FrontendShopCategoryController;
+use App\Http\Controllers\Frontend\ShopProductController as FrontendShopProductController;
+use App\Http\Controllers\Frontend\WishListController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Route;
@@ -29,12 +36,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.dashboard');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+    return view('frontend.dashboard');
 })->name('dashboard');
+
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware(['auth'])->name('verification.notice');
@@ -51,6 +59,56 @@ Route::post('/email/verification-notification', function (HttpRequest $request) 
     return back()->with('status', 'verification-link-sent');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
+/**
+ *  Product
+ */
+Route::get('categories/{slug}', [FrontendShopCategoryController::class, 'index'] )->name('category');
+Route::get('products/{slug}', [FrontendShopProductController::class, 'index'])->name('product');
+Route::post('products/{slug}/comment', [FrontendShopProductController::class, 'comment']);
+
+/**
+ *  Cart
+ */
+Route::get('cart', [ShopCartController::class, 'index'])->name('cart');
+Route::post('cart', [ShopCartController::class, 'add']);
+Route::put('cart', [ShopCartController::class, 'update']);
+Route::delete('cart', [ShopCartController::class, 'remove']);
+Route::delete('cart/clear', [ShopCartController::class, 'clear']);
+Route::post('cart/coupon', [ShopCartController::class, 'addCoupon']);
+Route::delete('cart/coupon', [ShopCartController::class, 'removeCoupon']);
+/**
+ *  Blog
+ */
+Route::get('blogs/{slug}', [BlogController::class, 'index'])->name('blog');
+Route::get('blogs/category/{slug}', [BlogController::class, 'getBlogCategory']);
+Route::get('blogs/post/{slug}', [BlogController::class, 'getBlogPost']);
+Route::post('blogs/comment', [BlogController::class, 'commentBlog']);
+Route::post('blogs/search', [BlogController::class, 'searchByName']);
+
+/**
+ *  User
+ */
+Route::get('user/profile', [CustomerController::class, 'index'])->name('user.profile');
+Route::post('user/profile', [CustomerController::class, 'updateProfile']);
+Route::get('user/address', [CustomerController::class, 'editAddress'])->name('user.address');
+Route::post('user/address', [CustomerController::class, 'storeAddress']);
+Route::put('user/address/{id}', [CustomerController::class, 'updateAddress']);
+Route::delete('user/address/{id}', [CustomerController::class, 'deleteAddress']);
+
+/**
+ *  WishList
+ */
+Route::get('wishlists', [WishListController::class, 'index'])->name('wishlist');
+Route::put('wishlists', [WishListController::class, 'update']);
+Route::delete('wishlist', [WishListController::class, 'destroy']);
+
+/**
+ *  Page
+ */
+Route::get('faq', [PageController::class, 'getFaq'])->name('faq');
+Route::get('contact', [PageController::class, 'getContact'])->name('contact');
+Route::post('comment', [PageController::class, 'comment'])->name('comment');
+Route::post('followBlog', [PageController::class, 'followBlog'])->name('followBlog');
 
 /**
  * -----------------------------------ADMIN-----------------------------------
@@ -59,7 +117,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('login', [AuthLoginController::class, 'showLoginForm']);
     Route::post('login', [AuthLoginController::class, 'login'])->name('login');
 
-    Route::middleware(['auth:admin'])->group(function () {
+    Route::middleware(['auth:admin', ])->group(function () {
         Route::get('register', [AuthRegisterController::class, 'showRegisterForm']);
         Route::post('register', [AuthRegisterController::class, 'register'])->name('register');
         Route::get('/', [HomeController::class, 'index'])->name('dashboard');
@@ -202,6 +260,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('contacts', [AdminController::class, 'getContact'])->name('contacts');
         Route::get('feedbacks', [AdminController::class, 'getFeedback'])->name('feedbacks');
     });
+});
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
 // Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {

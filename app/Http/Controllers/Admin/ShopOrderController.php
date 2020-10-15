@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\SuccessShipped;
 use App\Http\Controllers\Controller;
+use App\Mail\SuccessShippedMail;
 use App\Models\ShopOrderModel;
 use App\Models\ShopProductModel;
 use App\Models\ShopProductPropertiesModel;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ShopOrderController extends Controller
 {
@@ -120,17 +123,17 @@ class ShopOrderController extends Controller
 
     public function update(Request $request, $id)
     {
-        $input = $request->all();
-        $status = $input['status'];
-        $products = $input['product_id'];
-        $sizes = $input['size_id'];
-        $quantities = $input['quantity'];
-        $order = ShopOrderModel::findOrFail($id);
-        $statusOrigin = $order->status;
+        $input          = $request->all();
+        $status         = $input['status'];
+        $products       = $input['product_id'];
+        $sizes          = $input['size_id'];
+        $quantities     = $input['quantity'];
+        $order          = ShopOrderModel::findOrFail($id);
+        $statusOrigin   = $order->status;
         if (isset($input['shipment'])) {
             $order->shipment = $input['shipment'];
         }
-        $order->status = $status;
+        $order->status  = $status;
         $order->save();
         DB::beginTransaction();
         try {
@@ -150,6 +153,11 @@ class ShopOrderController extends Controller
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
+        }
+
+        if($status == 3) {
+            $email = $input['email'];
+            event(new SuccessShipped($email));
         }
         \Toastr::success('Cập nhật thành công');
         return redirect()->route('admin.orders');

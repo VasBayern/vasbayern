@@ -169,15 +169,6 @@
                                 <input type="text" class="form-control" value="" id="ship_price" placeholder="Giá Ship" readonly>
                             </div>
                         </div>
-                        <!-- <div class="form-group col-lg-4">
-                            <label for="">Tổng tiền</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
-                                </div>
-                                <input type="text" class="form-control" value="" id="total" placeholder="Thanh toán" readonly>
-                            </div>
-                        </div> -->
                         <div class="form-group col-lg-6">
                             <label for="">Địa chỉ</label>
                             <div class="input-group mb-3">
@@ -188,12 +179,22 @@
                             </div>
                         </div>
                         <div class="form-group col-lg-6">
+                            <label for="">Tổng tiền</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+                                </div>
+                                <input type="text" class="form-control" value="" id="total" placeholder="Thanh toán" readonly>
+                            </div>
+
+                        </div>
+                        <div class="form-group col-lg-12">
                             <label for="">Ghi chú</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-comment"></i></span>
                                 </div>
-                                <input type="text" class="form-control" value="" id="note" placeholder="Ghi chú" readonly>
+                                <textarea class="form-control" rows="2" placeholder="Enter ..." disabled=""></textarea>
                             </div>
                         </div>
                         <div class="form-group col-lg-4">
@@ -357,6 +358,7 @@
                             '<input type="hidden" name="product_id[]" value="' + order[i].orderDetails[j].product.id + '">' +
                             '<input type="hidden" name="size_id[]" value="' + order[i].orderDetails[j].size.id + '">' +
                             '<input type="hidden" name="quantity[]" value="' + order[i].orderDetails[j].quantity + '">' +
+                            '<input type="hidden" name="email" value="' + order[i].email + '">' +
                             '<td class="imgProduct"></td>' +
                             '<td>' + order[i].orderDetails[j].product.name + '</td>' +
                             '<td>' + order[i].orderDetails[j].size.name + '</td>' +
