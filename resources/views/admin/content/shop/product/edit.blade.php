@@ -145,7 +145,7 @@ Sửa sản phẩm
                         <div class="form-group">
                             <label for="intro">Mô tả</label>
                             <div class="mb-3">
-                                <textarea class="textareaIntro" name="intro" id="intro" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
+                                <textarea class="textarea" name="intro" id="intro" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
                                 {{ $product->intro }}
                                 </textarea>
                             </div>
@@ -206,7 +206,7 @@ Sửa sản phẩm
         <div class="row">
             <div class="col-12">
                 <a href="{{ route('admin.product') }}" class="btn btn-secondary">Hủy</a>
-                <input type="submit" value="Thêm" class="btn btn-success">
+                <input type="submit" value="Sửa" class="btn btn-success">
             </div>
         </div>
     </form>

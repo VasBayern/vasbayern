@@ -1,158 +1,453 @@
+<style type="text/css">
+    .profile {
+        color: #222326;
+    }
+    .profile:hover {
+        color: #222326;
+    }
+    .social-btn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 4px;
+        margin: 5px 0;
+        opacity: 0.85;
+        display: inline-block;
+        font-size: 17px;
+        line-height: 20px;
+        text-decoration: none;
+        text-align: center;
+    }
+    .social-btn:hover {
+        opacity: 1;
+    }
+    .fb {
+        background-color: #3B5998;
+        color: white;
+
+    }
+    .google {
+        background-color: #dd4b39;
+        color: white;
+
+    }
+    /*
+      ##Device = Tablets, Ipads (portrait)
+      ##Screen = B/w 768px to 1024px
+    */
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+        .intro {
+            display: none;
+        }
+    }
+
+    /*
+      ##Device = Tablets, Ipads (landscape)
+      ##Screen = B/w 768px to 1024px
+    */
+
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+        .intro {
+            display: none;
+        }
+    }
+
+    /*
+      ##Device = Low Resolution Tablets, Mobiles (Landscape)
+      ##Screen = B/w 481px to 767px
+    */
+
+    @media (min-width: 481px) and (max-width: 767px) {
+        .intro {
+            display: none;
+        }
+    }
+
+    /*
+      ##Device = Most of the Smartphones Mobiles (Portrait)
+      ##Screen = B/w 320px to 479px
+    */
+
+    @media (min-width: 320px) and (max-width: 480px) {
+        .intro {
+            display: none;
+        }
+    }
+</style>
  <!-- Page Preloder -->
  <div id="preloder">
      <div class="loader"></div>
  </div>
- <header class="header-section">
-     <div class="header-top">
-         <div class="container">
-             <div class="ht-left">
-                 <div class="mail-service">
-                     <i class=" fa fa-envelope"></i>
-                     hello.colorlib@gmail.com
-                 </div>
-                 <div class="phone-service">
-                     <i class=" fa fa-phone"></i>
-                     +65 11.188.888
-                 </div>
-             </div>
-             <div class="ht-right">
-                 <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
-                 <div class="lan-selector">
-                     <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                         <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt" data-title="English">English</option>
-                         <option value='yu' data-image="img/flag-2.jpg" data-imagecss="flag yu" data-title="Bangladesh">German </option>
-                     </select>
-                 </div>
-                 <div class="top-social">
-                     <a href="#"><i class="ti-facebook"></i></a>
-                     <a href="#"><i class="ti-twitter-alt"></i></a>
-                     <a href="#"><i class="ti-linkedin"></i></a>
-                     <a href="#"><i class="ti-pinterest"></i></a>
-                 </div>
-             </div>
-         </div>
-     </div>
-     <div class="container">
-         <div class="inner-header">
-             <div class="row">
-                 <div class="col-lg-2 col-md-2">
-                     <div class="logo">
-                         <a href="./index.html">
-                             <img src="{{asset('front_ends/img/logo.png')}}" alt="">
-                         </a>
-                     </div>
-                 </div>
-                 <div class="col-lg-7 col-md-7">
-                     <div class="advanced-search">
-                         <button type="button" class="category-btn">All Categories</button>
-                         <form action="#" class="input-group">
-                             <input type="text" placeholder="What do you need?">
-                             <button type="button"><i class="ti-search"></i></button>
-                         </form>
-                     </div>
-                 </div>
-                 <div class="col-lg-3 text-right col-md-3">
-                     <ul class="nav-right">
-                         <li class="heart-icon"><a href="#">
-                                 <i class="icon_heart_alt"></i>
-                                 <span>1</span>
-                             </a>
-                         </li>
-                         <li class="cart-icon"><a href="#">
-                                 <i class="icon_bag_alt"></i>
-                                 <span>3</span>
-                             </a>
-                             <div class="cart-hover">
-                                 <div class="select-items">
-                                     <table>
-                                         <tbody>
-                                             <tr>
-                                                 <td class="si-pic"><img src="{{asset('front_ends/img/select-product-1.jpg')}}" alt=""></td>
-                                                 <td class="si-text">
-                                                     <div class="product-selected">
-                                                         <p>$60.00 x 1</p>
-                                                         <h6>Kabino Bedside Table</h6>
-                                                     </div>
-                                                 </td>
-                                                 <td class="si-close">
-                                                     <i class="ti-close"></i>
-                                                 </td>
-                                             </tr>
-                                             <tr>
-                                                 <td class="si-pic"><img src="{{asset('front_ends/img/select-product-2.jpg')}}" alt=""></td>
-                                                 <td class="si-text">
-                                                     <div class="product-selected">
-                                                         <p>$60.00 x 1</p>
-                                                         <h6>Kabino Bedside Table</h6>
-                                                     </div>
-                                                 </td>
-                                                 <td class="si-close">
-                                                     <i class="ti-close"></i>
-                                                 </td>
-                                             </tr>
-                                         </tbody>
-                                     </table>
-                                 </div>
-                                 <div class="select-total">
-                                     <span>total:</span>
-                                     <h5>$120.00</h5>
-                                 </div>
-                                 <div class="select-button">
-                                     <a href="#" class="primary-btn view-card">VIEW CARD</a>
-                                     <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
-                                 </div>
-                             </div>
-                         </li>
-                         <li class="cart-price">$150.00</li>
-                     </ul>
-                 </div>
-             </div>
-         </div>
-     </div>
-     <div class="nav-item">
-         <div class="container">
-             <div class="nav-depart">
-                 <div class="depart-btn">
-                     <i class="ti-menu"></i>
-                     <span>All departments</span>
-                     <ul class="depart-hover">
-                         <li class="active"><a href="#">Women’s Clothing</a></li>
-                         <li><a href="#">Men’s Clothing</a></li>
-                         <li><a href="#">Underwear</a></li>
-                         <li><a href="#">Kid's Clothing</a></li>
-                         <li><a href="#">Brand Fashion</a></li>
-                         <li><a href="#">Accessories/Shoes</a></li>
-                         <li><a href="#">Luxury Brands</a></li>
-                         <li><a href="#">Brand Outdoor Apparel</a></li>
-                     </ul>
-                 </div>
-             </div>
-             <nav class="nav-menu mobile-menu">
-                 <ul>
-                     <li><a href="./index.html">Home</a></li>
-                     <li><a href="./shop.html">Shop</a></li>
-                     <li><a href="#">Collection</a>
-                         <ul class="dropdown">
-                             <li><a href="#">Men's</a></li>
-                             <li><a href="#">Women's</a></li>
-                             <li><a href="#">Kid's</a></li>
-                         </ul>
-                     </li>
-                     <li><a href="./blog.html">Blog</a></li>
-                     <li><a href="./contact.html">Contact</a></li>
-                     <li><a href="#">Pages</a>
-                         <ul class="dropdown">
-                             <li><a href="./blog-details.html">Blog Details</a></li>
-                             <li><a href="./shopping-cart.html">Shopping Cart</a></li>
-                             <li><a href="./check-out.html">Checkout</a></li>
-                             <li><a href="./faq.html">Faq</a></li>
-                             <li><a href="./register.html">Register</a></li>
-                             <li><a href="./login.html">Login</a></li>
-                         </ul>
-                     </li>
-                 </ul>
-             </nav>
-             <div id="mobile-menu-wrap"></div>
-         </div>
-     </div>
- </header>
+
+<header class="header-section">
+    <div class="header-top">
+        <div class="container">
+            <div class="ht-left">
+                <div class="mail-service">
+                    <i class=" fa fa-envelope"></i>
+                    vastb98@gmail.com
+                </div>
+                <div class="phone-service">
+                    <i class=" fa fa-phone"></i>
+                   034.674.1998
+                </div>
+            </div>
+
+            <div class="ht-right">
+                @if(Auth::check() && !empty(Auth::user()->email_verified_at))
+                    <ul class="nav nav-tabs" style="border: none">
+                        <li class="nav-item dropdown" style="background: #fff">
+                            <a class="nav-link dropdown-toggle profile" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false" style="border: none; font-size: 16px;">
+                                @if(isset(Auth::user()->image) && !empty(Auth::user()->image) )
+                                <img src="{{ URL::to('/') }}/front-ends/img/user-image/{{ Auth::user()->image }}" style="border-radius: 50%; width: 35px; margin-right: 10px;"/>
+                                @else
+                                    <img src="{{ URL::to('/') }}/front-ends/img/user-image/avt.jpg" style="border-radius: 50%; width: 35px; margin-right: 10px;"/>
+                                @endif
+                                {{ Auth::user()->name }}
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ url('user/profile') }}">Thông tin tài khoản</a>
+                                <a class="dropdown-item" href="{{ url('user/address') }}" >Địa chỉ giao hàng</a>
+                                <a class="dropdown-item" href="{{ url('user/wishlist') }}" >Sản phẩm yêu thích</a>
+                                <a class="dropdown-item" href="{{ url('user/order') }}">Lịch sử mua hàng</a>
+                                <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng xuất</a>
+                                <div class="dropdown-divider"></div>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                @else
+                <a href="#myModal" class="login-panel trigger-btn" data-toggle="modal" data-target=".bd-example-modal-lg">Đăng nhập</a>
+                <!-- Modal HTML -->
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content" style="background: rgb(248,248,248)">
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <div class="row" >
+                                            <div class="col-md-4 intro" style="background: rgb(255,255,255); height: 576px">
+
+                                                <div class="modal-body" style="margin-top: 65px;">
+                                                    <p>Đăng ký, đăng nhập để tiến hành mua hàng, theo dõi đơn hàng, lưu danh sách sản phẩm yêu thích, nhận nhiều ưu đãi hấp dẫn hơn.</p>
+                                                    <img src="{{ asset('front-ends/img/welcome.jpg') }}" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 ml-auto show-login" style="background: rgb(255,255,255);" >
+                                                <div class="modal-header">
+
+                                                    <h5 class="modal-title" id="exampleModalCenterTitle register" style="cursor: pointer">Đăng Nhập</h5>
+                                                    <h5 class="modal-title register" id="exampleModalCenterTitle"  style="cursor: pointer; margin-left: 20px;">Đăng Ký</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+
+                                                </div>
+                                                <div class="progress" style="height: 2px;">
+                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 26%;" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ route('login') }}" method="post">
+                                                        @csrf
+                                                        <div class="form-group">
+                                                            <label for="email">Email</label>
+                                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email" required="required">
+                                                            @error('email')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                            @enderror
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="password">Mật khẩu</label>
+                                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Mật khẩu" required="required">
+
+                                                            @error('password')
+                                                            <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                            @enderror
+                                                        </div>
+                                                        <div class="form-group hint-text small">
+                                                            <a href="#" style="color: #e5a226;font-size: 16px;padding-right: 10px;">Quên mật khẩu?</a>
+                                                            <a href="{{ url('register') }}" style="color: #e5a226;font-size: 16px;padding-right: 10px;">Đăng ký</a>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <button type="submit" class="btn btn-warning btn-block  btn-lg" style="color: #fff">ĐĂNG NHẬP</button>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-social">
+                                                                <a href="{{ url('login/facebook') }}" class="fb social-btn">
+                                                                    <i class="fa fa-facebook fa-fw"></i> Đăng nhập bằng Facebook
+                                                                </a>
+
+                                                                <a href="{{ url('login/google') }}" class="google social-btn"><i class="fa fa-google fa-fw">
+                                                                    </i> Đăng nhập bằng Google
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 ml-auto show-register" style="background: rgb(255,255,255); display: none" >
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalCenterTitle register" style="cursor: pointer">Đăng ký</h5>
+                                                    <h5 class="modal-title login" id="exampleModalCenterTitle"  style="cursor: pointer; margin-left: 45px;">Đăng nhập</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="progress" style="height: 2px;">
+                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 26%;" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="POST" action="{{ route('register') }}">
+                                                        @csrf
+                                                        <div class="form-group">
+                                                            <label for="text">Tên</label>
+                                                            <input id="name" type="text"  class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Tên" required="required">
+                                                            @error('name')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                            @enderror
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="email">Email</label>
+                                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email" required="required">
+                                                            @error('email')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                            @enderror
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="password">Password</label>
+                                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="**********" required="required" min="6">
+                                                            @error('password')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                            @enderror
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="password-confirm">Nhập lại mật khẩu</label>
+                                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="**********" required min="6">
+                                                        </div>
+                                                        <div class="form-group hint-text small">
+                                                            <label class="form-check-label"><input type="checkbox" required="required"> Tôi đồng ý với
+                                                                <a href="#" style=" color: #e5a226;font-size: 16px;padding-right: 10px;">Điều khoản sử dụng</a>
+                                                                &amp; <a href="#" style=" color: #e5a226;font-size: 16px;padding-right: 10px;">Chính sách riêng tư</a></label>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <button type="submit" class="btn btn-warning btn-block  btn-lg" style="color: #fff">ĐĂNG KÝ</button>
+                                                        </div>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                <!-- <div class="top-social">
+                    <a href="#"><i class="ti-facebook"></i></a>
+                    <a href="#"><i class="ti-twitter-alt"></i></a>
+                    <a href="#"><i class="ti-linkedin"></i></a>
+                    <a href="#"><i class="ti-pinterest"></i></a>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="inner-header">
+            <div class="row">
+                <div class="col-lg-2 col-md-2">
+                    <div class="logo">
+                        <a href="{{ url('/') }}">
+                            <img src="{{asset('front-ends/img/logo.png') }}" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-7">
+                    <div class="advanced-search">
+                        <button type="button" class="category-btn">All Categories</button>
+                        <div class="input-group">
+                            <input type="text" placeholder="What do you need?">
+                            <button type="button"><i class="ti-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 text-right col-md-3">
+                    <ul class="nav-right">
+                        <li class="heart-icon">
+                            <a href="#">
+                                <i class="icon_heart_alt"></i>
+                                <span class="countWhislist">1</span>
+                            </a>
+                        </li>
+                        <li class="cart-icon">
+                            <a href="{{ url('cart') }}">
+                                <i class="icon_bag_alt"></i>
+                                <span class="countCart">{{ \Cart::getTotalQuantity() }}</span>
+                            </a>
+                           
+                            <div class="cart-hover">
+                                <div class="select-items">
+                                    <table>
+                                        <tbody class="cartBody">
+                                      
+                                        @foreach(\Cart::getContent() as $item)
+                                        <tr class="rowCart rowCart{{$item->id}}">
+                                            <?php
+                                            $product_id = $item->id;
+                                            $product= \App\Model\ShopProductModel::find($product_id);
+                                            $images = (isset($product->images) && $product->images) ? json_decode($product->images) : array();
+                                            if ($product->priceSale >0) {
+                                                $price =$product->priceSale;
+                                            } else {
+                                                $price = $product-> priceCore;
+                                            }
+                                            ?>
+                                            <td class="si-pic">
+                                                @foreach($images as $image)
+                                                <img src="{{asset($image) }}" alt="" style="width: 100px; ">
+                                                @break;
+                                                @endforeach
+                                            </td>
+                                            <td class="si-text">
+                                                <div class="product-selected">
+                                                    <?php ?>
+                                                    <p>{{ number_format($price) }} VNĐ x <span class="quantityCart{{$item->id}}" data-quantity-{{$item->id}}="{{ $item->quantity }}">{{ $item->quantity }}</span></p>
+                                                    <h6>{{ $product->name }}</h6>
+                                                </div>
+                                            </td>
+                                            <td class="si-close" >
+                                                <i class="ti-close" data-rowId="{{ $item->id }}"></i>
+                                            </td>
+                                        </tr>
+                                    
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @if(Cart::isEmpty())
+                                <div class="select-total" >
+                                    <span class="emptyCart">Chưa có sản phẩm</span>
+                                </div>
+                                @else
+                                <div class="select-total">
+                                    <span>Tổng tiền:</span>
+                                    <h5>{{ number_format(\Cart::getSubTotal()) }} VNĐ</h5>
+                                </div>
+                                @endif
+                                <div class="select-button">
+                                    <a href="{{ url('cart') }}" class="primary-btn view-card">XEM GIỎ HÀNG</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="cart-price">{{ number_format(\Cart::getSubTotal()) }} VNĐ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nav-item">
+        <div class="container">
+            <div class="nav-depart">
+                <div class="depart-btn">
+                    <i class="ti-menu"></i>
+                    <span>Tất cả danh mục</span>
+                    <ul class="depart-hover">
+                        <?php
+                        $cats = \App\Models\ShopCategoryModel::where('parent_id',0)->get();
+                        ?>
+                        @foreach($cats as $cat)
+                        <li><a href="{{ url('/category/').'/'.$cat->id }}">{{ $cat->name }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            <nav class="nav-menu mobile-menu">
+                <ul>
+                    <li class="active"><a href="{{ url('/') }}">Home</a></li>
+                    <li><a href="#1">Danh mục</a>
+                        <ul class="dropdown">
+                            <?php
+                            $cats = \App\Models\ShopCategoryModel::where('parent_id',0)->get();
+                            ?>
+                            @foreach($cats as $cat)
+                                <li><a href="{{ url('/category/').'/'.$cat->id }}">{{ $cat->name }}</a></li>
+                            @endforeach
+                        </ul>
+                    </li>
+                    <li><a href="{{ route('blog') }}">Tin tức</a></li>
+                    <li><a href="{{ route('contact') }}">Liên hệ</a></li>
+                    <li><a href="#">Shop</a>
+                        <ul class="dropdown">
+                            <li><a href="{{ route('cart') }}">Giỏ hàng</a></li>
+                            <li><a href="#1">SP Yêu Thích</a></li>
+                            <li><a href="{{ route('faq') }}">Câu hỏi thường gặp</a></li>
+                            <li><a href="{{ route('register') }}">Đăng kí</a></li>
+                            <li><a href="{{ route('login') }}">Đăng nhập</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </div>
+</header>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    //xóa sp cart
+    $(document).ready(function () {
+        $('.ti-close').on('click',function (e) {
+            e.preventDefault();
+            var $this = $(this);
+            var delete_cart_url = '<?php echo url('cart/remove')?>';
+            var product_id = $(this).attr('data-rowId');
+            var dataPost = { product_id:product_id};
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: delete_cart_url,
+                type:'post',
+                dataType:'json',
+                data: dataPost,
+                success: function (result) {
+                    //$this.closest('.rowCart').fadeOut('slow');
+                    //$('.contentCart').remove();
+                    $('.rowCart'+result.id).fadeOut('slow', function(){
+                        $('.rowCart'+result.id).remove();
+                    });
+                    $('.countCart').html(result.quantityCart);
+                    $('.select-total').html('<span>Tổng tiền:</span>'+
+                                            '<h5>'+ result.total +'</h5>');
+                    $('.cart-price, .subTotal').html(result.subTotal);
+                    $('#totalCart').html(result.total);
+                    if($('.rowCart').length == 0){
+                        $('.select-total').html('<span class="emptyCart">Chưa có sản phẩm</span>');
+                    }
+                }
+            })
+        })
+    })
+    //show hide login register
+    $(document).ready(function () {
+        $('.register').click(function () {
+            $('.show-register').show();
+            $('.show-login').hide();
+        });
+        $('.login').click(function () {
+            $('.show-register').hide();
+            $('.show-login').show();
+        });
+    });
+</script>

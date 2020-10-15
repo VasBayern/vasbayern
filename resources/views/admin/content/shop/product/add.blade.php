@@ -156,7 +156,7 @@ Thêm sản phẩm
         <div class="row">
             <div class="col-12">
                 <a href="{{ route('admin.product') }}" class="btn btn-secondary">Hủy</a>
-                <input type="submit" value="Thêm" class="btn btn-success">
+                <input type="submit" value="Sửa" class="btn btn-success">
             </div>
         </div>
     </form>
