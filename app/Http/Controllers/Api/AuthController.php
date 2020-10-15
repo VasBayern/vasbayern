@@ -15,7 +15,7 @@ class AuthController extends Controller
     /**
      * @OA\Post(
      ** path="/auth/register",
-     *   tags={"Register"},
+     *   tags={"Auth"},
      *   summary="Register",
      *   operationId="register",
      *   security={{"bearerAuth": {}}},
@@ -52,29 +52,11 @@ class AuthController extends Controller
      *           type="string"
      *      )
      *   ),
-     *   @OA\Response(
-     *      response=201,
-     *       description="Success",
-     *      @OA\MediaType(
-     *           mediaType="application/json",
-     *      )
-     *   ),
-     *   @OA\Response(
-     *      response=401,
-     *       description="Unauthenticated"
-     *   ),
-     *   @OA\Response(
-     *      response=400,
-     *      description="Bad Request"
-     *   ),
-     *   @OA\Response(
-     *      response=404,
-     *      description="not found"
-     *   ),
-     *      @OA\Response(
-     *          response=403,
-     *          description="Forbidden"
-     *      )
+     *   @OA\Response(response=201,description="Success",@OA\MediaType( mediaType="application/json",)),
+     *   @OA\Response(response=401,description="Unauthenticated"),
+     *   @OA\Response(response=400,description="Bad Request"),
+     *   @OA\Response(response=404,description="not found"),
+     *   @OA\Response(response=403,description="Forbidden")
      *)
      **/
     public function register(Request $request)
@@ -104,14 +86,14 @@ class AuthController extends Controller
             $token = $user->createToken('Token')->accessToken;
             $user->save();
             $response = ['token' => $token];
-            return response($response, 200);
+            return response($response, 201);
         }
     }
 
     /**
      * @OA\Post(
      ** path="/auth/login",
-     *   tags={"Login"},
+     *   tags={"Auth"},
      *   summary="Login",
      *   operationId="login",
      *  security={
@@ -133,29 +115,11 @@ class AuthController extends Controller
      *           type="string"
      *      )
      *   ),
-     *   @OA\Response(
-     *      response=201,
-     *       description="Success",
-     *      @OA\MediaType(
-     *           mediaType="application/json",
-     *      )
-     *   ),
-     *   @OA\Response(
-     *      response=401,
-     *       description="Unauthenticated"
-     *   ),
-     *   @OA\Response(
-     *      response=400,
-     *      description="Bad Request"
-     *   ),
-     *   @OA\Response(
-     *      response=404,
-     *      description="not found"
-     *   ),
-     *      @OA\Response(
-     *          response=403,
-     *          description="Forbidden"
-     *      )
+     *   @OA\Response(response=201,description="Success",@OA\MediaType( mediaType="application/json",)),
+     *   @OA\Response(response=401,description="Unauthenticated"),
+     *   @OA\Response(response=400,description="Bad Request"),
+     *   @OA\Response(response=404,description="not found"),
+     *   @OA\Response(response=403,description="Forbidden")
      *)
      **/
     public function login(Request $request)
@@ -173,7 +137,7 @@ class AuthController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Token')->accessToken;
                 $response = ['token' => $token];
-                return response($response, 200);
+                return response($response, 201);
             } else {
                 $response = ['message' => 'Error Password'];
                 return response($response, 422);
@@ -184,45 +148,43 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     ** path="/auth/logout",
+     *   tags={"Auth"},
+     *   summary="Logout",
+     *   operationId="logout",
+     *  security={
+     *         {"bearerAuth": {}}
+     *     },
+     *   @OA\Response(response=201,description="Success",@OA\MediaType( mediaType="application/json",)),
+     *   @OA\Response(response=401,description="Unauthenticated"),
+     *   @OA\Response(response=400,description="Bad Request"),
+     *   @OA\Response(response=404,description="not found"),
+     *   @OA\Response(response=403,description="Forbidden")
+     *)
+     **/
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
         $response = ['message' => 'Logout success'];
-        return response($response, 200);
+        return response($response, 201);
     }
 
     /**
      * @OA\Get(
      ** path="/auth/getUser",
-     *   tags={"getUser"},
-     *   summary="getUser",
+     *   tags={"Auth"},
+     *   summary="User Information",
      *   operationId="getUser",
      *  security={
      *         {"bearerAuth": {}}
      *     },
-     *   @OA\Response(
-     *      response=201,
-     *       description="Success",
-     *      @OA\MediaType(
-     *           mediaType="application/json",
-     *      )
-     *   ),
-     *   @OA\Response(
-     *      response=401,
-     *       description="Unauthenticated"
-     *   ),
-     *   @OA\Response(
-     *      response=400,
-     *      description="Bad Request"
-     *   ),
-     *   @OA\Response(
-     *      response=404,
-     *      description="not found"
-     *   ),
-     *      @OA\Response(
-     *          response=403,
-     *          description="Forbidden"
-     *      )
+     *   @OA\Response(response=201,description="Success",@OA\MediaType( mediaType="application/json",)),
+     *   @OA\Response(response=401,description="Unauthenticated"),
+     *   @OA\Response(response=400,description="Bad Request"),
+     *   @OA\Response(response=404,description="not found"),
+     *   @OA\Response(response=403,description="Forbidden")
      *)
      **/
     public function getUser(Request $request)

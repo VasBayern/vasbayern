@@ -1,53 +1,52 @@
-version: '3.5'
-
+version: '3'
 services:
-  laravel-app:
-    build:
-      context: '.'
-      args:
-        uid: ${UID}
-    container_name: laravel-app
-    environment:
-      - APACHE_RUN_USER=#${UID}
-      - APACHE_RUN_GROUP=#${UID}
-    volumes:
-      - .:/var/www/html
-    ports:
-      - 8000:80
-    networks:
-      backend:
-        aliases:
-          - laravel-app
 
-  mysql-db:
-    image: mysql:5.7
-    container_name: mysql-db
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: digitalocean.com/php
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
     volumes:
-      - ./run/var:/var/lib/mysql
-      - ./run/dump/init.sql:/docker-entrypoint-initdb.d/init.sql
-    environment:
-      - MYSQL_ROOT_PASSWORD=securerootpassword
-      - MYSQL_DATABASE=${DB_DATABASE}
-      - MYSQL_USER=${DB_USERNAME}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - ./:/var/www
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
-      backend:
-        aliases:
-          - db
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    environment:
-      PMA_PORT: 3306
-      PMA_HOST: mysql-db
-      PMA_USER: root
-      PMA_PASSWORD: secret
+      - app-network
+
+  #MySQL Service
+  db:
+    image: mysql:5.7.22
+    container_name: db
+    restart: unless-stopped
+    tty: true
     ports:
-      - "8004:80"
-    restart: always
+      # The same principle goes for mysql by using port 3307 instead of 
+      # default port 3306
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: laravel
+      # replace with your own mysql password here
+      MYSQL_ROOT_PASSWORD: vietanh
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
     networks:
-      backend:
-        aliases:
-          - db
+      - app-network
+
+#Docker Networks
 networks:
-  backend:
-    name: backend-network
+  app-network:
+    driver: bridge
+#Volumes
+volumes:
+  dbdata:
+    driver: local
