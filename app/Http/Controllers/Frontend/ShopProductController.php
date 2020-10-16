@@ -24,6 +24,8 @@ class ShopProductController extends Controller
         $count_cmt = CommentModel::where('product_id', $id)->count();
         $data['count_cmt'] = $count_cmt;
 
+        //$stockProduct = DB::select('SELECT quantity FROM product_properties WHERE product_id ='.$id);
+        
         $wishlist = WishListModel::where('user_id', Auth::id())->where('product_id', $id)->get();
         $count_wishlist = count($wishlist);
         $data['count_wishlist'] = $count_wishlist;

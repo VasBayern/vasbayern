@@ -25,9 +25,9 @@ class WishListController extends Controller
         return view('frontend.user.wishlist', $data);
     }
 
-    public function update($product_id, Request  $request) {
+    public function add($id, Request  $request) {
         if ($request->ajax()) {
-            $product = ShopProductModel::find($product_id);
+            $product = ShopProductModel::find($id);
             if (!$product) {
                 return response(['msg' => 'not exist']);
             }
@@ -44,12 +44,12 @@ class WishListController extends Controller
                 $msg = 'error';
             }
             return response(['msg' => $msg]);*/
-            $wishlist = WishListModel::where('user_id', Auth::id())->where('product_id', $product_id)->get();
+            $wishlist = WishListModel::where('user_id', Auth::id())->where('product_id', $id)->get();
             if (count($wishlist) != 0) {
                 return response(['msg' => 'error']);
             } else {
                 DB::table('wishlist')->insert([
-                    'product_id' => $product_id,
+                    'product_id' => $id,
                     'user_id' => Auth::id(),
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),

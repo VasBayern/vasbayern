@@ -100,9 +100,9 @@
                         <li class="nav-item dropdown" style="background: #fff">
                             <a class="nav-link dropdown-toggle profile" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false" style="border: none; font-size: 16px;">
                                 @if(isset(Auth::user()->image) && !empty(Auth::user()->image) )
-                                <img src="{{ URL::to('/') }}/front-ends/img/user-image/{{ Auth::user()->image }}" style="border-radius: 50%; width: 35px; margin-right: 10px;"/>
+                                <img src="{{ URL::to('/') }}/front_ends/img/user-image/{{ Auth::user()->image }}" style="border-radius: 50%; width: 35px; margin-right: 10px;"/>
                                 @else
-                                    <img src="{{ URL::to('/') }}/front-ends/img/user-image/avt.jpg" style="border-radius: 50%; width: 35px; margin-right: 10px;"/>
+                                    <img src="{{ URL::to('/') }}/front_ends/img/user-image/avt.jpg" style="border-radius: 50%; width: 35px; margin-right: 10px;"/>
                                 @endif
                                 {{ Auth::user()->name }}
                             </a>
@@ -132,7 +132,7 @@
 
                                                 <div class="modal-body" style="margin-top: 65px;">
                                                     <p>Đăng ký, đăng nhập để tiến hành mua hàng, theo dõi đơn hàng, lưu danh sách sản phẩm yêu thích, nhận nhiều ưu đãi hấp dẫn hơn.</p>
-                                                    <img src="{{ asset('front-ends/img/welcome.jpg') }}" alt="">
+                                                    <img src="{{ asset('front_ends/img/welcome.jpg') }}" alt="">
                                                 </div>
                                             </div>
                                             <div class="col-md-8 ml-auto show-login" style="background: rgb(255,255,255);" >
@@ -272,7 +272,7 @@
                 <div class="col-lg-2 col-md-2">
                     <div class="logo">
                         <a href="{{ url('/') }}">
-                            <img src="{{asset('front-ends/img/logo.png') }}" alt="">
+                            <img src="{{asset('front_ends/img/logo.png') }}" alt="">
                         </a>
                     </div>
                 </div>
@@ -298,29 +298,24 @@
                                 <i class="icon_bag_alt"></i>
                                 <span class="countCart">{{ \Cart::getTotalQuantity() }}</span>
                             </a>
-                           
                             <div class="cart-hover">
                                 <div class="select-items">
                                     <table>
                                         <tbody class="cartBody">
-                                      
                                         @foreach(\Cart::getContent() as $item)
                                         <tr class="rowCart rowCart{{$item->id}}">
                                             <?php
                                             $product_id = $item->id;
-                                            $product= \App\Model\ShopProductModel::find($product_id);
-                                            $images = (isset($product->images) && $product->images) ? json_decode($product->images) : array();
+                                            $product= \App\Models\ShopProductModel::find($product_id);
+                                            $images = json_decode($product->images);
                                             if ($product->priceSale >0) {
                                                 $price =$product->priceSale;
                                             } else {
-                                                $price = $product-> priceCore;
+                                                $price = $product->priceCore;
                                             }
                                             ?>
                                             <td class="si-pic">
-                                                @foreach($images as $image)
-                                                <img src="{{asset($image) }}" alt="" style="width: 100px; ">
-                                                @break;
-                                                @endforeach
+                                                <img src="{{asset($images[0]) }}" alt="" style="width: 100px; ">
                                             </td>
                                             <td class="si-text">
                                                 <div class="product-selected">
@@ -333,7 +328,6 @@
                                                 <i class="ti-close" data-rowId="{{ $item->id }}"></i>
                                             </td>
                                         </tr>
-                                    
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -349,7 +343,7 @@
                                 </div>
                                 @endif
                                 <div class="select-button">
-                                    <a href="{{ url('cart') }}" class="primary-btn view-card">XEM GIỎ HÀNG</a>
+                                    <a href="{{ route('cart') }}" class="primary-btn view-card">XEM GIỎ HÀNG</a>
                                 </div>
                             </div>
                         </li>
@@ -367,10 +361,10 @@
                     <span>Tất cả danh mục</span>
                     <ul class="depart-hover">
                         <?php
-                        $cats = \App\Models\ShopCategoryModel::where('parent_id',0)->get();
+                        $categories = \App\Models\ShopCategoryModel::where('parent_id',0)->get();
                         ?>
-                        @foreach($cats as $cat)
-                        <li><a href="{{ url('/category/').'/'.$cat->id }}">{{ $cat->name }}</a></li>
+                        @foreach($categories as $category)
+                        <li><a href="{{ url('/categories/').'/'.$category->slug }}">{{ $category->name }}</a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -381,10 +375,10 @@
                     <li><a href="#1">Danh mục</a>
                         <ul class="dropdown">
                             <?php
-                            $cats = \App\Models\ShopCategoryModel::where('parent_id',0)->get();
+                            $category = \App\Models\ShopCategoryModel::where('parent_id',0)->get();
                             ?>
-                            @foreach($cats as $cat)
-                                <li><a href="{{ url('/category/').'/'.$cat->id }}">{{ $cat->name }}</a></li>
+                            @foreach($category as $category)
+                                <li><a href="{{ url('/categories/').'/'.$category->slug }}">{{ $category->name }}</a></li>
                             @endforeach
                         </ul>
                     </li>
@@ -406,48 +400,3 @@
     </div>
 </header>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    //xóa sp cart
-    $(document).ready(function () {
-        $('.ti-close').on('click',function (e) {
-            e.preventDefault();
-            var $this = $(this);
-            var delete_cart_url = '<?php echo url('cart/remove')?>';
-            var product_id = $(this).attr('data-rowId');
-            var dataPost = { product_id:product_id};
-            $.ajax({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                url: delete_cart_url,
-                type:'post',
-                dataType:'json',
-                data: dataPost,
-                success: function (result) {
-                    //$this.closest('.rowCart').fadeOut('slow');
-                    //$('.contentCart').remove();
-                    $('.rowCart'+result.id).fadeOut('slow', function(){
-                        $('.rowCart'+result.id).remove();
-                    });
-                    $('.countCart').html(result.quantityCart);
-                    $('.select-total').html('<span>Tổng tiền:</span>'+
-                                            '<h5>'+ result.total +'</h5>');
-                    $('.cart-price, .subTotal').html(result.subTotal);
-                    $('#totalCart').html(result.total);
-                    if($('.rowCart').length == 0){
-                        $('.select-total').html('<span class="emptyCart">Chưa có sản phẩm</span>');
-                    }
-                }
-            })
-        })
-    })
-    //show hide login register
-    $(document).ready(function () {
-        $('.register').click(function () {
-            $('.show-register').show();
-            $('.show-login').hide();
-        });
-        $('.login').click(function () {
-            $('.show-register').hide();
-            $('.show-login').show();
-        });
-    });
-</script>

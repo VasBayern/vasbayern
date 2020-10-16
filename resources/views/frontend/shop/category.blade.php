@@ -4,19 +4,6 @@
 @endsection
 @section('content')
 
-<style>
-    .new {
-        color: #ffffff;
-        font-size: 10px;
-        background: #76BC42;
-        position: absolute;
-        right: 0;
-        top: 20px;
-        padding: 5px 10px;
-        text-transform: uppercase;
-        border-radius: 20px;
-    }
-</style>
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
     <div class="container">
@@ -90,7 +77,7 @@
                     </div>
                     <a href="#" class="filter-btn">Filter</a>
                 </div>
-                {{-- <div class="filter-widget">
+                <!-- <div class="filter-widget">
                     <h4 class="fw-title">Color</h4>
                     <div class="fw-color-choose">
                         <div class="cs-item">
@@ -98,8 +85,7 @@
                             <label class="cs-green" for="cs-green">Green</label>
                         </div>
                     </div>
-                </div>--}}
-
+                </div> -->
 
                 <div class="filter-widget">
                     <h4 class="fw-title">Tags</h4>
@@ -138,27 +124,27 @@
                         <div class="col-lg-4 col-sm-6">
                             <ul class="product-item">
                                 <li class="pi-pic">
-                                    <?php $images = (isset($product->id) && $product->images) ? json_decode($product->images) : array(); ?>
-                                    @foreach($images as $image)
-                                    <img src="{{ asset($image) }}" alt="">
-                                    @break;
-                                    @endforeach
+                                    <?php $images = json_decode($product->images) ?>
+                                    <img src="{{ asset($images[0]) }}" alt="">
                                     @if($product->priceSale> 0)
                                     <div class="sale pp-sale" style="border-radius: 20px;">Sale</div>
                                     @endif
                                     @if($product->new == 1)
                                     <div class="new pp-new">New</div>
                                     @endif
-
                                     <ul>
+                                        <?php
+                                        $wishlist = \App\Models\WishListModel::where('user_id', \Auth::id())->where('product_id', $product->id)->get();
+                                        $count_wishlist = count($wishlist);
+                                        ?>
                                         <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                         <li class="quick-view"><a href="#" data-toggle="modal" data-target="#modalQuickView{{$product->id}}">+ Xem nhanh</a></li>
-                                        <li class="w-icon active"><a href="#{{ url('user/wishlist/'.$product->id) }}" title="Thêm sản phẩm yêu thích" id="add-wish-list"> <i class="icon_heart_alt"></i></a></li>
+                                        <li class="w-icon active"><a href="{{ url('wishlists/'.$product->id) }}" title="Thêm sản phẩm yêu thích" id="add-wish-list"><i class="fa @if($count_wishlist == 0) fa-heart-o @endif fa-heart"></i></a></li>
                                     </ul>
                                 </li>
                                 <div class="pi-text">
                                     <div class="catagory-name">{{ $product->category->name }}</div>
-                                    <a href="{{ url('product/'.$product->id) }}">
+                                    <a href="{{ url('products/'.$product->slug) }}">
                                         <h5>{{ $product->name }}</h5>
                                     </a>
                                     @if($product->priceSale == 0)
@@ -173,13 +159,12 @@
                     </div>
                     {{ $products->links() }}
                 </div>
-                <div class="loading-more">
-                    {{-- <i class="icon_loading"></i>
+                <!-- <div class="loading-more">
+                    <i class="icon_loading"></i>
                     <a href="#">
                         Loading More
-                    </a>--}}
-
-                </div>
+                    </a>
+                </div> -->
             </div>
         </div>
     </div>
@@ -193,17 +178,13 @@
                     <div class="row">
                         <div class="col-lg-5">
                             <!--Carousel Wrapper-->
-                            <?php $images = (isset($product->images) && $product->images) ? json_decode($product->images) : array() ?>
+                            <?php $images = json_decode($product->images) ?>
                             <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
                                 <!--Slides-->
-
                                 <div class="carousel-inner" role="listbox">
-                                    @foreach($images as $image)
                                     <div class="carousel-item active">
-                                        <img class="d-block w-100" alt="{{$product->name}}" src="{{ asset($image) }}">
+                                        <img class="d-block w-100" alt="{{$product->name}}" src="{{ asset($images[0]) }}">
                                     </div>
-                                    @break
-                                    @endforeach
                                 </div>
                                 <!--/.Slides-->
                                 <!--Controls-->
@@ -337,85 +318,65 @@
                             </div>
                             <!-- Accordion wrapper -->
                             <!-- Add to Cart -->
-                            {{-- <div class="card-body">
+                            <!-- <div class="card-body">
                                 <form action="{{ url('cart/add') }}" method="post">
-                            @csrf
-                            <div class="form-group row" style="margin-bottom: 0;">
-                                <label for="" class="col-lg-3" style="margin-top: 8px;">Size</label>
-                                <div class="product-details col-lg-9">
-                                    <div class="pd-size-choose">
+                                    @csrf
+                                    <div class="form-group row" style="margin-bottom: 0;">
+                                        <label for="" class="col-lg-3" style="margin-top: 8px;">Size</label>
+                                        <div class="product-details col-lg-9">
+                                            <div class="pd-size-choose">
 
-                                        @if(isset($product->product_properties) && count($product->product_properties) >0)
-                                        @foreach($product->product_properties as $pro)
-                                        <div class="sc-item">
-                                            <label>
-                                                <input type="radio" required name="size_id" class="size" value="{{ $pro->size_id }}" data-quantity="{{ $pro->quantity }}">
-                                                {{ $pro->size->name }}
-                                            </label>
+                                                @if(isset($product->product_properties) && count($product->product_properties) >0)
+                                                @foreach($product->product_properties as $pro)
+                                                <div class="sc-item">
+                                                    <label>
+                                                        <input type="radio" required name="size_id" class="size" value="{{ $pro->size_id }}" data-quantity="{{ $pro->quantity }}">
+                                                        {{ $pro->size->name }}
+                                                    </label>
+                                                </div>
+                                                @endforeach
+                                                @else
+                                                <p style="padding-top: 10px">Tạm hết hàng</p>
+                                                @endif
+                                            </div>
                                         </div>
-                                        @endforeach
-                                        @else
-                                        <p style="padding-top: 10px">Tạm hết hàng</p>
-                                        @endif
                                     </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="size" class="col-lg-3 col-form-label">Số lượng</label>
-                                <div class="col-lg-6">
-                                    <input type="number" name="quantity" min="1" value="1" class="form-control" id="quantity" required placeholder="Nhập số lượng ..." onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <p class='amount-remain offset-lg-3' style="display:none; padding-left: 15px;">Còn lại <span id='amount' style="font-weight:bold;">@if(isset($pro)){{ $pro->quantity }}@endif</span> sản phẩm trong kho</p>
-                            </div>
-                            <div class="text-center">
-                                <button type="button" class="btn btn-secondary" id="close-modal" data-dismiss="modal">Đóng</button>
-                                <input type="hidden" class="cart-btn" name="product_id" value="{{ $product->id }}">
-                                @if(isset($pro) && $pro->quantity > 0)
+                                    <div class="form-group row">
+                                        <label for="size" class="col-lg-3 col-form-label">Số lượng</label>
+                                        <div class="col-lg-6">
+                                            <input type="number" name="quantity" min="1" value="1" class="form-control" id="quantity" required placeholder="Nhập số lượng ..." onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <p class='amount-remain offset-lg-3' style="display:none; padding-left: 15px;">Còn lại <span id='amount' style="font-weight:bold;">@if(isset($pro)){{ $pro->quantity }}@endif</span> sản phẩm trong kho</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-secondary" id="close-modal" data-dismiss="modal">Đóng</button>
+                                        <input type="hidden" class="cart-btn" name="product_id" value="{{ $product->id }}">
+                                        @if(isset($pro) && $pro->quantity > 0)
 
-                                <button type="submit" class="btn btn-primary" id="add-to-cart" data-product-id="{{ $product->id  }}">Thêm vào giỏ hàng</button>
-                                @else
-                                <button type="submit" disabled class="btn btn-primary" id="add-to-cart" data-product-id="{{ $product->id  }}" style="background: darkgray;">Hết hàng</button>
-                                @endif
+                                        <button type="submit" class="btn btn-primary" id="add-to-cart" data-product-id="{{ $product->id  }}">Thêm vào giỏ hàng</button>
+                                        @else
+                                        <button type="submit" disabled class="btn btn-primary" id="add-to-cart" data-product-id="{{ $product->id  }}" style="background: darkgray;">Hết hàng</button>
+                                        @endif
 
-                            </div>
-                            </form>
-                        </div>--}}
-                        <!-- /.Add to Cart -->
+                                    </div>
+                                </form>
+                            </div> -->
+                            <!-- /.Add to Cart -->
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
     @endforeach
 </section>
 <!-- Product Shop Section End -->
 <script>
-    $(document).ready(function() {
-        $('.mdb-select').materialSelect();
-    });
-    /*$(document).ready(function () {
-        $('#add-wish-list').on('click', function (e) {
-            e.preventDefault();
-            var url=$(this).attr('href');
-            $.ajax({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                type: 'post',
-                url: url,
-            }).done(function (result) {
-                if (result['msg'] === 'success') {
-                    toastr.success('Thêm sản phẩm yêu thích thành công');
-                } else if (result['msg'] === 'error') {
-                    toastr.error('Sản phẩm đã được thêm từ trước');
-                } else if (result['msg'] === 'not exist') {
-                    toastr.error('Vui lòng thử lại','Không có sản phẩm')
-                } else {
-                    toastr.error('Vui lòng thử lại sau', 'Có lỗi xảy ra');
-                }
-            })
-        })
-    })*/
+    // $(document).ready(function() {
+    //     $('.mdb-select').materialSelect();
+    // });
+    
 </script>
 @endsection

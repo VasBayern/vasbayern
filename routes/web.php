@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ShopProductController;
 use App\Http\Controllers\Admin\ShopSizeController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CustomerController;
+use App\Http\Controllers\Frontend\HomeController as FrontendHomeController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\ShopCartController;
 use App\Http\Controllers\Frontend\ShopCategoryController as FrontendShopCategoryController;
@@ -35,9 +36,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.dashboard');
-});
+// Route::get('/', function () {
+//     return view('frontend.dashboard');
+// });
+Route::get('/', [FrontendHomeController::class, 'index']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('frontend.dashboard');
@@ -62,8 +64,8 @@ Route::post('/email/verification-notification', function (HttpRequest $request) 
 /**
  *  Product
  */
-Route::get('categories/{slug}', [FrontendShopCategoryController::class, 'index'] )->name('category');
-Route::get('products/{slug}', [FrontendShopProductController::class, 'index'])->name('product');
+Route::get('categories/{slug}', [FrontendShopCategoryController::class, 'index'] );
+Route::get('products/{slug}', [FrontendShopProductController::class, 'index']);
 Route::post('products/{slug}/comment', [FrontendShopProductController::class, 'comment']);
 
 /**
@@ -99,7 +101,7 @@ Route::delete('user/address/{id}', [CustomerController::class, 'deleteAddress'])
  *  WishList
  */
 Route::get('wishlists', [WishListController::class, 'index'])->name('wishlist');
-Route::put('wishlists', [WishListController::class, 'update']);
+Route::post('wishlists/{id}', [WishListController::class, 'add']);
 Route::delete('wishlist', [WishListController::class, 'destroy']);
 
 /**

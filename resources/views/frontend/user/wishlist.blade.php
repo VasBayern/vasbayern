@@ -116,27 +116,4 @@
             </div>
         @endif
     </section>
-    <script>
-        $(document).ready(function () {
-            $('.remove-wish-list').on('click', function (e) {
-                e.preventDefault();
-                var url=$(this).attr('href');
-                $.ajax({
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    type: 'post',
-                    url: url,
-                }).done(function (result) {
-                    if (result['msg'] === 'success') {
-                        toastr.success('Xóa thành công');
-                    } else if (result['msg'] === 'error') {
-                        toastr.error('Sản phẩm đã được thêm từ trước');
-                    } else if (result['msg'] === 'not exist') {
-                        toastr.error('Vui lòng thử lại','Không có sản phẩm')
-                    } else {
-                        toastr.error('Vui lòng thử lại sau', 'Có lỗi xảy ra');
-                    }
-                })
-            })
-        })
-    </script>
 @endsection

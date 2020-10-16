@@ -20,4 +20,30 @@
     <link rel="stylesheet" href="{{asset('front_ends/css/jquery-ui.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('front_ends/css/slicknav.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('front_ends/css/style.css')}}" type="text/css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Toastr-->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+
+    <style type="text/css">
+        .product-item .pi-pic .new {
+            color: #ffffff;
+            font-size: 10px;
+            background: #76BC42;
+            position: absolute;
+            right: 0;
+            top: 20px;
+            padding: 5px 10px;
+            text-transform: uppercase;
+            border-radius: 20px;
+        }
+
+        .single-latest-blog .latest-text .blog-intro {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 3;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+        }
+    </style>
 </head>

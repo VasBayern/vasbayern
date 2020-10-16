@@ -58,27 +58,24 @@ class ShopCartController extends Controller
             $quantityCart = \Cart::getTotalQuantity();
             $total = \Cart::getSubTotal();
             $total = number_format($total) . ' VNĐ';
+            $price = number_format($price) . ' VNĐ';
             $cartCollection = \Cart::getContent();
 
-            // $images = DB::table('shop_products')->select('images')->where('id',$product_id)->get();
-
-            // foreach($images as $image) {
-
-            // }
-            $price = number_format($price) . ' VNĐ';
+            $images = json_decode($product->images);
             $response = [
                 'quantityCart'  => $quantityCart,
                 'id'            => $product_id,
                 'name'          => $product->name,
                 'price'         => $price,
                 'quantity'      => $quantity,
-                'total'         => $total
+                'total'         => $total,
+                'image'         => $images[0]
             ];
         }
         return response($response);
     }
     public function update(Request $request)
-    {
+     {
         $input = $request->all();
         $product_id = (int) $input['product_id'];
         $quantity = (int) $input['quantity'];
@@ -129,7 +126,7 @@ class ShopCartController extends Controller
         ];
 
         return response($response);
-    }
+     }
 
     public function remove(Request $request)
     {
@@ -148,7 +145,6 @@ class ShopCartController extends Controller
          * Coupon
          */
         $total = 0;
-
         if (session()->has('coupon')) {
             //remove all product
             if ($subTotal == 0) {
@@ -180,7 +176,6 @@ class ShopCartController extends Controller
 
     public function clear()
     {
-
         \Cart::clear();
         session()->save();
 

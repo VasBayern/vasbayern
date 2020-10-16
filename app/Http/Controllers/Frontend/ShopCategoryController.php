@@ -7,7 +7,9 @@ use App\Models\ShopBrandModel;
 use App\Models\ShopCategoryModel;
 use App\Models\ShopProductModel;
 use App\Models\ShopSizeModel;
+use App\Models\WishListModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShopCategoryController extends Controller
 {

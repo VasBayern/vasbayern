@@ -18,14 +18,14 @@ class ShopBannerModel extends Model
         $locations[1]   = 'Main banner';
         $locations[2]   = 'Sale 1';
         $locations[3]   = 'Sale 2';
-        $locations[4]   = 'Sale 3';
+        $locations[4]   = 'Benefit Item';
 
         return $locations;
     }
 
     public static function getBannerByLocation($location_id) {
 
-        $banner = DB::table('shop_banners')->where('location_id', $location_id)->take(2)->get();
+        $banner = DB::table('shop_banners')->where('location_id', $location_id)->take(3)->get();
         return $banner;
     }
 }
