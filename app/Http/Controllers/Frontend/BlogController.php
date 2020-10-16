@@ -21,8 +21,8 @@ class BlogController extends Controller
 
     public function getBlogCategory($slug) {
         $data = array();
-        $categories = BlogCategoryModel::all();
-        $data['categories']=$categories;
+        $categoryPosts = BlogCategoryModel::all();
+        $data['categoryPosts']=$categoryPosts;
 
         $category = BlogCategoryModel::where('slug', $slug)->first();
         $data['category']=$category;

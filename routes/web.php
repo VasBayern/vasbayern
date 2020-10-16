@@ -79,7 +79,7 @@ Route::delete('cart/coupon', [ShopCartController::class, 'removeCoupon']);
 /**
  *  Blog
  */
-Route::get('blogs/{slug}', [BlogController::class, 'index'])->name('blog');
+Route::get('blogs', [BlogController::class, 'index'])->name('blog');
 Route::get('blogs/category/{slug}', [BlogController::class, 'getBlogCategory']);
 Route::get('blogs/post/{slug}', [BlogController::class, 'getBlogPost']);
 Route::post('blogs/comment', [BlogController::class, 'commentBlog']);
@@ -261,9 +261,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('feedbacks', [AdminController::class, 'getFeedback'])->name('feedbacks');
     });
 });
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
-});
+// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
+//     \UniSharp\LaravelFilemanager\Lfm::routes();
+// });
 
 // Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
 //     Route::get('/laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show');
