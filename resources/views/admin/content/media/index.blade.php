@@ -5,7 +5,7 @@
 @section('content')
     <h1> Media</h1>
     <div style="margin-top: 30px">
-    <iframe src="/laravel-filemanager?type=images" style="width: 100%; height: 500px; overflow: hidden; border: none;"></iframe>
+    <iframe src="http://localhost/vasbayern/public/laravel-filemanager?type=images" style="width: 100%; height: 500px; overflow: hidden; border: none;"></iframe>
     </div>
 @endsection
 <!-- jQuery -->

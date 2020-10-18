@@ -117,12 +117,13 @@
     })
 </script>
 <!-- File Manager -->
-<script src="{{ asset('/vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
+<script src="{{ asset('/vendor/laravel-filemanager/js/lfm.js') }}"></script>
 <script>
     $(document).ready(function() {
         $('.lfm-btn').filemanager('image', {
-            'prefix': '/laravel-filemanager'
+            'prefix': 'http://localhost/vasbayern/public/laravel-filemanager'
         });
+        
         $('.plus-image').on('click', function(e) {
             e.preventDefault();
             var countLfm = parseInt($('.lfm-btn').length);
@@ -152,7 +153,7 @@
             var box = $(this).closest('.form-group');
             $(html).insertBefore(box);
             $('.lfm-btn').filemanager('image', {
-                'prefix': '/laravel-filemanager'
+                'prefix': 'http://localhost/vasbayern/public/laravel-filemanager'
             });
         })
         $(document).on('click', '.remove-image', function(e) {

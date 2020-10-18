@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\ShopProductModel;
 use App\Models\WishListModel;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class WishListController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $data = array();
         $user_id = Auth::id();
         $wishlists = DB::table('wishlist')->join('users', 'user_id', '=', 'users.id')
@@ -25,41 +27,41 @@ class WishListController extends Controller
         return view('frontend.user.wishlist', $data);
     }
 
-    public function add($id, Request  $request) {
+    public function add($id, Request  $request)
+    {
         if ($request->ajax()) {
             $product = ShopProductModel::find($id);
-            if (!$product) {
-                return response(['msg' => 'not exist']);
-            }
-            /*$msg = 'success';
-            try {
-                DB::table('wishlist')->insert([
-                    'product_id' => $product_id,
-                    'user_id' => Auth::id(),
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
 
-            } catch (\Exception $e) {
-                $msg = 'error';
+            DB::beginTransaction();
+            try {
+                if (!$product) {
+                    $response = ['msg' => 'product not exist'];
+                }
+                if (!Auth::check()) {
+                    $response = ['msg' => 'user not exist'];
+                }
+                $wishlist = WishListModel::where('user_id', Auth::id())->where('product_id', $id)->get();
+                if (count($wishlist) != 0) {
+                    $response = ['msg' => 'wishlist exist'];
+                } else {
+                    DB::table('wishlist')->insert([
+                        'product_id' => $id,
+                        'user_id' => Auth::id(),
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                    $response = ['msg' => 'success'];
+                    DB::commit();
+                }
+            } catch (Exception $e) {
+                DB::rollBack();
             }
-            return response(['msg' => $msg]);*/
-            $wishlist = WishListModel::where('user_id', Auth::id())->where('product_id', $id)->get();
-            if (count($wishlist) != 0) {
-                return response(['msg' => 'error']);
-            } else {
-                DB::table('wishlist')->insert([
-                    'product_id' => $id,
-                    'user_id' => Auth::id(),
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ]);
-                return response(['msg' => 'success']);
-            }
+            return response($response);
         }
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $item = WishListModel::find($id);
         $item->delete();
         \Toastr::success('Xóa thành công');

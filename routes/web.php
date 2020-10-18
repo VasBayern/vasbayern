@@ -96,6 +96,8 @@ Route::get('user/address', [CustomerController::class, 'editAddress'])->name('us
 Route::post('user/address', [CustomerController::class, 'storeAddress']);
 Route::put('user/address/{id}', [CustomerController::class, 'updateAddress']);
 Route::delete('user/address/{id}', [CustomerController::class, 'deleteAddress']);
+Route::get('user/order', [CustomerController::class, 'getOrderDetail'])->name('user.order');
+
 
 /**
  *  WishList
@@ -267,10 +269,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 //     \UniSharp\LaravelFilemanager\Lfm::routes();
 // });
 
-// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
-//     Route::get('/laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show');
-//     Route::post('/laravel-filemanager/upload', '\UniSharp\LaravelFilemanager\Controllers\UploadController@upload');
-// });
-// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-//     \UniSharp\LaravelFilemanager\Lfm::routes();
-// });
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
+    Route::get('/laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show');
+    Route::post('/laravel-filemanager/upload', '\UniSharp\LaravelFilemanager\Controllers\UploadController@upload');
+});

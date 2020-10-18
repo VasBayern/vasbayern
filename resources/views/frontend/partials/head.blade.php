@@ -21,11 +21,55 @@
     <link rel="stylesheet" href="{{asset('front_ends/css/slicknav.min.css')}}" type="text/css">
     <link rel="stylesheet" href="{{asset('front_ends/css/style.css')}}" type="text/css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Toastr-->
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style type="text/css">
+        .spad {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .avatar .avatar-image {
+            height: 140px;
+            background-color: rgb(233, 236, 239);
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .avatar .add-avatar button {
+            position: relative;
+            height: 50px;
+            margin-top: 40px;
+            margin-left: 15px;
+        }
+
+        .avatar .add-avatar i {
+            position: relative;
+            float: left;
+            top: 12px;
+        }
+
+        .avatar .add-avatar span {
+            position: relative;
+            float: left;
+            color: #dee2e6;
+        }
+
+        .avatar .add-avatar span:hover {
+            color: #dee2e6;
+        }
+
+        .avatar .add-avatar .file-upload {
+            position: absolute;
+            left: -35px;
+            top: -7px;
+            width: 135px;
+            font-size: 28px;
+            opacity: 0;
+            cursor: pointer;
+        }
+
         .product-item .pi-pic .new {
             color: #ffffff;
             font-size: 10px;

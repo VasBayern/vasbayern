@@ -99,10 +99,10 @@
                     <ul class="nav nav-tabs" style="border: none">
                         <li class="nav-item dropdown" style="background: #fff">
                             <a class="nav-link dropdown-toggle profile" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false" style="border: none; font-size: 16px;">
-                                @if(isset(Auth::user()->image) && !empty(Auth::user()->image) )
-                                <img src="{{ URL::to('/') }}/front_ends/img/user-image/{{ Auth::user()->image }}" style="border-radius: 50%; width: 35px; margin-right: 10px;"/>
+                                @if(isset(Auth::user()->avatar) && !empty(Auth::user()->avatar) )
+                                <img src="{{ URL::to('/') }}/front_ends/img/user_avatar/{{ Auth::user()->avatar }}" style="border-radius: 50%; width: 35px; margin-right: 10px;"/>
                                 @else
-                                    <img src="{{ URL::to('/') }}/front_ends/img/user-image/avt.jpg" style="border-radius: 50%; width: 35px; margin-right: 10px;"/>
+                                    <img src="{{ URL::to('/') }}/front_ends/img/user_avatar/avt.jpg" style="border-radius: 50%; width: 35px; margin-right: 10px;"/>
                                 @endif
                                 {{ Auth::user()->name }}
                             </a>
@@ -399,4 +399,3 @@
         </div>
     </div>
 </header>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

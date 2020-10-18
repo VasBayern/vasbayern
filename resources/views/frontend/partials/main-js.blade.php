@@ -1,4 +1,5 @@
   <!-- Js Plugins -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.0.4/popper.js"></script>
   <script src="{{asset('front_ends/js/jquery-3.3.1.min.js')}}"></script>
   <script src="{{asset('front_ends/js/bootstrap.min.js')}}"></script>
   <script src="{{asset('front_ends/js/jquery-ui.min.js')}}"></script>
@@ -13,9 +14,69 @@
   <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
   {!! Toastr::message() !!}
 
+  <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js" type="text/javascript"></script>
   <script type="text/javascript">
     $(document).ready(function() {
+      $('#quickForm').validate({
+        rules: {
+          name: {
+            required: true,
+          },
+          old_password: {
+            required: true,
+            minlength: 8,
+            maxlength: 15,
+          },
+          new_password: {
+            required: true,
+            minlength: 8,
+            maxlength: 15,
+          },
+          password_confirmation: {
+            required: true,
+            minlength: 8,
+            maxlength: 15,
+            equalTo: '#new_password'
+          },
+        },
+        messages: {
+          name: {
+            required: "Vui lòng nhập tên",
+          },
+          old_password: {
+            required: "Vui lòng nhập mật khẩu",
+            minlength: "Mật khẩu chứa ít nhất 8 kí tự",
+            maxlength: "Mật khẩu chứa tối đa 15 kí tự",
+          },
+          new_password: {
+            required: "Vui lòng nhập mật khẩu mới",
+            minlength: "Mật khẩu chứa ít nhất 8 kí tự",
+            maxlength: "Mật khẩu chứa tối đa 15 kí tự",
+          },
+          password_confirmation: {
+            required: "Vui lòng nhập mật khẩu",
+            minlength: "Mật khẩu chứa ít nhất 8 kí tự",
+            maxlength: "Mật khẩu chứa tối đa 15 kí tự",
+            equalTo: "Mật khẩu xác thực không trùng khớp",
+          },
+        },
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+          error.addClass('invalid-feedback');
+          element.closest('.form-group').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+          $(element).addClass('is-invalid');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+          $(element).removeClass('is-invalid');
+        }
+      });
+    });
+  </script>
 
+  <script type="text/javascript">
+    $(document).ready(function() {
       //show hide login register
       $(document).ready(function() {
         $('.register').click(function() {
@@ -220,7 +281,7 @@
         });
       });
       //add wishlist
-      $(document).on('click','#add-wish-list', function(e) {
+      $(document).on('click', '#add-wish-list', function(e) {
         e.preventDefault();
         $('.fa-heart-o').removeClass('fa-heart-o').addClass('fa-heart');
         var url = $(this).attr('href');
@@ -233,10 +294,12 @@
         }).done(function(result) {
           if (result['msg'] === 'success') {
             toastr.success('Thêm sản phẩm yêu thích thành công');
-          } else if (result['msg'] === 'error') {
+          } else if (result['msg'] === 'wishlist exist') {
             toastr.error('Sản phẩm đã được thêm từ trước');
-          } else if (result['msg'] === 'not exist') {
+          } else if (result['msg'] === 'product not exist') {
             toastr.error('Vui lòng thử lại', 'Không có sản phẩm')
+          } else if (result['msg'] === 'user not exist') {
+            toastr.warning('Vui lòng đăng nhập')
           } else {
             toastr.error('Vui lòng thử lại sau', 'Có lỗi xảy ra');
           }
@@ -265,7 +328,7 @@
         })
       })
     });
-    // update
+    // update cart
     function updateCart(quantity, product_id, product_price) {
       var update_cart_url = '<?php echo url('cart') ?>';
       var dataPost = {

@@ -25,6 +25,7 @@
             minlength: 8
           },
           password_confirmation: {
+            required: true,
             minlength: 8,
             equalTo: '#password'
           },
