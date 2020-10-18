@@ -30,6 +30,7 @@
             padding-bottom: 50px;
         }
 
+        /* user profile */
         .avatar .avatar-image {
             height: 140px;
             background-color: rgb(233, 236, 239);
@@ -70,6 +71,71 @@
             cursor: pointer;
         }
 
+        /* end user profile */
+
+        /* user address */
+        .form-group .col-form-label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .address-info .info {
+            height: 180px;
+            margin-bottom: 30px;
+            margin-right: 70px;
+            background: #F8F8F8;
+            border: 1px solid #BBBBBB;
+        }
+
+        .address-info #info-default {
+            border: 1px dashed #8FC050;
+        }
+
+        .address-info span.default {
+            font-size: 16px;
+            font-weight: 700;
+            float: right;
+            color: #F8F8F8;
+        }
+
+        .address-info #defaultAddress {
+            color: #8FC050;
+        }
+
+        .address-info h5 {
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .address-info p {
+            margin-bottom: 0;
+            font-size: 14px;
+        }
+
+        .address-info .add-address {
+            color: #007bff;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .address-info .edit-address,
+        .delete-address {
+            border-radius: 2px;
+            padding: 7px;
+            border: 1px solid;
+            border-color: rgb(204, 204, 204);
+            color: #333333;
+            background: linear-gradient(rgb(255, 255, 255), rgb(247, 247, 247));
+        }
+
+        .address-info .edit-address:hover,
+        .delete-address:hover {
+            color: #333333;
+        }
+
+        /* end user-address */
+
+        /* product */
         .product-item .pi-pic .new {
             color: #ffffff;
             font-size: 10px;
@@ -82,6 +148,9 @@
             border-radius: 20px;
         }
 
+        /* end product */
+
+        /* blog */
         .single-latest-blog .latest-text .blog-intro {
             overflow: hidden;
             text-overflow: ellipsis;
@@ -89,5 +158,7 @@
             display: -webkit-box;
             -webkit-box-orient: vertical;
         }
+
+        /* end blog */
     </style>
 </head>

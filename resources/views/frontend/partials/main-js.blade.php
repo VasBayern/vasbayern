@@ -22,6 +22,15 @@
           name: {
             required: true,
           },
+          email: {
+            required: true,
+            email: true,
+          },
+          password: {
+            required: true,
+            minlength: 8,
+            maxlength: 15,
+          },
           old_password: {
             required: true,
             minlength: 8,
@@ -38,10 +47,34 @@
             maxlength: 15,
             equalTo: '#new_password'
           },
+          phone: {
+            required: true,
+          },
+          city: {
+            required: true,
+          },
+          district: {
+            required: true,
+          },
+          ward: {
+            required: true,
+          },
+          address: {
+            required: true,
+          },
         },
         messages: {
           name: {
             required: "Vui lòng nhập tên",
+          },
+          email: {
+            required: "Vui lòng nhập email",
+            email: "Vui lòng nhập đúng định dạng",
+          },
+          password: {
+            required: "Vui lòng nhập mật khẩu",
+            minlength: "Mật khẩu chứa ít nhất 8 kí tự",
+            maxlength: "Mật khẩu chứa tối đa 15 kí tự",
           },
           old_password: {
             required: "Vui lòng nhập mật khẩu",
@@ -59,6 +92,22 @@
             maxlength: "Mật khẩu chứa tối đa 15 kí tự",
             equalTo: "Mật khẩu xác thực không trùng khớp",
           },
+          phone: {
+            required: "Vui lòng nhập SĐT",
+          },
+          city: {
+            required: "Vui lòng nhập Tỉnh / Thành",
+          },
+          district: {
+            required: "Vui lòng nhập Quận / Huyện",
+          },
+          ward: {
+            required: "Vui lòng nhập Xã / Phường",
+          },
+          address: {
+            required: "Vui lòng nhập địa chỉ",
+          },
+
         },
         errorElement: 'span',
         errorPlacement: function(error, element) {
@@ -184,8 +233,6 @@
               product_id: product_id
             },
             success: function(result) {
-              //$this.closest('.rowCart').fadeOut('slow');
-              //$('.contentCart').remove();
               $('.rowCart' + result.id).fadeOut('slow', function() {
                 $('.rowCart' + result.id).remove();
               });
@@ -232,7 +279,6 @@
         e.preventDefault();
         var add_coupon_url = '<?php echo url('cart/coupon') ?>';
         var couponName = $('#code').val();
-        $('#code').empty();
         $.ajax({
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -246,7 +292,7 @@
         }).done(function(result) {
           if (result.msg === 'success') {
             toastr.success('Thêm mã giảm giá thành công');
-            $('#code').val('');
+            $('#code').html(result.name);
             $('#couponName').html(result.couponName);
             $('#totalCart').html(result.totalPrice);
             $('#couponValue').html(result.couponValue);
@@ -255,7 +301,6 @@
           } else {
             toastr.error('Vui lòng thử lại sau', 'Có lỗi xảy ra');
           }
-
         });
       });
       //remove coupon
@@ -269,7 +314,6 @@
           dataType: 'json',
           type: 'DELETE',
         }).done(function(result) {
-
           if (result.msg === 'success') {
             toastr.success('Xóa mã giảm giá thành công');
             $('#couponName').empty();
@@ -313,15 +357,14 @@
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
-          type: 'post',
+          type: 'delete',
           url: url,
         }).done(function(result) {
           if (result['msg'] === 'success') {
             toastr.success('Xóa thành công');
-          } else if (result['msg'] === 'error') {
-            toastr.error('Sản phẩm đã được thêm từ trước');
-          } else if (result['msg'] === 'not exist') {
-            toastr.error('Vui lòng thử lại', 'Không có sản phẩm')
+            $('.row-wishlist-' + result.id).fadeOut('slow', function() {
+              $('.row-wishlist-' + result.id).remove();
+            });
           } else {
             toastr.error('Vui lòng thử lại sau', 'Có lỗi xảy ra');
           }

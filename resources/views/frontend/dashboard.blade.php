@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 @section('title')
 Trang chủ
 @endsection
-
 <!-- Head Begin -->
 @include('frontend.partials.head')
 <!-- Head End -->
 
 <body>
-
     <!-- Header Section Begin -->
     @include('frontend.partials.header')
     <!-- Header End -->
-
     <!-- Hero Section Begin -->
     <section class="hero-section">
         <div class="hero-items owl-carousel">
@@ -76,12 +72,12 @@ Trang chủ
                     <div class="filter-control">
                         <ul>
                             @foreach($parent_1_categories as $key => $parent_category)
-                            <li class="parentCategory parentCategory{{ $key}}" data-parentId="{{ $key }}" data-group="1">{{ $parent_category->name }}</li>
+                            <li class="parent_1_Category parent_1_Category{{ $key}}" data-parentId="{{ $key }}" data-group="1">{{ $parent_category->name }}</li>
                             @endforeach
                         </ul>
                     </div>
                     @foreach($parent_1_categories as $key => $parent_category)
-                    <div class="product-slider owl-carousel productSlider{{ $key }}">
+                    <div class="product-slider product-slider-1 owl-carousel product_1_Slider{{ $key }}">
                         <?php
                         $products = \App\Models\ShopProductModel::where('cat_id', $parent_category->id)->where('homepage', 1)->orderBy('updated_at', 'DESC')->get();
                         ?>
@@ -118,7 +114,6 @@ Trang chủ
                             </div>
                         </div>
                         @endforeach
-
                     </div>
                     @endforeach
                 </div>
@@ -172,12 +167,12 @@ Trang chủ
                     <div class="filter-control">
                         <ul>
                             @foreach($parent_2_categories as $key => $parent_category)
-                            <li class="parentCategory parentCategory{{ $key+3}}" data-parentId="{{ $key+3 }}" data-group="2">{{ $parent_category->name }}</li>
+                            <li class="parent_2_Category parent_2_Category{{ $key}}" data-parentId="{{ $key }}" data-group="1">{{ $parent_category->name }}</li>
                             @endforeach
                         </ul>
                     </div>
                     @foreach($parent_2_categories as $key => $parent_category)
-                    <div class="product-slider owl-carousel productSlider{{ $key+3 }}">
+                    <div class="product-slider product-slider-2 owl-carousel product_2_Slider{{ $key }}">
                         <?php
                         $products = \App\Models\ShopProductModel::where('cat_id', $parent_category->id)->where('homepage', 1)->orderBy('updated_at', 'DESC')->get();
                         ?>
@@ -342,18 +337,25 @@ Trang chủ
     <script>
         // slide category
         $(document).ready(function() {
-            $('.product-slider').hide();
-            $('.parentCategory0, .parentCategory3').addClass('active');
-            $('.productSlider0, .productSlider3').show();
-            $('.parentCategory').on('click', function(e) {
+            $('.product-slider-1').hide();
+            $('.parent_1_Category0, .parent_2_Category0').addClass('active');
+            $('.product_1_Slider0, .product_2_Slider0').show();
+
+            $('.parent_1_Category').on('click', function(e) {
                 e.preventDefault();
                 let parentId = $(this).attr('data-parentId');
-                let parentGroup = $(this).attr('data-group');
-                $('.parentCategory').removeClass('active');
+                $('.parent_1_Category').removeClass('active');
                 $(this).addClass('active');
-                $('.product-slider').hide();
-                $('.productSlider' + parentId).show();
-                
+                $('.product-slider-1').hide();
+                $('.product_1_Slider' + parentId).show();
+            });
+            $('.parent_2_Category').on('click', function(e) {
+                e.preventDefault();
+                let parentId = $(this).attr('data-parentId');
+                $('.parent_2_Category').removeClass('active');
+                $(this).addClass('active');
+                $('.product-slider-2').hide();
+                $('.product_2_Slider' + parentId).show();
             });
         })
     </script>

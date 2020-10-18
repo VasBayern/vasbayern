@@ -19,9 +19,9 @@ class WishListController extends Controller
         $user_id = Auth::id();
         $wishlists = DB::table('wishlist')->join('users', 'user_id', '=', 'users.id')
             ->join('shop_products', 'product_id', '=', 'shop_products.id')
-            ->select('wishlist.id', 'wishlist.product_id', 'shop_products.name', 'shop_products.images', 'shop_products.priceCore', 'shop_products.priceSale')
+            ->select('wishlist.id', 'wishlist.product_id', 'shop_products.name', 'shop_products.slug', 'shop_products.images', 'shop_products.priceCore', 'shop_products.priceSale')
             ->where('users.id', '=', $user_id)
-            ->paginate(10);
+            ->get();
         $data['wishlists'] = $wishlists;
 
         return view('frontend.user.wishlist', $data);
@@ -64,7 +64,10 @@ class WishListController extends Controller
     {
         $item = WishListModel::find($id);
         $item->delete();
-        \Toastr::success('Xóa thành công');
-        return redirect()->back();
+        $response = [
+            'msg'   => 'success',
+            'id'    => $id,
+        ];
+        return response($response);
     }
 }

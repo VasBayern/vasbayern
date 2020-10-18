@@ -24,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SuccessShipped' => [
             'App\Listeners\ThankForPurchaseMail',
         ],
+        'App\Events\OrderProduct' => [
+            'App\Listeners\SendOrderMail',
+        ],
     ];
 
     /**

@@ -213,6 +213,7 @@
                                     <span class="input-group-text"><i class="fas fa-truck"></i></span>
                                 </div>
                                 <select class="form-control custom-select" id="shipment" name="shipment">
+                                    <option value="0" data-id="1" id="sm0">-- Chọn --</option>
                                     <option value="1" data-id="1" id="sm1">Grab</option>
                                     <option value="2" data-id="2" id="sm2">GHTK</option>
                                     <option value="3" data-id="3" id="sm3">VNPost</option>

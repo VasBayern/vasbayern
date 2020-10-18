@@ -19,6 +19,7 @@ use App\Http\Controllers\Frontend\HomeController as FrontendHomeController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\ShopCartController;
 use App\Http\Controllers\Frontend\ShopCategoryController as FrontendShopCategoryController;
+use App\Http\Controllers\Frontend\ShopPaymentController;
 use App\Http\Controllers\Frontend\ShopProductController as FrontendShopProductController;
 use App\Http\Controllers\Frontend\WishListController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -79,6 +80,12 @@ Route::delete('cart/clear', [ShopCartController::class, 'clear']);
 Route::post('cart/coupon', [ShopCartController::class, 'addCoupon']);
 Route::delete('cart/coupon', [ShopCartController::class, 'removeCoupon']);
 /**
+ *  Payment
+ */
+Route::get('payment', [ShopPaymentController::class, 'index'])->name('payment');
+Route::post('payment', [ShopPaymentController::class, 'order']);
+Route::post('payment/ship', [ShopPaymentController::class, 'chooseShip']);
+/**
  *  Blog
  */
 Route::get('blogs', [BlogController::class, 'index'])->name('blog');
@@ -104,7 +111,7 @@ Route::get('user/order', [CustomerController::class, 'getOrderDetail'])->name('u
  */
 Route::get('wishlists', [WishListController::class, 'index'])->name('wishlist');
 Route::post('wishlists/{id}', [WishListController::class, 'add']);
-Route::delete('wishlist', [WishListController::class, 'destroy']);
+Route::delete('wishlists/{id}', [WishListController::class, 'destroy']);
 
 /**
  *  Page

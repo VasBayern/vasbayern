@@ -38,7 +38,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#666666;padding:10px 10px 20px 10px;">
+                            <td style="font-family:Arial,Helvetica,sans-serif;font-size:16px;color:#666666;padding:10px 10px 20px 10px;">
                                 Tiếp tục ủng hộ shop tại: 
                             </td>
                         </tr>

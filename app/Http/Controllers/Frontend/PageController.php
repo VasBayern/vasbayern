@@ -39,17 +39,12 @@ class PageController extends Controller
     }
 
     public function followBlog(Request $request) {
-        $validatedData = $request->validate([
-            'email' => 'email'
-        ],[
-            'email.email' => 'Bạn phải nhập email',
-        ]);
-        $input = $request->all();
-        if(NewsletterModel::where('email', '=', $input['email'])->exists()) {
+        $email = $request->email;
+        if(NewsletterModel::where('email', '=', $email)->exists()) {
             \Toastr::error('Vui lòng nhập email khác','Email này đã được đăng ký' );
         } else {
             $item = new NewsletterModel();
-            $item->email = $input['email'];
+            $item->email = $email;
             $item->save();
             \Toastr::success('Hệ thống sẽ gửi tin mới nhất qua email của bạn','Đăng kí thành công' );
         }

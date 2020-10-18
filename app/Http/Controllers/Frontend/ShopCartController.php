@@ -149,6 +149,7 @@ class ShopCartController extends Controller
             //remove all product
             if ($subTotal == 0) {
                 $total = 0;
+                session()->forget('coupon');
             } else {
                 $coupon = session()->get('coupon');
                 if ($coupon['type'] == 'percent') {
@@ -177,6 +178,7 @@ class ShopCartController extends Controller
     public function clear()
     {
         \Cart::clear();
+        session()->forget('coupon');
         session()->save();
 
         $response = ['msg' => 'success'];

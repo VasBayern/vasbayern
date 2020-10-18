@@ -91,35 +91,13 @@
                             <div class="cart-buttons">
                                 <a href="{{ url('/') }}" class="primary-btn continue-shop" style="color:#e7ab3c;">Tiếp tục mua sắm</a>
                             </div>
-                            <!-- @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li style="list-style: none">{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif -->
-                            <!-- @if(session('success'))
-                                <div class="alert alert-success">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    {!!session('success')!!}
-                                </div>
-                            @endif
-                            @if(session('msg'))
-                                <div class="alert alert-warning">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    {!!session('msg')!!}
-                                </div>
-                            @endif -->
                             <div class="discount-coupon">
                                 <h6>Mã giảm giá</h6>
                                 <p>Nhập mã Coupon để được giảm 100k, mã VAS giảm 200k, mã vietanh giảm 10%</p>
                                 <p>Đặc biệt nhập mã VietAnhDepTrai để được giảm 90%, rẻ như cho không!!!</p>
                                 <form action="{{ url('cart/coupon') }}" class="coupon-form" method="POST">
                                     @csrf
-                                    <input type="text" placeholder="Nhập mã giảm giá" name="code" id="code" >
+                                    <input type="text" placeholder="Nhập mã giảm giá" name="code" id="code">
                                     <button type="submit" class="site-btn coupon-btn">Nhập</button>
                                 </form>
                             </div>
@@ -144,7 +122,6 @@
                                         $total = $subTotal - (double) $discount;
                                     }
                                     ?>
-
                                     <li class="subtotal">Mã giảm giá
                                         <span style="margin-left: 15px;">
                                             <button type="button"  class="close close-coupon" aria-label="Close" data-button='{{{ $total }}}'>

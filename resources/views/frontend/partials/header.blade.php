@@ -2,9 +2,11 @@
     .profile {
         color: #222326;
     }
+
     .profile:hover {
         color: #222326;
     }
+
     .social-btn {
         width: 100%;
         padding: 12px;
@@ -18,19 +20,23 @@
         text-decoration: none;
         text-align: center;
     }
+
     .social-btn:hover {
         opacity: 1;
     }
+
     .fb {
         background-color: #3B5998;
         color: white;
 
     }
+
     .google {
         background-color: #dd4b39;
         color: white;
 
     }
+
     /*
       ##Device = Tablets, Ipads (portrait)
       ##Screen = B/w 768px to 1024px
@@ -75,10 +81,10 @@
         }
     }
 </style>
- <!-- Page Preloder -->
- <div id="preloder">
-     <div class="loader"></div>
- </div>
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
 
 <header class="header-section">
     <div class="header-top">
@@ -86,169 +92,163 @@
             <div class="ht-left">
                 <div class="mail-service">
                     <i class=" fa fa-envelope"></i>
-                    vastb98@gmail.com
+                    vasbayernshop@gmail.com
                 </div>
                 <div class="phone-service">
                     <i class=" fa fa-phone"></i>
-                   034.674.1998
+                    034.674.1998
                 </div>
             </div>
-
             <div class="ht-right">
                 @if(Auth::check() && !empty(Auth::user()->email_verified_at))
-                    <ul class="nav nav-tabs" style="border: none">
-                        <li class="nav-item dropdown" style="background: #fff">
-                            <a class="nav-link dropdown-toggle profile" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false" style="border: none; font-size: 16px;">
-                                @if(isset(Auth::user()->avatar) && !empty(Auth::user()->avatar) )
-                                <img src="{{ URL::to('/') }}/front_ends/img/user_avatar/{{ Auth::user()->avatar }}" style="border-radius: 50%; width: 35px; margin-right: 10px;"/>
-                                @else
-                                    <img src="{{ URL::to('/') }}/front_ends/img/user_avatar/avt.jpg" style="border-radius: 50%; width: 35px; margin-right: 10px;"/>
-                                @endif
-                                {{ Auth::user()->name }}
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ url('user/profile') }}">Thông tin tài khoản</a>
-                                <a class="dropdown-item" href="{{ url('user/address') }}" >Địa chỉ giao hàng</a>
-                                <a class="dropdown-item" href="{{ url('user/wishlist') }}" >Sản phẩm yêu thích</a>
-                                <a class="dropdown-item" href="{{ url('user/order') }}">Lịch sử mua hàng</a>
-                                <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng xuất</a>
-                                <div class="dropdown-divider"></div>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                    </ul>
+                <ul class="nav nav-tabs" style="border: none">
+                    <li class="nav-item dropdown" style="background: #fff">
+                        <a class="nav-link dropdown-toggle profile" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false" style="border: none; font-size: 16px;">
+                            @if(isset(Auth::user()->avatar) && !empty(Auth::user()->avatar) )
+                            <img src="{{ URL::to('/') }}/front_ends/img/user_avatar/{{ Auth::user()->avatar }}" style="border-radius: 50%; width: 35px; margin-right: 10px;" />
+                            @else
+                            <img src="{{ URL::to('/') }}/front_ends/img/user_avatar/avt.jpg" style="border-radius: 50%; width: 35px; margin-right: 10px;" />
+                            @endif
+                            {{ Auth::user()->name }}
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ route('user.profile') }}">Thông tin tài khoản</a>
+                            <a class="dropdown-item" href="{{ route('user.address') }}">Địa chỉ giao hàng</a>
+                            <a class="dropdown-item" href="{{ route('user.order') }}">Lịch sử mua hàng</a>
+                            <a class="dropdown-item" href="{{ route('wishlist') }}">Sản phẩm yêu thích</a>
+                            <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng xuất</a>
+                            <div class="dropdown-divider"></div>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                </ul>
                 @else
                 <a href="#myModal" class="login-panel trigger-btn" data-toggle="modal" data-target=".bd-example-modal-lg">Đăng nhập</a>
                 <!-- Modal HTML -->
                 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content" style="background: rgb(248,248,248)">
-                                <div class="modal-body">
-                                    <div class="container-fluid">
-                                        <div class="row" >
-                                            <div class="col-md-4 intro" style="background: rgb(255,255,255); height: 576px">
-
-                                                <div class="modal-body" style="margin-top: 65px;">
-                                                    <p>Đăng ký, đăng nhập để tiến hành mua hàng, theo dõi đơn hàng, lưu danh sách sản phẩm yêu thích, nhận nhiều ưu đãi hấp dẫn hơn.</p>
-                                                    <img src="{{ asset('front_ends/img/welcome.jpg') }}" alt="">
-                                                </div>
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content" style="background: rgb(248,248,248)">
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-4 intro" style="background: rgb(255,255,255); height: 576px">
+                                            <div class="modal-body" style="margin-top: 65px;">
+                                                <p>Đăng ký, đăng nhập để tiến hành mua hàng, theo dõi đơn hàng, lưu danh sách sản phẩm yêu thích, nhận nhiều ưu đãi hấp dẫn hơn.</p>
+                                                <img src="{{ asset('front_ends/img/welcome.jpg') }}" alt="">
                                             </div>
-                                            <div class="col-md-8 ml-auto show-login" style="background: rgb(255,255,255);" >
-                                                <div class="modal-header">
-
-                                                    <h5 class="modal-title" id="exampleModalCenterTitle register" style="cursor: pointer">Đăng Nhập</h5>
-                                                    <h5 class="modal-title register" id="exampleModalCenterTitle"  style="cursor: pointer; margin-left: 20px;">Đăng Ký</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-
-                                                </div>
-                                                <div class="progress" style="height: 2px;">
-                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 26%;" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="{{ route('login') }}" method="post">
-                                                        @csrf
-                                                        <div class="form-group">
-                                                            <label for="email">Email</label>
-                                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email" required="required">
-                                                            @error('email')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="password">Mật khẩu</label>
-                                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Mật khẩu" required="required">
-
-                                                            @error('password')
-                                                            <span class="invalid-feedback" role="alert">
+                                        </div>
+                                        <div class="col-md-8 ml-auto show-login" style="background: rgb(255,255,255);">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle register" style="cursor: pointer">Đăng Nhập</h5>
+                                                <h5 class="modal-title register" id="exampleModalCenterTitle" style="cursor: pointer; margin-left: 20px;">Đăng Ký</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="progress" style="height: 2px;">
+                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 26%;" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{ route('login') }}" method="post" id="quickForm">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="email">Email</label>
+                                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email">
+                                                        @error('email')
+                                                        <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="form-group hint-text small">
-                                                            <a href="#" style="color: #e5a226;font-size: 16px;padding-right: 10px;">Quên mật khẩu?</a>
-                                                            <a href="{{ url('register') }}" style="color: #e5a226;font-size: 16px;padding-right: 10px;">Đăng ký</a>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <button type="submit" class="btn btn-warning btn-block  btn-lg" style="color: #fff">ĐĂNG NHẬP</button>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="col-social">
-                                                                <a href="{{ url('login/facebook') }}" class="fb social-btn">
-                                                                    <i class="fa fa-facebook fa-fw"></i> Đăng nhập bằng Facebook
-                                                                </a>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="password">Mật khẩu</label>
+                                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Mật khẩu">
+                                                        @error('password')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group hint-text small">
+                                                        <a href="#" style="color: #e5a226;font-size: 16px;padding-right: 10px;">Quên mật khẩu?</a>
+                                                        <a href="{{ url('register') }}" style="color: #e5a226;font-size: 16px;padding-right: 10px;">Đăng ký</a>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-warning btn-block  btn-lg" style="color: #fff">ĐĂNG NHẬP</button>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-social">
+                                                            <a href="{{ url('login/facebook') }}" class="fb social-btn">
+                                                                <i class="fa fa-facebook fa-fw"></i> Đăng nhập bằng Facebook
+                                                            </a>
 
-                                                                <a href="{{ url('login/google') }}" class="google social-btn"><i class="fa fa-google fa-fw">
-                                                                    </i> Đăng nhập bằng Google
-                                                                </a>
-                                                            </div>
+                                                            <a href="{{ url('login/google') }}" class="google social-btn"><i class="fa fa-google fa-fw">
+                                                                </i> Đăng nhập bằng Google
+                                                            </a>
                                                         </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <div class="col-md-8 ml-auto show-register" style="background: rgb(255,255,255); display: none" >
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalCenterTitle register" style="cursor: pointer">Đăng ký</h5>
-                                                    <h5 class="modal-title login" id="exampleModalCenterTitle"  style="cursor: pointer; margin-left: 45px;">Đăng nhập</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="progress" style="height: 2px;">
-                                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 26%;" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form method="POST" action="{{ route('register') }}">
-                                                        @csrf
-                                                        <div class="form-group">
-                                                            <label for="text">Tên</label>
-                                                            <input id="name" type="text"  class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Tên" required="required">
-                                                            @error('name')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="email">Email</label>
-                                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email" required="required">
-                                                            @error('email')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                            @enderror
-                                                        </div>
+                                        </div>
+                                        <div class="col-md-8 ml-auto show-register" style="background: rgb(255,255,255); display: none">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalCenterTitle register" style="cursor: pointer">Đăng ký</h5>
+                                                <h5 class="modal-title login" id="exampleModalCenterTitle" style="cursor: pointer; margin-left: 45px;">Đăng nhập</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="progress" style="height: 2px;">
+                                                <div class="progress-bar bg-warning" role="progressbar" style="width: 26%;" aria-valuenow="" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="POST" action="{{ route('register') }}" id="quickForm">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="text">Tên</label>
+                                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Tên" required="required">
+                                                        @error('name')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email">Email</label>
+                                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email" required="required">
+                                                        @error('email')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
+                                                    </div>
 
-                                                        <div class="form-group">
-                                                            <label for="password">Password</label>
-                                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="**********" required="required" min="6">
-                                                            @error('password')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="password-confirm">Nhập lại mật khẩu</label>
-                                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="**********" required min="6">
-                                                        </div>
-                                                        <div class="form-group hint-text small">
-                                                            <label class="form-check-label"><input type="checkbox" required="required"> Tôi đồng ý với
-                                                                <a href="#" style=" color: #e5a226;font-size: 16px;padding-right: 10px;">Điều khoản sử dụng</a>
-                                                                &amp; <a href="#" style=" color: #e5a226;font-size: 16px;padding-right: 10px;">Chính sách riêng tư</a></label>
-                                                        </div>
+                                                    <div class="form-group">
+                                                        <label for="password">Mật khẩu</label>
+                                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="**********" required="required" min="6">
+                                                        @error('password')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="password-confirm">Nhập lại mật khẩu</label>
+                                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="**********" required min="6">
+                                                    </div>
+                                                    <div class="form-group hint-text small">
+                                                        <label class="form-check-label"><input type="checkbox" required="required"> Tôi đồng ý với
+                                                            <a href="#" style=" color: #e5a226;font-size: 16px;padding-right: 10px;">Điều khoản sử dụng</a>
+                                                            &amp; <a href="#" style=" color: #e5a226;font-size: 16px;padding-right: 10px;">Chính sách riêng tư</a></label>
+                                                    </div>
 
-                                                        <div class="form-group">
-                                                            <button type="submit" class="btn btn-warning btn-block  btn-lg" style="color: #fff">ĐĂNG KÝ</button>
-                                                        </div>
-                                                    </form>
+                                                    <div class="form-group">
+                                                        <button type="submit" class="btn btn-warning btn-block  btn-lg" style="color: #fff">ĐĂNG KÝ</button>
+                                                    </div>
+                                                </form>
 
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -256,6 +256,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 @endif
                 <!-- <div class="top-social">
                     <a href="#"><i class="ti-facebook"></i></a>
@@ -302,38 +303,38 @@
                                 <div class="select-items">
                                     <table>
                                         <tbody class="cartBody">
-                                        @foreach(\Cart::getContent() as $item)
-                                        <tr class="rowCart rowCart{{$item->id}}">
-                                            <?php
-                                            $product_id = $item->id;
-                                            $product= \App\Models\ShopProductModel::find($product_id);
-                                            $images = json_decode($product->images);
-                                            if ($product->priceSale >0) {
-                                                $price =$product->priceSale;
-                                            } else {
-                                                $price = $product->priceCore;
-                                            }
-                                            ?>
-                                            <td class="si-pic">
-                                                <img src="{{asset($images[0]) }}" alt="" style="width: 100px; ">
-                                            </td>
-                                            <td class="si-text">
-                                                <div class="product-selected">
-                                                    <?php ?>
-                                                    <p>{{ number_format($price) }} VNĐ x <span class="quantityCart{{$item->id}}" data-quantity-{{$item->id}}="{{ $item->quantity }}">{{ $item->quantity }}</span></p>
-                                                    <h6>{{ $product->name }}</h6>
-                                                </div>
-                                            </td>
-                                            <td class="si-close" >
-                                                <i class="ti-close" data-rowId="{{ $item->id }}"></i>
-                                            </td>
-                                        </tr>
-                                        @endforeach
+                                            @foreach(\Cart::getContent() as $item)
+                                            <tr class="rowCart rowCart{{$item->id}}">
+                                                <?php
+                                                $product_id = $item->id;
+                                                $product = \App\Models\ShopProductModel::find($product_id);
+                                                $images = json_decode($product->images);
+                                                if ($product->priceSale > 0) {
+                                                    $price = $product->priceSale;
+                                                } else {
+                                                    $price = $product->priceCore;
+                                                }
+                                                ?>
+                                                <td class="si-pic">
+                                                    <img src="{{asset($images[0]) }}" alt="" style="width: 100px; ">
+                                                </td>
+                                                <td class="si-text">
+                                                    <div class="product-selected">
+                                                        <?php ?>
+                                                        <p>{{ number_format($price) }} VNĐ x <span class="quantityCart{{$item->id}}" data-quantity-{{$item->id}}="{{ $item->quantity }}">{{ $item->quantity }}</span></p>
+                                                        <h6>{{ $product->name }}</h6>
+                                                    </div>
+                                                </td>
+                                                <td class="si-close">
+                                                    <i class="ti-close" data-rowId="{{ $item->id }}"></i>
+                                                </td>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                                 @if(Cart::isEmpty())
-                                <div class="select-total" >
+                                <div class="select-total">
                                     <span class="emptyCart">Chưa có sản phẩm</span>
                                 </div>
                                 @else
@@ -361,7 +362,7 @@
                     <span>Tất cả danh mục</span>
                     <ul class="depart-hover">
                         <?php
-                        $categories = \App\Models\ShopCategoryModel::where('parent_id',0)->get();
+                        $categories = \App\Models\ShopCategoryModel::where('parent_id', 0)->get();
                         ?>
                         @foreach($categories as $category)
                         <li><a href="{{ url('/categories/').'/'.$category->slug }}">{{ $category->name }}</a></li>
@@ -375,10 +376,10 @@
                     <li><a href="#1">Danh mục</a>
                         <ul class="dropdown">
                             <?php
-                            $category = \App\Models\ShopCategoryModel::where('parent_id',0)->get();
+                            $category = \App\Models\ShopCategoryModel::where('parent_id', 0)->get();
                             ?>
                             @foreach($category as $category)
-                                <li><a href="{{ url('/categories/').'/'.$category->slug }}">{{ $category->name }}</a></li>
+                            <li><a href="{{ url('/categories/').'/'.$category->slug }}">{{ $category->name }}</a></li>
                             @endforeach
                         </ul>
                     </li>
@@ -389,8 +390,10 @@
                             <li><a href="{{ route('cart') }}">Giỏ hàng</a></li>
                             <li><a href="#1">SP Yêu Thích</a></li>
                             <li><a href="{{ route('faq') }}">Câu hỏi thường gặp</a></li>
+                            @if(!Auth::check() || empty(Auth::user()->email_verified_at))
                             <li><a href="{{ route('register') }}">Đăng kí</a></li>
                             <li><a href="{{ route('login') }}">Đăng nhập</a></li>
+                            @endif
                         </ul>
                     </li>
                 </ul>

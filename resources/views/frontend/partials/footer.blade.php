@@ -8,9 +8,9 @@
                         <a href="#"><img src="{{asset('front_ends/img/footer-logo.png')}}" alt=""></a>
                     </div>
                     <ul>
-                        <li>Address: 60-49 Road 11378 New York</li>
-                        <li>Phone: +65 11.188.888</li>
-                        <li>Email: hello.colorlib@gmail.com</li>
+                        <li>Địa chỉ: Số 34 ngõ 445 Nguyễn Khang, Cầu Giấy, Hà Nội</li>
+                        <li>SĐT: 0346741998</li>
+                        <li>Email: vasbayernshop@gmail.com</li>
                     </ul>
                     <div class="footer-social">
                         <a href="#"><i class="fa fa-facebook"></i></a>
@@ -44,12 +44,15 @@
             </div>
             <div class="col-lg-4">
                 <div class="newslatter-item">
-                    <h5>Join Our Newsletter Now</h5>
-                    <p>Get E-mail updates about our latest shop and special offers.</p>
-                    <form action="#" class="subscribe-form">
-                        <input type="text" placeholder="Enter Your Mail">
-                        <button type="button">Subscribe</button>
-                    </form>
+                    <div class="newslatter-item">
+                        <h5>Đăng ký nhận bản tin</h5>
+                        <p>Nhận email về các chương trình khuyến mãi, các bài viết mới của cửa hàng</p>
+                        <form action="{{ route('followBlog') }}" class="subscribe-form" method="post" enctype="multipart/form-data" id="quickForm" required>
+                            @csrf
+                            <input type="email" placeholder="Nhập email của bạn ..." name="email">
+                            <button type="submit">Đăng ký</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
