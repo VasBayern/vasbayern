@@ -30,7 +30,7 @@ Sản phẩm
                 <div class="card">
                     <div class="card-header">
                         <div class="col-lg-1">
-                            <a href="{{ url('admin/product') }}"><button type="button" class="btn btn-primary">Thêm</button></a>
+                            <a href="{{ url('admin/products') }}"><button type="button" class="btn btn-primary">Thêm</button></a>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -81,7 +81,7 @@ Sản phẩm
                                 </td>
                                 <td>
                                     <a href="#myModal" class="btn btn-success btn-action view-properties" data-toggle="modal" data-target="#modal-default" data-view="{{$product->id}}" title="Xem chi tiết"> <i class="fas fa-eye"></i></a>
-                                    <a href="{{ url('admin/product/'.$product->slug) }}" class="btn btn-action btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="{{ url('admin/products/'.$product->slug) }}" class="btn btn-action btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
                                     <a href="#myModal{{$product->id}}" class="btn btn-action btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                                 </tr>
@@ -103,7 +103,7 @@ Sản phẩm
 <!-- Modal HTML -->
 @foreach($products as $product)
 <!-- Modal Delete -->
-<div id="myModal{{$product->id}}" class="modal fade">
+<div id="myModal{{$product->slug}}" class="modal fade">
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
             <div class="modal-header flex-column">
@@ -117,7 +117,7 @@ Sản phẩm
                 <p>Lưu ý : Hành động này không thể hoàn tác</p>
             </div>
             <div class="modal-footer justify-content-center">
-                <form name="product" action="{{ url('admin/product/'.$product->slug) }}" method="post" class="form-horizontal">
+                <form name="product" action="{{ url('admin/products/'.$product->slug) }}" method="post" class="form-horizontal">
                     @method('DELETE')
                     @csrf
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>

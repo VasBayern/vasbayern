@@ -30,12 +30,14 @@ class ShopCartController extends Controller
 
     public function add(Request $request)
     {
-        $input = $request->all();
+        $input      = $request->all();
         $product_id = (int) $input['product_id'];
-        $quantity = (int) $input['quantity'];
-        $size_id =  $input['size_id'];
-        $size = ShopSizeModel::find($size_id);
-        $product  = ShopProductModel::find($product_id);
+        $quantity   = (int) $input['quantity'];
+        $size_id    =  $input['size_id'];
+        $color_id   = $input['color_id'];
+        $size       = ShopSizeModel::find($size_id);
+        $color      = ShopSizeModel::find($color_id);
+        $product    = ShopProductModel::find($product_id);
 
         if (isset($product->id)) {
             if ($product->priceSale > 0) {
@@ -44,23 +46,24 @@ class ShopCartController extends Controller
                 $price = $product->priceCore;
             }
             \Cart::add(array(
-                'id' => $product->id,
-                'name' => $product->name,
-                'price' => $price,
-                'quantity' => $quantity,
-                'attributes' => array(
-                    'size_id' => $size->id,
+                'id'            => $product->id,
+                'name'          => $product->name,
+                'price'         => $price,
+                'quantity'      => $quantity,
+                'attributes'    => array(
+                    'size_id'   => $size->id,
                     'size_name' => $size->name,
+                    'size_id'   => $color->id,
+                    'size_name' => $color->name,
                 ),
             ));
             session()->save();
             
-            $quantityCart = \Cart::getTotalQuantity();
-            $total = \Cart::getSubTotal();
-            $total = number_format($total) . ' VNĐ';
-            $price = number_format($price) . ' VNĐ';
+            $quantityCart   = \Cart::getTotalQuantity();
+            $total          = \Cart::getSubTotal();
+            $total          = number_format($total) . ' VNĐ';
+            $price          = number_format($price) . ' VNĐ';
             $cartCollection = \Cart::getContent();
-
             $images = json_decode($product->images);
             $response = [
                 'quantityCart'  => $quantityCart,
@@ -76,53 +79,50 @@ class ShopCartController extends Controller
     }
     public function update(Request $request)
      {
-        $input = $request->all();
-        $product_id = (int) $input['product_id'];
-        $quantity = (int) $input['quantity'];
-        $product_price = (int) $input['product_price'];
-
-        $product = ShopProductModel::find($product_id);
+        $input          = $request->all();
+        $product_id     = (int) $input['product_id'];
+        $quantity       = (int) $input['quantity'];
+        $product_price  = (int) $input['product_price'];
+        $product        = ShopProductModel::find($product_id);
         \Cart::update($product->id, array(
-            'quantity' => array(
-                'relative' => false,
-                'value' => $quantity,
+            'quantity'      => array(
+                'relative'  => false,
+                'value'     => $quantity,
             ),
         ));
         session()->save();
 
         $totalPrice = (float)$product_price * $quantity;
-        $subTotal = \Cart::getSubTotal();
-
+        $subTotal   = \Cart::getSubTotal();
         if (session()->has('coupon')) {
             //remove all product
             if ($subTotal == 0) {
                 $total = 0;
             } else {
-                $coupon = session()->get('coupon');
+                $coupon         = session()->get('coupon');
                 if ($coupon['type'] == 'percent') {
-                    $discount =  $coupon['discount_percent'];
-                    $total = $subTotal - ($subTotal * (float) $discount / 100);
+                    $discount   =  $coupon['discount_percent'];
+                    $total      = $subTotal - ($subTotal * (float) $discount / 100);
                 } elseif ($coupon['type'] == 'price') {
-                    $discount =   $coupon['discount_price'];
-                    $total = $subTotal - (float) $discount;
+                    $discount   =   $coupon['discount_price'];
+                    $total      = $subTotal - (float) $discount;
                 }
             }
         } else {
             $total =  $subTotal;
         }
-
-        $totalPrice = number_format($totalPrice) . ' VNĐ';
-        $subTotal = number_format($subTotal) . ' VNĐ';
-        $total = number_format($total) . ' VNĐ';
-        $quantityCart = \Cart::getTotalQuantity();
+        $totalPrice     = number_format($totalPrice) . ' VNĐ';
+        $subTotal       = number_format($subTotal) . ' VNĐ';
+        $total          = number_format($total) . ' VNĐ';
+        $quantityCart   = \Cart::getTotalQuantity();
 
         $response = [
-            'id' => $product_id,
-            'quantity' => $quantity,
+            'id'            => $product_id,
+            'quantity'      => $quantity,
             'quantityCart'  => $quantityCart,
-            'totalPrice' => $totalPrice,
-            'subTotal' => $subTotal,
-            'total' => $total
+            'totalPrice'    => $totalPrice,
+            'subTotal'      => $subTotal,
+            'total'         => $total
         ];
 
         return response($response);
@@ -130,16 +130,16 @@ class ShopCartController extends Controller
 
     public function remove(Request $request)
     {
-        $input = $request->all();
+        $input      = $request->all();
         $product_id = $input['product_id'];
-        $product = ShopProductModel::find($product_id);
+        $product    = ShopProductModel::find($product_id);
 
         if (isset($product_id)) {
             \Cart::remove($product->id);
             session()->save();
         }
-        $subTotal = \Cart::getSubTotal();
-        $quantityCart = \Cart::getTotalQuantity();
+        $subTotal       = \Cart::getSubTotal();
+        $quantityCart   = \Cart::getTotalQuantity();
 
         /**
          * Coupon
@@ -151,26 +151,26 @@ class ShopCartController extends Controller
                 $total = 0;
                 session()->forget('coupon');
             } else {
-                $coupon = session()->get('coupon');
+                $coupon         = session()->get('coupon');
                 if ($coupon['type'] == 'percent') {
-                    $discount =  $coupon['discount_percent'];
-                    $total = $subTotal - ($subTotal * (float) $discount / 100);
+                    $discount   =  $coupon['discount_percent'];
+                    $total      = $subTotal - ($subTotal * (float) $discount / 100);
                 } elseif ($coupon['type'] == 'price') {
-                    $discount =   $coupon['discount_price'];
-                    $total = $subTotal - (float) $discount;
+                    $discount   =   $coupon['discount_price'];
+                    $total      = $subTotal - (float) $discount;
                 }
             }
         } else {
-            $total =  $subTotal;
+            $total  =  $subTotal;
         }
-        $subTotal = number_format($subTotal) . ' VNĐ';
-        $total = number_format($total) . ' VNĐ';
+        $subTotal   = number_format($subTotal) . ' VNĐ';
+        $total      = number_format($total) . ' VNĐ';
 
         $response = [
-            'id' => $product_id,
-            'subTotal' => $subTotal,
-            'quantityCart' => $quantityCart,
-            'total' => $total
+            'id'            => $product_id,
+            'subTotal'      => $subTotal,
+            'quantityCart'  => $quantityCart,
+            'total'         => $total
         ];
         return response($response);
     }
@@ -194,23 +194,23 @@ class ShopCartController extends Controller
             return response($response);
         } else {
             session()->put('coupon', [
-                'name' => $coupon->code,
-                'type' => $coupon->type,
-                'discount_price' => $coupon->value,
-                'discount_percent' => $coupon->percent_off,
+                'name'              => $coupon->code,
+                'type'              => $coupon->type,
+                'discount_price'    => $coupon->value,
+                'discount_percent'  => $coupon->percent_off,
             ]);
 
             $sub_total = \Cart::getSubTotal();
             $total = 0;
-            $coupon = session()->get('coupon');
+            $coupon             = session()->get('coupon');
             if ($coupon['type'] == 'percent') {
-                $discount =  $coupon['discount_percent'];
-                $couponValue =  '- ' . number_format($discount) . ' %';
-                $total = $sub_total - ($sub_total * (float) $discount / 100);
+                $discount       =  $coupon['discount_percent'];
+                $couponValue    =  '- ' . number_format($discount) . ' %';
+                $total          = $sub_total - ($sub_total * (float) $discount / 100);
             } elseif ($coupon['type'] == 'price') {
-                $discount =   $coupon['discount_price'];
-                $couponValue =  '- ' . number_format($discount) . ' VNĐ';
-                $total = $sub_total - (float) $discount;
+                $discount       =   $coupon['discount_price'];
+                $couponValue    =  '- ' . number_format($discount) . ' VNĐ';
+                $total          = $sub_total - (float) $discount;
             }
             if ($sub_total == 0) {
                 $total = 0;
@@ -218,11 +218,11 @@ class ShopCartController extends Controller
             $total = number_format($total) . ' VNĐ';
 
             $response = [
-                'msg' => 'success',
-                'couponName' => $input['code'],
-                'couponType' => $coupon['type'],
+                'msg'           => 'success',
+                'couponName'    => $input['code'],
+                'couponType'    => $coupon['type'],
                 'couponValue'   => $couponValue,
-                'totalPrice' => $total
+                'totalPrice'    => $total
             ];
             return response($response);
         }
@@ -239,7 +239,7 @@ class ShopCartController extends Controller
         }
         $total = number_format($total) . ' VNĐ';
         $response = [
-            'msg'      => 'success',
+            'msg'   => 'success',
             'total' => $total,
         ];
         return response($response);

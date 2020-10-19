@@ -41,6 +41,9 @@
                 code: {
                     required: true,
                 },
+                color: {
+                    required: true,
+                },
             },
             messages: {
                 name: {
@@ -57,6 +60,9 @@
                 },
                 pecent_off: {
                     required: "Vui lòng nhập % giảm giá",
+                },
+                color: {
+                    required: "Vui lòng nhập màu",
                 },
             },
             errorElement: 'span',

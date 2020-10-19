@@ -3,25 +3,25 @@
 {{ $product->name }}
 @endsection
 @section('content')
-
 <style>
-    /* Extra small devices (phones, 600px and down) */
-    @media only screen and (max-width: 600px) {
-        ul.tab li {
-            width: 500px;
-        }
+    .radio-color {
+        position: absolute;
+        visibility: hidden;
     }
 
-    /* Small devices (portrait tablets and large phones, 600px and up) */
-    @media only screen and (min-width: 600px) {
-        ul.tab li {
-            width: 500px;
-        }
+    .radio-inline {
+        height: 30px;
+        width: 30px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .pd-color .color-name {
+        font-size: 14px;
+        font-weight: 500;
+        margin-left: 15px;
     }
 </style>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
     <div class="container">
@@ -42,11 +42,10 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-               
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="product-pic-zoom">
-                        <?php $images  = json_decode($product->images)?>
+                            <?php $images  = json_decode($product->images) ?>
                             <img class="product-big-img" src="{{ asset($images[0]) }}" alt="">
                             <div class="zoom-icon">
                                 <i class="fa fa-search-plus"></i>
@@ -60,8 +59,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-5">
+                    <div class="col-lg-5 offset-lg-1">
                         <form action="{{ url('cart/add') }}" method="post">
                             @csrf
                             <div class="product-details">
@@ -88,18 +86,30 @@
                                     <h4>{{ number_format($product->priceCore) }} VNĐ</h4>
                                     @endif
                                 </div>
+                                <div class="pd-color">
+                                    <h6>Màu <span class="color-name"></span></h6>
+                                    <div class="pd-color-choose">
+                                        @foreach($properties as $property)
+                                        <?php
+                                        $listSize = json_encode($property);
+                                        ?>
+                                        <label class="radio-inline" style="background-color: {{ $property['color'] }}">
+                                            <input type="radio" name="color_id" class="radio-color" value="{{ $property['color_id'] }}" data-name="{{ $property['color_name']}}" data-color="{{ $listSize }}">
+                                        </label>
+                                        @endforeach
+                                    </div>
+                                </div>
 
                                 <div class="pd-size-choose">
-                                    @if(isset($product->product_properties) && count($product->product_properties) >0)
-                                    @foreach($product->product_properties as $size)
+                                    <h6>Size</h6>
+                                    @foreach($sizes as $size)
                                     <div class="sc-item">
                                         <label>
-                                            <input type="radio" name="size_id" class="size" value="{{ $size->size_id }}" data-quantity="{{ $size->quantity }}">
-                                            {{ $size->size->name }}
+                                            <input type="radio" name="size_id" class="size" value="{{ $size->size_id }}" data-quantity="">
+                                            {{ $size->size_name }}
                                         </label>
                                     </div>
                                     @endforeach
-                                    @endif
                                     <div class="log"></div>
                                 </div>
 
@@ -108,14 +118,13 @@
                                         <!-- Chỉ nhập số-->
                                         <input type="text" id="quantity" name="quantity" value="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                     </div>
-                                    <input type="hidden" class="cart-btn" name="product_id" value="{{ $product->id }}">
-                                    @if(isset($size) && $size->quantity > 0)
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    @if(isset($size))
                                     <button type="submit" class="primary-btn pd-cart" id="add-to-cart" data-product-id="{{ $product->id  }}" style="border:none; padding: 14px 25px 10px">Thêm vào giỏ hàng</button>
                                     @else
                                     <button type="submit" disabled class="primary-btn pd-cart" id="add-to-cart" data-product-id="{{ $product->id  }}" style="border:none; background: darkgray;">Hết hàng</button>
                                     @endif
                                 </div>
-                                <p class='amount-remain' style="display: none">Còn lại <span id='amount' style="font-weight:bold;">@if(isset($size)){{ $size->quantity }}@endif</span> sản phẩm trong kho</p>
 
                                 <ul class="pd-tags">
                                     <li><span>CATEGORIES</span>: More Accessories, Wallets & Cases</li>
@@ -215,6 +224,16 @@
 
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $("input[name='color_id']").change(function(e) {
+            var colorName = $(this).attr('data-name');
+            $('.color-name').html(colorName);
+            var color = JSON.parse($(this).attr('data-color'));
+            console.log(color.sizes);
+            var i;
 
-
+        });
+    })
+</script>
 @endsection

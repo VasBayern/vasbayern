@@ -41,7 +41,16 @@
                 },
                 'images[]': {
                     required: true,
-                }
+                },
+                size_id: {
+                    required: true,
+                },
+                color_id: {
+                    required: true,
+                },
+                quantity: {
+                    required: true,
+                },
             },
             messages: {
                 name: {
@@ -73,6 +82,15 @@
                 },
                 'images[]': {
                     required: "Vui lòng nhập ảnh",
+                },
+                size_id: {
+                    required: "Vui lòng chọn size",
+                },
+                color_id: {
+                    required: "Vui lòng chọn màu sắc",
+                },
+                quantity: {
+                    required: "Vui lòng chọn số lượng",
                 },
             },
             errorElement: 'span',

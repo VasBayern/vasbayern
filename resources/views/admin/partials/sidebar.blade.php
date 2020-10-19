@@ -68,6 +68,12 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="{{ route('admin.color') }}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Màu sắc</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="{{ route('admin.coupon') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Mã giảm giá</p>
@@ -114,7 +120,7 @@
 
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
-          <i class="nav-icon fas fa-shopping-cart"></i>
+            <i class="nav-icon fas fa-shopping-cart"></i>
             <p>
               Đơn hàng
               <i class="right fas fa-angle-left"></i>

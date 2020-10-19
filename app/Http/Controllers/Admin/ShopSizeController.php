@@ -18,9 +18,8 @@ class ShopSizeController extends Controller
 
     public function store(Request $request) {
         $validatedData = $request->validate([
-            'name' => 'required|max:255|unique:sizes',
+            'name' => 'max:255|unique:sizes',
         ],[
-            'name.required' => 'Bạn chưa nhập tên',
             'name.unique' => 'Size đã tồn tại',
         ]);
 

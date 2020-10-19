@@ -23,7 +23,7 @@ Thêm sản phẩm
 
 <!-- Main content -->
 <section class="content">
-    <form action="{{ url('admin/product') }}" method="post" enctype="multipart/form-data" id="quickForm">
+    <form action="{{ url('admin/products') }}" method="post" enctype="multipart/form-data" id="quickForm">
         @csrf
         <div class="row">
             <div class="col-md-6">

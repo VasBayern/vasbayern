@@ -23,7 +23,7 @@ Sửa sản phẩm
 
 <!-- Main content -->
 <section class="content">
-    <form action="{{ url('admin/product/'.$product->slug) }}" method="post" enctype="multipart/form-data" id="quickForm">
+    <form action="{{ url('admin/products/'.$product->slug) }}" method="post" enctype="multipart/form-data" id="quickForm">
         @method('PUT')
         @csrf
         <div class="row">
@@ -177,8 +177,10 @@ Sửa sản phẩm
                                 <tr>
                                     <th>#</th>
                                     <th>Size</th>
+                                    <th>Màu sắc</th>
                                     <th>Số Lượng</th>
-                                    <th></th>
+                                    <th> <a href="#myModal" class="btn btn-success" title="Thêm" data-toggle="modal" data-target="#modal-default"><i class="fas fa-plus"></i></a>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -187,6 +189,9 @@ Sửa sản phẩm
                                 <tr>
                                     <th scope="row">{{ $stt }}</th>
                                     <td>{{ $productProperty->size->name }}</td>
+                                    <td>
+                                        <p style="width: 40px; height: 30px; margin: 0 auto; background-color:{{ $productProperty->color->color }}"></p>
+                                    </td>
                                     <td>{{ $productProperty->quantity }}</td>
                                     <td>
                                         <a href="#myModal" class="btn btn-primary" title="Sửa" data-toggle="modal" data-target="#modal-default-{{ $productProperty->id }}"><i class="fas fa-pencil-alt"></i></a>
@@ -212,16 +217,14 @@ Sửa sản phẩm
     </form>
 </section>
 <!-- /.content -->
-@foreach($product->product_properties as $productProperty)
-<!-- Modal Edit -->
-<div class="modal fade" id="modal-default-{{ $productProperty->id }}">
+<!-- Modal Add -->
+<div class="modal fade" id="modal-default">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url('product/'.$product->id.'/properties/'.$productProperty->id) }}" method="post" enctype="multipart/form-data" id="quickForm">
-                @method('PUT')
+            <form action="{{ url('admin/products/'.$product->slug.'/properties') }}" method="post" enctype="multipart/form-data" id="quickForm">
                 @csrf
                 <div class="modal-header">
-                    <h4 class="modal-title">Sửa size {{ $productProperty->size->name }}</h4>
+                    <h4 class="modal-title">Thêm</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -242,11 +245,64 @@ Sửa sản phẩm
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label for="name">Size</label>
-                            <select name="name" class="form-control custom-select">
-                                @foreach($product->product_properties as $productProperty)
-                                <option value="0">{{ $productProperty->size->name }}</option>
+                            <select name="size_id" class="form-control custom-select">
+                                <option value="">-- Chọn size --</option>
+                                @foreach($sizes as $size)
+                                <option value="{{ $size->id }}">{{ $size->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="color_id">Màu</label>
+                            <select name="color_id" class="form-control custom-select">
+                                <option value="">-- Chọn màu --</option>
+                                @foreach($colors as $color)
+                                <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="quantity">Số Lượng</label>
+                            <input type="text" name="quantity" value="{{ $productProperty->quantity }}" class="form-control" id="quantity" placeholder="Vui lòng nhập số lượng" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@foreach($product->product_properties as $productProperty)
+<!-- Modal Edit -->
+<div class="modal fade" id="modal-default-{{ $productProperty->id }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ url('admin/products/'.$product->slug.'/properties/'.$productProperty->id) }}" method="post" enctype="multipart/form-data" id="quickForm">
+                @method('PUT')
+                @csrf
+                <div class="modal-header">
+                    <h4 class="modal-title">Sửa size {{ $productProperty->size->name }} màu {{ $productProperty->color->name }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="name">Size</label>
+                            <input type="text" name="size_id" value="{{ $productProperty->size->name }}" class="form-control" disabled>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="color">Màu</label>
+                            <input type="text" name="color_id" value="{{ $productProperty->color->name }}" class="form-control" disabled>
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="quantity">Số Lượng</label>
@@ -282,7 +338,7 @@ Sửa sản phẩm
                 <p>Lưu ý : Hành động này không thể hoàn tác</p>
             </div>
             <div class="modal-footer justify-content-center">
-                <form name="brand" action="{{ url('product/'.$product->id.'/properties/'.$productProperty->id) }}" method="post" class="form-horizontal">
+                <form name="brand" action="{{ url('admin/products/'.$product->id.'/properties/'.$productProperty->id) }}" method="post" class="form-horizontal">
                     @method('DELETE')
                     @csrf
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>

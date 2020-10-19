@@ -2203,8 +2203,14 @@ ol {
 .product-details .pd-color h6 {
 	color: #252525;
 	font-weight: 700;
-	float: left;
 	margin-right: 28px;
+	margin-bottom: 15px;
+}
+.product-details .pd-size-choose h6 {
+	color: #252525;
+	font-weight: 700;
+	margin-right: 28px;
+	margin-bottom: 15px;
 }
 
 .product-details .pd-color .pd-color-choose {

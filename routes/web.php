@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ShopBannerController;
 use App\Http\Controllers\Admin\ShopBrandController;
 use App\Http\Controllers\Admin\ShopCategoryController;
+use App\Http\Controllers\Admin\ShopColorController;
 use App\Http\Controllers\Admin\ShopCouponController;
 use App\Http\Controllers\Admin\ShopOrderController;
 use App\Http\Controllers\Admin\ShopProductController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\Frontend\ShopCategoryController as FrontendShopCategory
 use App\Http\Controllers\Frontend\ShopPaymentController;
 use App\Http\Controllers\Frontend\ShopProductController as FrontendShopProductController;
 use App\Http\Controllers\Frontend\WishListController;
+use App\Models\ShopColorModel;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Route;
@@ -180,18 +182,26 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('size/{id}', [ShopSizeController::class, 'destroy']);
 
         /**
+         * Color
+         */
+        Route::get('colors', [ShopColorController::class, 'index'])->name('color');
+        Route::post('colors', [ShopColorController::class, 'store']);
+        Route::put('colors/{id}', [ShopColorController::class, 'update']);
+        Route::delete('colors/{id}', [ShopColorController::class, 'destroy']);
+        
+        /**
          * Shop Product
          */
-        Route::get('product/list', [ShopProductController::class, 'index'])->name('product');
-        Route::get('product', [ShopProductController::class, 'create']);
-        Route::get('product/{slug}', [ShopProductController::class, 'edit']);
-        Route::post('product', [ShopProductController::class, 'store']);
-        Route::put('product/{slug}', [ShopProductController::class, 'update']);
-        Route::delete('product/{id}', [ShopProductController::class, 'destroy']);
+        Route::get('products/list', [ShopProductController::class, 'index'])->name('product');
+        Route::get('products', [ShopProductController::class, 'create']);
+        Route::get('products/{slug}', [ShopProductController::class, 'edit']);
+        Route::post('products', [ShopProductController::class, 'store']);
+        Route::put('products/{slug}', [ShopProductController::class, 'update']);
+        Route::delete('products/{slug}', [ShopProductController::class, 'destroy']);
 
-        Route::post('product/{slug}/properties',  [ShopProductController::class, 'storeProperties']);
-        Route::put('product/{slug}/properties/{id}', [ShopProductController::class, 'updateProperties']);
-        Route::delete('product/{slug}/properties/{id}',  [ShopProductController::class, 'destroyProperties']);
+        Route::post('products/{slug}/properties',  [ShopProductController::class, 'storeProperties']);
+        Route::put('products/{slug}/properties/{id}', [ShopProductController::class, 'updateProperties']);
+        Route::delete('products/{slug}/properties/{id}',  [ShopProductController::class, 'destroyProperties']);
 
         //Route::view('/product/{id}/properties', 'admin.content.shop.product.edit');
         /**
