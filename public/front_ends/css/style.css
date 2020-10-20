@@ -2276,8 +2276,7 @@ ol {
 }
 
 .product-details .pd-size-choose .sc-item label.active {
-	background: #252525;
-	color: #ffffff;
+	border: 1px solid #252525;
 }
 
 .product-details .quantity {

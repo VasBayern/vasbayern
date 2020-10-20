@@ -141,6 +141,10 @@ class ShopOrderController extends Controller
                 if ($status == 2 || $status == 3) {
                     foreach ($products as $key => $product_id) {
                         ShopProductPropertiesModel::where('product_id', $product_id)->where('size_id', $sizes[$key])->decrement('quantity', $quantities[$key]);
+                        $property = ShopProductPropertiesModel::where('product_id', $product_id)->where('size_id', $sizes[$key])->first();
+                        if($property['quantity'] == 0) {
+                            $property->delete();
+                        }
                     }
                 }
             } elseif ($statusOrigin == 2) {

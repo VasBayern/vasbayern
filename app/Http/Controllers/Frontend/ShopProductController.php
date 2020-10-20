@@ -21,9 +21,10 @@ class ShopProductController extends Controller
 
         $sizes = DB::select('SELECT DISTINCT B.id AS size_id, B.name AS size_name
         FROM product_properties AS A
-        JOIN sizes AS B ON A.size_id = B.id WHERE A.product_id = ' . $product->id);
+        JOIN sizes AS B ON A.size_id = B.id WHERE A.product_id = ' . $product->id .' ORDER BY size_id');
         $data['sizes'] = $sizes;
 
+ 
         $sql = DB::select('SELECT B.id AS size_id, B.name AS size_name, C.id AS color_id, C.name AS color_name, C.color, A.quantity
         FROM product_properties AS A
         JOIN sizes AS B ON A.size_id = B.id

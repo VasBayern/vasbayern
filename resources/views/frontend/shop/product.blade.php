@@ -86,46 +86,49 @@
                                     <h4>{{ number_format($product->priceCore) }} VNĐ</h4>
                                     @endif
                                 </div>
+                                @if(count($sizes) > 0)
                                 <div class="pd-color">
                                     <h6>Màu <span class="color-name"></span></h6>
                                     <div class="pd-color-choose">
                                         @foreach($properties as $property)
                                         <?php
                                         $listSize = json_encode($property);
+                                        $sizeOfColor = json_encode($sizes)
                                         ?>
                                         <label class="radio-inline" style="background-color: {{ $property['color'] }}">
-                                            <input type="radio" name="color_id" class="radio-color" value="{{ $property['color_id'] }}" data-name="{{ $property['color_name']}}" data-color="{{ $listSize }}">
+                                            <input type="radio" name="color_id" class="radio-color" value="{{ $property['color_id'] }}" data-name="{{ $property['color_name']}}" data-size="{{ $sizeOfColor }}" data-color="{{ $listSize }}">
                                         </label>
                                         @endforeach
                                     </div>
                                 </div>
-
                                 <div class="pd-size-choose">
                                     <h6>Size</h6>
-                                    @foreach($sizes as $size)
-                                    <div class="sc-item">
-                                        <label>
-                                            <input type="radio" name="size_id" class="size" value="{{ $size->size_id }}" data-quantity="">
-                                            {{ $size->size_name }}
-                                        </label>
+                                    <div class="size-item">
+                                        @foreach($sizes as $size)
+                                        <div class="sc-item">
+                                            <label class="size size-{{$size->size_id}}">
+                                                <input type="radio" name="size_id" value="{{ $size->size_id }}" data-size="{{ $sizeOfColor }}" data-color="{{ $listSize }}" data-quantity="">
+                                                {{ $size->size_name }}
+                                            </label>
+                                        </div>
+                                        @endforeach
                                     </div>
-                                    @endforeach
                                     <div class="log"></div>
                                 </div>
-
+                                @endif
                                 <div class="quantity">
                                     <div class="pro-qty">
                                         <!-- Chỉ nhập số-->
-                                        <input type="text" id="quantity" name="quantity" value="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                                        <input type="text" id="quantity" name="quantity" data-quantity="" value="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                     </div>
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    @if(isset($size))
-                                    <button type="submit" class="primary-btn pd-cart" id="add-to-cart" data-product-id="{{ $product->id  }}" style="border:none; padding: 14px 25px 10px">Thêm vào giỏ hàng</button>
+                                    @if(count($sizes) > 0)
+                                    <button type="submit" class="primary-btn pd-cart" id="add-to-cart" data-product-id="{{ $product->id  }}" style="border:none; padding: 14px 25px 10px;">Thêm vào giỏ hàng</button>
                                     @else
                                     <button type="submit" disabled class="primary-btn pd-cart" id="add-to-cart" data-product-id="{{ $product->id  }}" style="border:none; background: darkgray;">Hết hàng</button>
                                     @endif
                                 </div>
-
+                                <p class="amount"></p>
                                 <ul class="pd-tags">
                                     <li><span>CATEGORIES</span>: More Accessories, Wallets & Cases</li>
                                     <li><span>TAGS</span>: Clothing, T-shirt, Woman</li>
@@ -141,12 +144,9 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
-
                 <!-- bl -->
             </div>
-
         </div>
     </div>
 </section>
@@ -229,11 +229,81 @@
         $("input[name='color_id']").change(function(e) {
             var colorName = $(this).attr('data-name');
             $('.color-name').html(colorName);
+            var i, j;
+            var html = '';
+            var sizeColor = [];
             var color = JSON.parse($(this).attr('data-color'));
-            console.log(color.sizes);
-            var i;
-
+            var sizes = Object.values(color.sizes);
+            for (i = 0; i < sizes.length; i++) {
+                sizeColor.push(sizes[i].size_id);
+            }
+            var listSize = JSON.parse($(this).attr('data-size'));
+            for (j = 0; j < listSize.length; j++) {
+                if (sizeColor.indexOf(listSize[j].size_id) > -1) {
+                    $('.size-' + listSize[j].size_id).css({
+                        "background-color": "#ffffff",
+                        "cursor": "pointer",
+                        //"border": "#ebebeb",
+                        "pointer-events": "auto"
+                    });
+                } else {
+                    $('.size-' + listSize[j].size_id).css({
+                        "background-color": "#cccccc",
+                        "pointer-events": "none",
+                        //"border": "#cccccc"
+                    });
+                }
+            }
+            $("input[name='size_id']").change(function(e) {
+                size_id = $(this).val();
+                var i;
+                for (i = 0; i < sizes.length; i++) {
+                    if (size_id == sizes[i].size_id) {
+                        $('.amount').html('Còn lại <span class="quantity-stock" style="font-weight: bold;" data-quantity="' + sizes[i].quantity + '">' + sizes[i].quantity + '</span> sản phẩm');
+                    }
+                }
+            })
         });
+    })
+
+    $(document).ready(function() {
+        $('.inc').on('click', function(e) {
+            e.preventDefault();
+            quantity = parseInt($('#quantity').val());
+            nextQuantity = quantity + 1;
+            $('#quantity').attr('data-quantity', nextQuantity);
+            var quantityStock = $('.quantity-stock').attr('data-quantity');
+            if (nextQuantity > quantityStock) {
+                alert('Vui lòng chọn số lượng ít hơn');
+                $(this).css({
+                    "pointer-events": "none"
+                });
+            }
+        });
+        $('.dec').on('click', function(e) {
+            e.preventDefault();
+            quantity = parseInt($('#quantity').val());
+            nextQuantity = quantity - 1;
+            $('#quantity').attr('data-quantity', nextQuantity);
+            var quantityStock = $('.quantity-stock').attr('data-quantity');
+            if (nextQuantity < quantityStock) {
+                $('.inc').css({
+                    "pointer-events": "auto"
+                });
+            }
+        })
+        $('#quantity').on('change', function(e) {
+            e.preventDefault();
+            quantity = parseInt($('#quantity').val());
+            var quantityStock = $('.quantity-stock').attr('data-quantity');
+            console.log(quantity);
+            if (quantity > quantityStock) {
+                alert('Vui lòng chọn số lượng ít hơn');
+                $('.inc').css({
+                    "pointer-events": "none"
+                });
+            }
+        })
     })
 </script>
 @endsection

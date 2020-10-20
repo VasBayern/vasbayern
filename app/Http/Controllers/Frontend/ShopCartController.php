@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\ShopColorModel;
 use App\Models\ShopCouponModel;
 use App\Models\ShopProductModel;
 use App\Models\ShopProductPropertiesModel;
@@ -36,7 +37,7 @@ class ShopCartController extends Controller
         $size_id    =  $input['size_id'];
         $color_id   = $input['color_id'];
         $size       = ShopSizeModel::find($size_id);
-        $color      = ShopSizeModel::find($color_id);
+        $color      = ShopColorModel::find($color_id);
         $product    = ShopProductModel::find($product_id);
 
         if (isset($product->id)) {
@@ -46,19 +47,19 @@ class ShopCartController extends Controller
                 $price = $product->priceCore;
             }
             \Cart::add(array(
-                'id'            => $product->id,
-                'name'          => $product->name,
-                'price'         => $price,
-                'quantity'      => $quantity,
-                'attributes'    => array(
-                    'size_id'   => $size->id,
-                    'size_name' => $size->name,
-                    'size_id'   => $color->id,
-                    'size_name' => $color->name,
+                'id'                => $product->id,
+                'name'              => $product->name,
+                'price'             => $price,
+                'quantity'          => $quantity,
+                'attributes'        => array(
+                    'size_id'       => $size->id,
+                    'size_name'     => $size->name,
+                    'color_id'      => $color->id,
+                    'color_name'    => $color->name,
                 ),
             ));
             session()->save();
-            
+
             $quantityCart   = \Cart::getTotalQuantity();
             $total          = \Cart::getSubTotal();
             $total          = number_format($total) . ' VNĐ';
@@ -72,13 +73,17 @@ class ShopCartController extends Controller
                 'price'         => $price,
                 'quantity'      => $quantity,
                 'total'         => $total,
-                'image'         => $images[0]
+                'image'         => $images[0],
+                'color_id'      => $color->id,
+                'color_name'    => $color->name,
+                'size_id'       => $size->id,
+                'size_name'     => $size->name,
             ];
         }
         return response($response);
     }
     public function update(Request $request)
-     {
+    {
         $input          = $request->all();
         $product_id     = (int) $input['product_id'];
         $quantity       = (int) $input['quantity'];
@@ -126,7 +131,7 @@ class ShopCartController extends Controller
         ];
 
         return response($response);
-     }
+    }
 
     public function remove(Request $request)
     {
