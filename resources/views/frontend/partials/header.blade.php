@@ -306,7 +306,7 @@
                                             @foreach(\Cart::getContent() as $item)
                                             <tr class="rowCart rowCart{{$item->id}}">
                                                 <?php
-                                                $product_id = $item->id;
+                                                $product_id = $item->attributes->product_id;
                                                 $product = \App\Models\ShopProductModel::find($product_id);
                                                 $images = json_decode($product->images);
                                                 if ($product->priceSale > 0) {
@@ -323,6 +323,9 @@
                                                         <?php ?>
                                                         <p>{{ number_format($price) }} VNĐ x <span class="quantityCart{{$item->id}}" data-quantity-{{$item->id}}="{{ $item->quantity }}">{{ $item->quantity }}</span></p>
                                                         <h6>{{ $product->name }}</h6>
+                                                        <p style="color: #252525;">Size: <span style=" color: #dba239;">{{ $item->attributes->size_name }}</span> - 
+                                                            Màu: <span style=" color: #dba239;">{{ $item->attributes->color_name }}</span>
+                                                        </p>
                                                     </div>
                                                 </td>
                                                 <td class="si-close">

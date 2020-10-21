@@ -122,6 +122,7 @@
                                         <input type="text" id="quantity" name="quantity" data-quantity="" value="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                     </div>
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="quantityStock" class="quantityStock" value="{{ $product->id }}">
                                     @if(count($sizes) > 0)
                                     <button type="submit" class="primary-btn pd-cart" id="add-to-cart" data-product-id="{{ $product->id  }}" style="border:none; padding: 14px 25px 10px;">Thêm vào giỏ hàng</button>
                                     @else
@@ -260,6 +261,7 @@
                 for (i = 0; i < sizes.length; i++) {
                     if (size_id == sizes[i].size_id) {
                         $('.amount').html('Còn lại <span class="quantity-stock" style="font-weight: bold;" data-quantity="' + sizes[i].quantity + '">' + sizes[i].quantity + '</span> sản phẩm');
+                        $('.quantityStock').val(sizes[i].quantity);
                     }
                 }
             })
@@ -267,14 +269,41 @@
     })
 
     $(document).ready(function() {
+        // var changeQuantity = function(e) {
+        //     e.preventDefault();
+        //     var quantity = parseInt($('#quantity').val());
+        //     var nextQuantity = quantity + 1;
+        //     $('#quantity').attr('data-quantity', nextQuantity);
+        //     var quantityStock = $('.quantity-stock').attr('data-quantity');
+        //     if (nextQuantity > quantityStock || quantity > quantityStock) {
+        //         $('#quantity').val(quantityStock);
+        //         $('#quantity').html(quantityStock);
+        //         $('#quantity').attr('data-quantity', quantityStock);
+        //         toastr.error('Vui lòng chọn số lượng ít hơn');
+        //         $('.inc').css({
+        //             "pointer-events": "none"
+        //         });
+        //     }
+        //     if (quantity == 0) {
+        //         $('.dec').css({
+        //             "pointer-events": "none"
+        //         });
+        //     }
+        // }
+        // $('.inc').on('click', changeQuantity);
+        // $('#quantity').on('change', changeQuantity);
+
         $('.inc').on('click', function(e) {
             e.preventDefault();
-            quantity = parseInt($('#quantity').val());
-            nextQuantity = quantity + 1;
+            var quantity = parseInt($('#quantity').val());
+            var nextQuantity = quantity + 1;
             $('#quantity').attr('data-quantity', nextQuantity);
             var quantityStock = $('.quantity-stock').attr('data-quantity');
             if (nextQuantity > quantityStock) {
-                alert('Vui lòng chọn số lượng ít hơn');
+                $('#quantity').val(quantityStock);
+                $('#quantity').html(quantityStock);
+                $('#quantity').attr('data-quantity', quantityStock);
+                toastr.error('Vui lòng chọn số lượng ít hơn');
                 $(this).css({
                     "pointer-events": "none"
                 });
@@ -282,8 +311,8 @@
         });
         $('.dec').on('click', function(e) {
             e.preventDefault();
-            quantity = parseInt($('#quantity').val());
-            nextQuantity = quantity - 1;
+            var quantity = parseInt($('#quantity').val());
+            var nextQuantity = quantity - 1;
             $('#quantity').attr('data-quantity', nextQuantity);
             var quantityStock = $('.quantity-stock').attr('data-quantity');
             if (nextQuantity < quantityStock) {
@@ -291,15 +320,27 @@
                     "pointer-events": "auto"
                 });
             }
+            if (nextQuantity == 0) {
+                $('.dec').css({
+                    "pointer-events": "none"
+                });
+            }
         })
         $('#quantity').on('change', function(e) {
             e.preventDefault();
-            quantity = parseInt($('#quantity').val());
+            var quantity = parseInt($('#quantity').val());
             var quantityStock = $('.quantity-stock').attr('data-quantity');
-            console.log(quantity);
             if (quantity > quantityStock) {
-                alert('Vui lòng chọn số lượng ít hơn');
+                $('#quantity').val(quantityStock);
+                $('#quantity').html(quantityStock);
+                $('#quantity').attr('data-quantity', quantityStock);
+                toastr.error('Vui lòng chọn số lượng ít hơn');
                 $('.inc').css({
+                    "pointer-events": "none"
+                });
+            }
+            if (quantity == 0) {
+                $('.dec').css({
                     "pointer-events": "none"
                 });
             }

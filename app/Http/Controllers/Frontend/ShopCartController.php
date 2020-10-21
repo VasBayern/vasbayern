@@ -15,11 +15,12 @@ class ShopCartController extends Controller
     public function index()
     {
         $data = array();
+
         $cartCollection = \Cart::getContent();
         $data['catProducts'] = $cartCollection;
         $products = array();
         foreach ($cartCollection as $product) {
-            $product_id = $product->id;
+            $product_id = $product->attributes->product_id;
             $products[$product_id] = ShopProductModel::find($product_id);
         }
         $data['products'] = $products;
@@ -36,9 +37,11 @@ class ShopCartController extends Controller
         $quantity   = (int) $input['quantity'];
         $size_id    =  $input['size_id'];
         $color_id   = $input['color_id'];
+        $quantityStock   = $input['quantityStock'];
         $size       = ShopSizeModel::find($size_id);
         $color      = ShopColorModel::find($color_id);
         $product    = ShopProductModel::find($product_id);
+        $property = ShopProductPropertiesModel::select('id')->where('product_id', $product_id)->where('size_id', $size_id)->where('color_id', $color_id)->first();
 
         if (isset($product->id)) {
             if ($product->priceSale > 0) {
@@ -47,15 +50,17 @@ class ShopCartController extends Controller
                 $price = $product->priceCore;
             }
             \Cart::add(array(
-                'id'                => $product->id,
+                'id'                => $property['id'],
                 'name'              => $product->name,
                 'price'             => $price,
                 'quantity'          => $quantity,
                 'attributes'        => array(
+                    'product_id'    => $product_id,
                     'size_id'       => $size->id,
                     'size_name'     => $size->name,
                     'color_id'      => $color->id,
                     'color_name'    => $color->name,
+                    'quantityStock' => $quantityStock
                 ),
             ));
             session()->save();
@@ -74,10 +79,11 @@ class ShopCartController extends Controller
                 'quantity'      => $quantity,
                 'total'         => $total,
                 'image'         => $images[0],
-                'color_id'      => $color->id,
-                'color_name'    => $color->name,
                 'size_id'       => $size->id,
                 'size_name'     => $size->name,
+                'color_id'      => $color->id,
+                'color_name'    => $color->name,
+                'quantityStock' => $quantityStock
             ];
         }
         return response($response);
@@ -85,11 +91,13 @@ class ShopCartController extends Controller
     public function update(Request $request)
     {
         $input          = $request->all();
-        $product_id     = (int) $input['product_id'];
+        $id             = (int) $input['id'];
         $quantity       = (int) $input['quantity'];
         $product_price  = (int) $input['product_price'];
-        $product        = ShopProductModel::find($product_id);
-        \Cart::update($product->id, array(
+        $quantityStock  = (int) $input['product_price'];
+        $color_id       = (int) $input['color_id'];
+        $size_id        = (int) $input['size_id'];
+        \Cart::update($id, array(
             'quantity'      => array(
                 'relative'  => false,
                 'value'     => $quantity,
@@ -122,12 +130,13 @@ class ShopCartController extends Controller
         $quantityCart   = \Cart::getTotalQuantity();
 
         $response = [
-            'id'            => $product_id,
+            'id'            => $id,
             'quantity'      => $quantity,
+            'quantityStock' => $quantityStock,
             'quantityCart'  => $quantityCart,
             'totalPrice'    => $totalPrice,
             'subTotal'      => $subTotal,
-            'total'         => $total
+            'total'         => $total,
         ];
 
         return response($response);
@@ -136,11 +145,10 @@ class ShopCartController extends Controller
     public function remove(Request $request)
     {
         $input      = $request->all();
-        $product_id = $input['product_id'];
-        $product    = ShopProductModel::find($product_id);
+        $id         = $input['id'];
 
-        if (isset($product_id)) {
-            \Cart::remove($product->id);
+        if (isset($id)) {
+            \Cart::remove($id);
             session()->save();
         }
         $subTotal       = \Cart::getSubTotal();
@@ -172,7 +180,7 @@ class ShopCartController extends Controller
         $total      = number_format($total) . ' VNĐ';
 
         $response = [
-            'id'            => $product_id,
+            'id'            => $id,
             'subTotal'      => $subTotal,
             'quantityCart'  => $quantityCart,
             'total'         => $total

@@ -23,7 +23,7 @@
         "laravel/passport": "^10.0",
         "laravel/tinker": "^2.0",
         "livewire/livewire": "^2.0",
-        "unisharp/laravel-filemanager": "~2.0"
+        "unisharp/laravel-filemanager": "~1.9.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
