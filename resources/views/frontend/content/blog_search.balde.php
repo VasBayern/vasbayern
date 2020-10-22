@@ -3,11 +3,7 @@
 Tin tức
 @endsection
 @section('content')
-<style type="text/css">
-    .default-cat {
-        color: #E7AB3C;
-    }
-</style>
+
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
     <div class="container">
@@ -15,8 +11,7 @@ Tin tức
             <div class="col-lg-12">
                 <div class="breadcrumb-text product-more">
                     <a href="{{ url('/') }}"><i class="fa fa-home"></i> Trang chủ</a>
-                    <a href="{{ route('blog') }}">Tin tức</a>
-                    <span>{{ $category->name }}</span>
+                    <span>Tin tức</span>
                 </div>
             </div>
         </div>
@@ -30,18 +25,17 @@ Tin tức
                 <div class="blog-sidebar">
                     <div class="search-form">
                         <h4>Tìm Kiếm</h4>
-                        <form action="#">
-                            <input type="text" placeholder="Search . . .  ">
+                        <form action="{{ url('blogs/search') }}" method="post">
+                            @csrf
+                            <input type="text" placeholder="Tìm kiếm . . .  " id="search-blog" name="name">
                             <button type="submit"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
                     <div class="blog-catagory">
                         <h4>Danh Mục</h4>
                         <ul>
-                            @foreach($categoryPosts as $categoryPost)
-                            <!-- <?php $default = $category->id == $categoryPost->id ? 'default-cat' : '' ?> -->
-                            <li><a href="{{ url('blogs/category/'.$categoryPost->slug) }}"
-                             <?php if ($category->id == $categoryPost->id) {echo 'style="color: #E7AB3C"'; } ?>>{{ $categoryPost->name }}</a></li>
+                            @foreach($categories as $category)
+                            <li><a href="{{ url('blogs/category/'.$category->slug) }}">{{ $category->name }}</a></li>
                             @endforeach
                         </ul>
                     </div>
@@ -131,7 +125,6 @@ Tin tức
                             </div>
                         </div> -->
                 </div>
-                {{ $posts->links() }}
             </div>
         </div>
     </div>

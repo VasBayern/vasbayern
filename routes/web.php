@@ -94,7 +94,8 @@ Route::get('blogs', [BlogController::class, 'index'])->name('blog');
 Route::get('blogs/category/{slug}', [BlogController::class, 'getBlogCategory']);
 Route::get('blogs/post/{slug}', [BlogController::class, 'getBlogPost']);
 Route::post('blogs/comment', [BlogController::class, 'commentBlog']);
-Route::post('blogs/search', [BlogController::class, 'searchByName']);
+Route::post('blogs/searchAuto', [BlogController::class, 'searchByName']);
+Route::post('blogs/search', [BlogController::class, 'search']);
 
 /**
  *  User
@@ -122,6 +123,8 @@ Route::get('faq', [PageController::class, 'getFaq'])->name('faq');
 Route::get('contact', [PageController::class, 'getContact'])->name('contact');
 Route::post('comment', [PageController::class, 'comment'])->name('comment');
 Route::post('followBlog', [PageController::class, 'followBlog'])->name('followBlog');
+Route::post('searchAuto', [PageController::class, 'searchAuto'])->name('searchProduct');
+Route::post('search', [PageController::class, 'searchProduct']);
 
 /**
  * -----------------------------------ADMIN-----------------------------------

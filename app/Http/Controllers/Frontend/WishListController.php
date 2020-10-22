@@ -64,9 +64,11 @@ class WishListController extends Controller
     {
         $item = WishListModel::find($id);
         $item->delete();
+        $countWishlist = count(WishListModel::where('user_id', Auth::id())->get());
         $response = [
-            'msg'   => 'success',
-            'id'    => $id,
+            'msg'           => 'success',
+            'id'            => $id,
+            'countWishlist' => $countWishlist,
         ];
         return response($response);
     }

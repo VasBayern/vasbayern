@@ -28,13 +28,11 @@
     .fb {
         background-color: #3B5998;
         color: white;
-
     }
 
     .google {
         background-color: #dd4b39;
         color: white;
-
     }
 
     /*
@@ -117,7 +115,6 @@
                             <a class="dropdown-item" href="{{ route('user.order') }}">Lịch sử mua hàng</a>
                             <a class="dropdown-item" href="{{ route('wishlist') }}">Sản phẩm yêu thích</a>
                             <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng xuất</a>
-                            <div class="dropdown-divider"></div>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none">
                                 @csrf
                             </form>
@@ -279,20 +276,64 @@
                 </div>
                 <div class="col-lg-7 col-md-7">
                     <div class="advanced-search">
-                        <button type="button" class="category-btn">All Categories</button>
-                        <div class="input-group">
-                            <input type="text" placeholder="What do you need?">
-                            <button type="button"><i class="ti-search"></i></button>
-                        </div>
+                        <form action="{{ url('search') }}" method="POST">
+                            @csrf
+                            <button type="button" class="category-btn">All Categories</button>
+                            <div class="input-group">
+                                <input type="text" placeholder="What do you need?" id="search" name="name">
+                                <button type="submit"><i class="ti-search"></i></button>
+                            </div>
+                        </for   m>
                     </div>
                 </div>
                 <div class="col-lg-3 text-right col-md-3">
                     <ul class="nav-right">
                         <li class="heart-icon">
-                            <a href="#">
+                            <?php $wishlists = \App\Models\WishListModel::where('user_id', \Auth::id())->get() ?>
+                            <a href="{{ route('wishlist') }}">
                                 <i class="icon_heart_alt"></i>
-                                <span class="countWhislist">1</span>
+                                <span class="countWhislist">{{ count($wishlists) }}</span>
                             </a>
+                            <div class="heart-hover">
+                                @if(count($wishlists) > 0)
+                                <div class="select-items">
+                                    <table>
+                                        <tbody class="heartBody">
+                                            @foreach($wishlists as $item)
+                                            <tr class="row-wishlist-{{ $item->id }}">
+                                                <?php
+                                                $product = \App\Models\ShopProductModel::find($item->product_id);
+                                                $images = json_decode($product->images);
+                                                if ($product->priceSale > 0) {
+                                                    $price = $product->priceSale;
+                                                } else {
+                                                    $price = $product->priceCore;
+                                                }
+                                                ?>
+                                                <td class="si-pic">
+                                                    <a href="{{ url('products/'.$product->slug) }}"><img src="{{asset($images[0]) }}" alt="" style="width: 100px; "></a>
+                                                </td>
+                                                <td class="si-text">
+                                                    <div class="product-selected">
+                                                        <?php ?>
+                                                        <p>{{ number_format($price) }} VNĐ </p>
+                                                        <h6>{{ $product->name }}</h6>
+                                                    </div>
+                                                </td>
+                                                <td class="si-close">
+                                                    <a href="{{ url('wishlists/'.$item->id) }}" class="remove-wish-list">x</a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @else
+                                <div class="select-total">
+                                    <span class="emptyHeart">Chưa có sản phẩm</span>
+                                </div>
+                                @endif
+                            </div>
                         </li>
                         <li class="cart-icon">
                             <a href="{{ url('cart') }}">
@@ -323,7 +364,7 @@
                                                         <?php ?>
                                                         <p>{{ number_format($price) }} VNĐ x <span class="quantityCart{{$item->id}}" data-quantity-{{$item->id}}="{{ $item->quantity }}">{{ $item->quantity }}</span></p>
                                                         <h6>{{ $product->name }}</h6>
-                                                        <p style="color: #252525;">Size: <span style=" color: #dba239;">{{ $item->attributes->size_name }}</span> - 
+                                                        <p style="color: #252525;">Size: <span style=" color: #dba239;">{{ $item->attributes->size_name }}</span> -
                                                             Màu: <span style=" color: #dba239;">{{ $item->attributes->color_name }}</span>
                                                         </p>
                                                     </div>
@@ -368,7 +409,9 @@
                         $categories = \App\Models\ShopCategoryModel::where('parent_id', 0)->get();
                         ?>
                         @foreach($categories as $category)
-                        <li><a href="{{ url('/categories/').'/'.$category->slug }}">{{ $category->name }}</a></li>
+                        <li>
+                            <a href="{{ url('/categories/').'/'.$category->slug }}">{{ $category->name }}</a>
+                        </li>
                         @endforeach
                     </ul>
                 </div>

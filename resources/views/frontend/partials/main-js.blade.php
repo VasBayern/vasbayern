@@ -124,6 +124,58 @@
     });
   </script>
 
+  <script>
+    //search prodcut
+    $('#search').on('keyup', function() {
+      url = '<?php echo url('searchAuto') ?>';
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url,
+        dataType: 'json',
+        type: 'POST',
+      }).done(function(result) {
+        var productName = '';
+        $.map(result, function(n) {
+          for (var prop in n) {
+            productName += n[prop] + ',';
+          }
+          productName = productName.substring(0, productName.length - 1) + ',';
+          productArray = productName.split(',');
+        });
+        $("#search").autocomplete({
+          source: productArray
+        });
+      });
+    })
+    // search blog
+    $('#search-blog').on('keyup', function() {
+      url = '<?php echo url('blogs/searchAuto') ?>';
+      $.ajax({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url: url,
+        dataType: 'json',
+        type: 'POST',
+      }).done(function(result) {
+        var blogName = '';
+        $.map(result, function(n) {
+          for (var prop in n) {
+            blogName += n[prop] + ',';
+          }
+          blogName = blogName.substring(0, blogName.length - 1) + ',';
+          blogArray = blogName.split(',');
+        });
+        $("#search").autocomplete({
+          source: blogArray
+        });
+      });
+    })
+  </script>
+
+
   <script type="text/javascript">
     //show hide login register
     $(document).ready(function() {
@@ -215,9 +267,7 @@
       });
 
       //update cart
-      var updateCart = function(e) {
-
-      }
+      //var updateCart = function(e) {}
       //$('.quantity-btn-' + id).on('change', updateCart);
       //$('.inc').on('click', updateCart);
       //$('.dec').on('click', updateCart);
@@ -233,8 +283,7 @@
         console.log(quantity + ' - ' + quantityStock);
         if (quantity > quantityStock) {
           toastr.error('Số lượng sản phẩm trong kho không đủ');
-          $('.quantity-btn-' + id).val(quantity);
-          $('.quantity-btn-' + id).html(quantity);
+          $('.quantity-btn-' + id).val(quantityStock);
           breakOut = true;
           return false;
         }
@@ -466,6 +515,12 @@
       }).done(function(result) {
         if (result['msg'] === 'success') {
           toastr.success('Thêm sản phẩm yêu thích thành công');
+          // let html = '';
+          // html += '<tr class="row-wishlist-'+ result.id + '">' +
+          //   '<td class="si-pic"><a href=""><img src="" alt="" style="width: 100px; "></a></td>' +
+          //   '<td class="si-text"><div class="product-selected"><p></p><h6></h6></div></td>' +
+          //   '<td class="si-close"><a href="" class="remove-wish-list">x</a></td>' +
+          //   '</tr>';
         } else if (result['msg'] === 'wishlist exist') {
           toastr.error('Sản phẩm đã được thêm từ trước');
         } else if (result['msg'] === 'product not exist') {
@@ -494,6 +549,7 @@
             $('.row-wishlist-' + result.id).fadeOut('slow', function() {
               $('.row-wishlist-' + result.id).remove();
             });
+            $('.countWhislist').html(result.countWishlist);
           } else {
             toastr.error('Vui lòng thử lại sau', 'Có lỗi xảy ra');
           }

@@ -5,7 +5,12 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\CommentContactModel;
 use App\Models\NewsletterModel;
+use App\Models\ShopBrandModel;
+use App\Models\ShopCategoryModel;
+use App\Models\ShopProductModel;
+use App\Models\ShopSizeModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -49,5 +54,27 @@ class PageController extends Controller
             \Toastr::success('Hệ thống sẽ gửi tin mới nhất qua email của bạn','Đăng kí thành công' );
         }
         return redirect()->back();
+    }
+
+    public function searchAuto(Request $request) {
+        $products = DB::table('shop_products')->select('name')->get()->toArray();
+        return response($products);
+    }
+
+    public function searchProduct(Request $request) {
+        $products = ShopProductModel::where('name', 'like', '%'.$request->name.'%')->get();
+        $data = array();
+        $data['products'] = $products;
+
+        $categories = ShopCategoryModel::all();
+        $data['categories'] = $categories;
+
+        $brands = ShopBrandModel::all();
+        $data['brands'] = $brands;
+
+        $sizes = ShopSizeModel::all();
+        $data['sizes'] = $sizes;
+
+        return view('frontend.content.searchProduct', $data);
     }
 }

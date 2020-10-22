@@ -103,9 +103,9 @@ Thanh toán
 
     .user-product p {
         margin-bottom: 5px;
-        font-size: 12px;
+        font-size: 10px;
         float: left;
-        width: 210px;
+        width: 270px;
     }
 
     .user-product .price-product {
@@ -163,7 +163,7 @@ Thanh toán
             <div class="row">
                 <form action="{{ url('payment') }}" method="post">
                     @csrf
-                    <div class="col-lg-8">
+                    <div class="col-lg-7">
                         <h4>1. Chọn hình thức giao hàng (chưa hoàn thiện)</h4>
                         <div class="border radio-item">
                             <div class="radio-ship">
@@ -231,32 +231,29 @@ Thanh toán
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                         <div class="place-order">
                             <h4>3. Thông tin </h4>
                             <div class="user-profile">
                                 <div class="user-edit">
                                     <p style="float: left;">Địa chỉ giao hàng</p>
-                                    @if (isset($customer_default) || isset($customer))
-                                    <a class="edit-address" href="{{ url('user/address') }}">Sửa</a>
-                                    @endif
+                                    <a class="edit-address" href="{{ url('user/address') }}">@if (isset($customer_default) || isset($customer))Sửa @else Thêm @endif</a>
                                 </div>
-                                @if (isset($customer_default) && !empty($customer_default))
+                                @if (isset($customer_default))
                                 <div class="user-address">
                                     <h6>{{ $customer_default->name }}</h6>
                                     <p>Địa chỉ: {{ $customer_default->address }}, {{ $customer_default->ward }}, {{ $customer_default->district }}, {{ $customer_default->city }}</p>
                                     <p>Điện thoại: {{ $customer_default->phone }}</p>
                                 </div>
-                                @elseif (!isset($customer_default) && isset($customer) && !empty($customer))
+                                @elseif (!isset($customer_default) && isset($customer))
                                 <div class="user-address">
                                     <h6>{{ $customer->name }}</h6>
                                     <p>Địa chỉ: {{ $customer->address }}, {{ $customer->ward }}, {{ $customer->district }}, {{ $customer->city }}</p>
                                     <p>Điện thoại: {{ $customer->phone }}</p>
                                 </div>
                                 @else
-                                <div class="user-address" style="padding: 10px 0 28px 0">
+                                <div class="user-address" style="padding: 10px 0 20px 0">
                                     <p style="float: left;">Vui lòng thêm một địa chỉ giao hàng</p>
-                                    <a class="add-address" href="{{ url('user/address') }}">Thêm</a>
                                 </div>
                                 @endif
                             </div>
@@ -284,7 +281,7 @@ Thanh toán
                                 </div>
                                 @foreach($cart_products as $cart_product)
                                 <div class="user-product">
-                                    <p>{{ $cart_product->quantity}} x <span style="font-size: 10px;">{{ $cart_product->name }}</span> </p>
+                                    <p>{{ $cart_product->quantity}} x {{ $cart_product->name }} - {{ $cart_product->attributes->color_name }} - {{ $cart_product->attributes->size_name }}</p>
                                     <span class="price-product">{{ number_format($cart_product->price*$cart_product->quantity) }} vnđ</span>
                                 </div>
                                 @endforeach
@@ -374,25 +371,6 @@ Thanh toán
              })
          });
      })*/
-    $(document).ready(function() {
-        $('#order-proceed').on('click', function() {
-            $('#loading').show();
-            $('#payment').hide();
-            var add_order_url = '<?php echo url('payment') ?>';
-            var dataPost = $(this).closest('form').serializeArray();
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: add_order_url,
-                type: 'post',
-                dataType: 'json',
-                data: dataPost,
-                success: function(result) {
-                    alert('success'.result);
-                }
-            })
-        })
-    })
+    
 </script>
 @endsection

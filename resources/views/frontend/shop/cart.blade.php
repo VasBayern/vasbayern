@@ -147,7 +147,7 @@ Giỏ hàng
                                 </li>
                                 <li class="cart-total">Thanh toán <span id="totalCart">{{ $subTotal > 0 ? number_format($total) : 0 }} VNĐ</span></li>
                             </ul>
-                            @if(Auth::check())
+                            @if(Auth::check() && !empty(Auth::user()->email_verified_at))
                             <a href="{{ url('payment') }}" class="proceed-btn" style="background: #e7ab3c;">TIẾN HÀNH THANH TOÁN</a>
                             @else
                             <a href="#myModal" class="proceed-btn" data-toggle="modal" data-target=".bd-example-modal-lg" style="background: #e7ab3c;">TIẾN HÀNH THANH TOÁN</a>
@@ -161,47 +161,4 @@ Giỏ hàng
     </div>
 </section>
 <!-- Shopping Cart Section End -->
-<!-- <script>
-    $(document).ready(function() {
-        console.log($('.quantity-btn').val());
-        if ($('.quantity-btn').val() >= 99) {
-            $('.inc').css({
-                "pointer-events": "none"
-            })
-        }
-        if ($('.quantity-btn').val() == 1) {
-            $('.dec').css({
-                "pointer-events": "none"
-            })
-        }
-        $('.quantity-btn, .inc').on('change', function(e) {
-            e.preventDefault();
-            quantity = $('.quantity-btn').val();
-            if ($('.quantity-btn').val() < 99) {
-                $('.inc, .dec').css({
-                    "pointer-events": "auto"
-                })
-            } else {
-                $('.inc').css({
-                    "pointer-events": "none"
-                })
-            }
-        })
-        $('.inc').on('click', function(e) {
-            e.preventDefault();
-            quantity = $('.quantity-btn').val();
-            if ($('.quantity-btn').val() < 99) {
-                $('.inc, .dec').css({
-                    "pointer-events": "auto"
-                })
-            } else {
-                $('.quantity-btn').val(99)
-                $('.inc').css({
-                    "pointer-events": "none"
-                })
-            }
-        })
-       
-    })
-</script> -->
 @endsection

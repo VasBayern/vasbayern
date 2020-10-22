@@ -1,4 +1,4 @@
-@extends('frontend.layouts.shop')
+@extends('frontend.layouts.app')
 @section('title')
     Câu hỏi thường gặp
 @endsection

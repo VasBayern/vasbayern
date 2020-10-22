@@ -18,7 +18,7 @@ Sản phẩm yêu thích
 <!-- Breadcrumb Section Begin -->
 
 <section class="spad">
-    @if(Auth::check() && !empty(Auth::user()->email_verified_at))
+
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1">
@@ -36,6 +36,7 @@ Sản phẩm yêu thích
                 <div class="filter-widget" style="margin-bottom: 0;">
                     <h4 class="fw-title">Sản phẩm yêu thích</h4>
                 </div>
+                @if(Auth::check() && !empty(Auth::user()->email_verified_at))
                 @if(count($wishlists) != 0)
                 <div>
                     <table class="table table-bordered">
@@ -76,7 +77,7 @@ Sản phẩm yêu thích
                                         @csrf
                                         <button type="button" class="btn btn-danger remove-wish-list"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                                     </form> -->
-                                    <a href="{{ url('wishlists/'.$wishlist->id) }}" class="btn btn-danger remove-wish-list"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                                    <a href="{{ url('wishlists/'.$wishlist->id) }}" class="btn btn-danger remove-wish-list"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                             <?php $stt++; ?>
@@ -87,9 +88,11 @@ Sản phẩm yêu thích
                 @else
                 <p>Vui lòng thêm sản phẩm yêu thích</p>
                 @endif
+                @else
+                <p>Vui lòng đăng nhập</p>
+                @endif
             </div>
         </div>
     </div>
-    @endif
 </section>
 @endsection

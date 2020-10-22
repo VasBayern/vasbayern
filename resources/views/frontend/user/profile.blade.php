@@ -18,7 +18,6 @@ Thông tin tài khoản
 </div>
 <!-- Breadcrumb Section Begin -->
 <section class="spad">
-    @if(Auth::check() && !empty(Auth::user()->email_verified_at))
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1">
@@ -33,6 +32,10 @@ Thông tin tài khoản
                 </div>
             </div>
             <div class='col-lg-9 order-1 order-lg-2'>
+                <div class="filter-widget" style="margin-bottom: 0;">
+                    <h4 class="fw-title">Thông tin tài khoản</h4>
+                </div>
+                @if(Auth::check() && !empty(Auth::user()->email_verified_at))
                 @if(session('error'))
                 <div class="alert alert-danger">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -41,9 +44,6 @@ Thông tin tài khoản
                 @endif
                 <form action="{{ url('user/profile') }}" method="post" enctype="multipart/form-data" id="quickForm">
                     @csrf
-                    <div class="filter-widget" style="margin-bottom: 0;">
-                        <h4 class="fw-title">Thông tin tài khoản</h4>
-                    </div>
                     <div class="form-group container avatar">
                         <div class="row">
                             <div class="avatar-image col-lg-2">
@@ -77,7 +77,6 @@ Thông tin tài khoản
                                 <input type="checkbox" class="form-check-input" name="check">
                                 <label class="form-check-label">Thay đổi mật khẩu</label>
                             </div>
-
                         </div>
                     </div>
                     <div class="password" style="display: none">
@@ -98,10 +97,13 @@ Thông tin tài khoản
                         <button type="submit" class="btn btn-warning" id="btnUpdateProfile">Cập nhật</button>
                     </div>
                 </form>
+                @else
+                <p>Vui lòng đăng nhập</p>
+                @endif
             </div>
+
         </div>
     </div>
-    @endif
 </section>
 <script>
     $(document).ready(function() {

@@ -18,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
-    //use HasRoles;
+    use HasRoles;
     
     protected $guard = 'user';
 

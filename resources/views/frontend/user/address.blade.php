@@ -19,7 +19,6 @@
 <!-- Breadcrumb Section Begin -->
 
 <section class="spad">
-    @if(Auth::check() && !empty(Auth::user()->email_verified_at))
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1">
@@ -34,6 +33,10 @@
                 </div>
             </div>
             <div class='col-lg-9 order-1 order-lg-2'>
+                <div class="filter-widget" style="margin-bottom: 0;">
+                    <h4 class="fw-title">Địa chỉ giao hàng</h4>
+                </div>
+                @if(Auth::check() && !empty(Auth::user()->email_verified_at))
                 @if ($errors->any())
                 <div class="alert alert-danger">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -44,9 +47,6 @@
                     </ul>
                 </div>
                 @endif
-                <div class="filter-widget" style="margin-bottom: 0;">
-                    <h4 class="fw-title">Địa chỉ giao hàng</h4>
-                </div>
                 <div>
                     <div class="form-group row address-info">
                         @foreach($customers as $customer)
@@ -72,10 +72,12 @@
                         </span>
                     </div>
                 </div>
+                @else
+                <p>Vui lòng đăng nhập</p>
+                @endif
             </div>
         </div>
     </div>
-    @endif
 </section>
 <!-- Modal Add-->
 <div id="myModalAdd" class="modal fade bd-example-modal-lg-add" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

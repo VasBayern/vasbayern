@@ -21,6 +21,7 @@
         font-weight: 500;
         margin-left: 15px;
     }
+   
 </style>
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
@@ -107,7 +108,7 @@
                                         @foreach($sizes as $size)
                                         <div class="sc-item">
                                             <label class="size size-{{$size->size_id}}">
-                                                <input type="radio" name="size_id" value="{{ $size->size_id }}" data-size="{{ $sizeOfColor }}" data-color="{{ $listSize }}" data-quantity="">
+                                                <input type="radio" class="size_id" name="size_id" value="{{ $size->size_id }}" data-size="{{ $sizeOfColor }}" data-color="{{ $listSize }}" data-quantity="">
                                                 {{ $size->size_name }}
                                             </label>
                                         </div>
@@ -227,7 +228,10 @@
 </div>
 <script>
     $(document).ready(function() {
+        //change color
         $("input[name='color_id']").change(function(e) {
+            $('.size_id').prop('checked', false);
+            $('.size').removeClass('active');
             var colorName = $(this).attr('data-name');
             $('.color-name').html(colorName);
             var i, j;
@@ -244,14 +248,12 @@
                     $('.size-' + listSize[j].size_id).css({
                         "background-color": "#ffffff",
                         "cursor": "pointer",
-                        //"border": "#ebebeb",
                         "pointer-events": "auto"
                     });
                 } else {
                     $('.size-' + listSize[j].size_id).css({
                         "background-color": "#cccccc",
                         "pointer-events": "none",
-                        //"border": "#cccccc"
                     });
                 }
             }
@@ -269,30 +271,7 @@
     })
 
     $(document).ready(function() {
-        // var changeQuantity = function(e) {
-        //     e.preventDefault();
-        //     var quantity = parseInt($('#quantity').val());
-        //     var nextQuantity = quantity + 1;
-        //     $('#quantity').attr('data-quantity', nextQuantity);
-        //     var quantityStock = $('.quantity-stock').attr('data-quantity');
-        //     if (nextQuantity > quantityStock || quantity > quantityStock) {
-        //         $('#quantity').val(quantityStock);
-        //         $('#quantity').html(quantityStock);
-        //         $('#quantity').attr('data-quantity', quantityStock);
-        //         toastr.error('Vui lòng chọn số lượng ít hơn');
-        //         $('.inc').css({
-        //             "pointer-events": "none"
-        //         });
-        //     }
-        //     if (quantity == 0) {
-        //         $('.dec').css({
-        //             "pointer-events": "none"
-        //         });
-        //     }
-        // }
-        // $('.inc').on('click', changeQuantity);
-        // $('#quantity').on('change', changeQuantity);
-
+        // change quantity
         $('.inc').on('click', function(e) {
             e.preventDefault();
             var quantity = parseInt($('#quantity').val());

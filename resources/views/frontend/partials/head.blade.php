@@ -159,6 +159,20 @@
             -webkit-box-orient: vertical;
         }
 
+        .blog-item .intro {
+            color: #636363;
+            font-weight: 300;
+            margin-top: 15px;
+            letter-spacing: 0;
+            font-size: 14px;
+            text-transform: none;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 3;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+        }
+
         /* end blog */
     </style>
 </head>

@@ -3,22 +3,7 @@
 Tin tức
 @endsection
 @section('content')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.10/jquery.autocomplete.min.js"></script>
-<style type="text/css">
-    .intro {
-        color: #636363;
-        font-weight: 300;
-        margin-top: 15px;
-        letter-spacing: 0;
-        font-size: 14px;
-        text-transform: none;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        -webkit-line-clamp: 3;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-    }
-</style>
+
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
     <div class="container">
@@ -40,8 +25,9 @@ Tin tức
                 <div class="blog-sidebar">
                     <div class="search-form">
                         <h4>Tìm Kiếm</h4>
-                        <form>
-                            <input type="text" placeholder="Tìm kiếm . . .  " id="search-blog">
+                        <form action="{{ url('blogs/search') }}" method="post">
+                            @csrf
+                            <input type="text" placeholder="Tìm kiếm . . .  " id="search-blog" name="name">
                             <button type="submit"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
