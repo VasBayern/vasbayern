@@ -283,7 +283,7 @@
                                 <input type="text" placeholder="What do you need?" id="search" name="name">
                                 <button type="submit"><i class="ti-search"></i></button>
                             </div>
-                        </for   m>
+                        </form>
                     </div>
                 </div>
                 <div class="col-lg-3 text-right col-md-3">

@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : 127.0.0.1
  Source Server Type    : MySQL
  Source Server Version : 100414
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 100414
  File Encoding         : 65001
 
- Date: 19/10/2020 17:30:43
+ Date: 25/10/2020 23:36:18
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +28,7 @@ CREATE TABLE `colors`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of colors
@@ -218,13 +218,11 @@ CREATE TABLE `jobs`  (
   `created_at` int UNSIGNED NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `jobs_queue_index`(`queue`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jobs
 -- ----------------------------
-INSERT INTO `jobs` VALUES (3, 'default', '{\"uuid\":\"e977b4cc-661f-4fbf-a7f6-a04296fb7f23\",\"displayName\":\"App\\\\Mail\\\\OrderMail\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"backoff\":\"\",\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Mail\\\\SendQueuedMailable\",\"command\":\"O:34:\\\"Illuminate\\\\Mail\\\\SendQueuedMailable\\\":3:{s:8:\\\"mailable\\\";O:18:\\\"App\\\\Mail\\\\OrderMail\\\":28:{s:5:\\\"order\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":4:{s:5:\\\"class\\\";s:25:\\\"App\\\\Models\\\\ShopOrderModel\\\";s:2:\\\"id\\\";i:14;s:9:\\\"relations\\\";a:1:{i:0;s:4:\\\"user\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";}s:6:\\\"detail\\\";O:32:\\\"Darryldecode\\\\Cart\\\\CartCollection\\\":1:{s:8:\\\"\\u0000*\\u0000items\\\";a:1:{i:1;O:32:\\\"Darryldecode\\\\Cart\\\\ItemCollection\\\":2:{s:9:\\\"\\u0000*\\u0000config\\\";a:6:{s:14:\\\"format_numbers\\\";b:0;s:8:\\\"decimals\\\";i:0;s:9:\\\"dec_point\\\";s:1:\\\".\\\";s:13:\\\"thousands_sep\\\";s:1:\\\",\\\";s:7:\\\"storage\\\";N;s:6:\\\"events\\\";N;}s:8:\\\"\\u0000*\\u0000items\\\";a:6:{s:2:\\\"id\\\";i:1;s:4:\\\"name\\\";s:30:\\\"\\u00c1O POLO VASBAYERN APS084S9109\\\";s:5:\\\"price\\\";d:350000;s:8:\\\"quantity\\\";i:1;s:10:\\\"attributes\\\";O:41:\\\"Darryldecode\\\\Cart\\\\ItemAttributeCollection\\\":1:{s:8:\\\"\\u0000*\\u0000items\\\";a:2:{s:7:\\\"size_id\\\";i:1;s:9:\\\"size_name\\\";s:1:\\\"S\\\";}}s:10:\\\"conditions\\\";a:0:{}}}}}s:6:\\\"locale\\\";N;s:4:\\\"from\\\";a:0:{}s:2:\\\"to\\\";a:1:{i:0;a:2:{s:4:\\\"name\\\";N;s:7:\\\"address\\\";s:17:\\\"vastb98@gmail.com\\\";}}s:2:\\\"cc\\\";a:0:{}s:3:\\\"bcc\\\";a:0:{}s:7:\\\"replyTo\\\";a:0:{}s:7:\\\"subject\\\";N;s:11:\\\"\\u0000*\\u0000markdown\\\";N;s:7:\\\"\\u0000*\\u0000html\\\";N;s:4:\\\"view\\\";N;s:8:\\\"textView\\\";N;s:8:\\\"viewData\\\";a:0:{}s:11:\\\"attachments\\\";a:0:{}s:14:\\\"rawAttachments\\\";a:0:{}s:15:\\\"diskAttachments\\\";a:0:{}s:9:\\\"callbacks\\\";a:0:{}s:5:\\\"theme\\\";N;s:6:\\\"mailer\\\";s:4:\\\"smtp\\\";s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;s:5:\\\"delay\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}}s:5:\\\"tries\\\";N;s:7:\\\"timeout\\\";N;}\"}}', 0, NULL, 1603072382, 1603072382);
-INSERT INTO `jobs` VALUES (4, 'default', '{\"uuid\":\"6013099d-673b-4240-ac00-4452976654bc\",\"displayName\":\"App\\\\Mail\\\\OrderMail\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"backoff\":\"\",\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Mail\\\\SendQueuedMailable\",\"command\":\"O:34:\\\"Illuminate\\\\Mail\\\\SendQueuedMailable\\\":3:{s:8:\\\"mailable\\\";O:18:\\\"App\\\\Mail\\\\OrderMail\\\":28:{s:5:\\\"order\\\";O:45:\\\"Illuminate\\\\Contracts\\\\Database\\\\ModelIdentifier\\\":4:{s:5:\\\"class\\\";s:25:\\\"App\\\\Models\\\\ShopOrderModel\\\";s:2:\\\"id\\\";i:15;s:9:\\\"relations\\\";a:1:{i:0;s:4:\\\"user\\\";}s:10:\\\"connection\\\";s:5:\\\"mysql\\\";}s:6:\\\"detail\\\";O:32:\\\"Darryldecode\\\\Cart\\\\CartCollection\\\":1:{s:8:\\\"\\u0000*\\u0000items\\\";a:0:{}}s:6:\\\"locale\\\";N;s:4:\\\"from\\\";a:0:{}s:2:\\\"to\\\";a:1:{i:0;a:2:{s:4:\\\"name\\\";N;s:7:\\\"address\\\";s:17:\\\"vastb98@gmail.com\\\";}}s:2:\\\"cc\\\";a:0:{}s:3:\\\"bcc\\\";a:0:{}s:7:\\\"replyTo\\\";a:0:{}s:7:\\\"subject\\\";N;s:11:\\\"\\u0000*\\u0000markdown\\\";N;s:7:\\\"\\u0000*\\u0000html\\\";N;s:4:\\\"view\\\";N;s:8:\\\"textView\\\";N;s:8:\\\"viewData\\\";a:0:{}s:11:\\\"attachments\\\";a:0:{}s:14:\\\"rawAttachments\\\";a:0:{}s:15:\\\"diskAttachments\\\";a:0:{}s:9:\\\"callbacks\\\";a:0:{}s:5:\\\"theme\\\";N;s:6:\\\"mailer\\\";s:4:\\\"smtp\\\";s:10:\\\"connection\\\";N;s:5:\\\"queue\\\";N;s:15:\\\"chainConnection\\\";N;s:10:\\\"chainQueue\\\";N;s:19:\\\"chainCatchCallbacks\\\";N;s:5:\\\"delay\\\";N;s:10:\\\"middleware\\\";a:0:{}s:7:\\\"chained\\\";a:0:{}}s:5:\\\"tries\\\";N;s:7:\\\"timeout\\\";N;}\"}}', 0, NULL, 1603072382, 1603072382);
 
 -- ----------------------------
 -- Table structure for migrations
@@ -235,7 +233,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of migrations
@@ -284,6 +282,8 @@ INSERT INTO `migrations` VALUES (41, '2020_10_19_085412_create_colors_table', 9)
 INSERT INTO `migrations` VALUES (42, '2020_10_19_085739_add_color_id_to_product_properties_table', 10);
 INSERT INTO `migrations` VALUES (43, '2020_10_19_090432_drop_table_product_properties', 11);
 INSERT INTO `migrations` VALUES (44, '2020_10_19_090631_create_product_properties', 12);
+INSERT INTO `migrations` VALUES (45, '2020_10_25_014738_drop_order_detail', 13);
+INSERT INTO `migrations` VALUES (46, '2020_10_25_014905_create_table_order_detail', 14);
 
 -- ----------------------------
 -- Table structure for model_has_permissions
@@ -465,18 +465,12 @@ CREATE TABLE `order`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `order_user_id_foreign`(`user_id`) USING BTREE,
   CONSTRAINT `order_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order
 -- ----------------------------
-INSERT INTO `order` VALUES (9, 2, 'Việt Anh', '0346741998', 'Số nhà 34 Ngõ 445 Nguyễn Khang ,Yên Hòa, Cầu Giấy, Hà Nội', NULL, '0', '1', 400000, 30000, 0, 430000, 'COD', '2020-10-18 23:09:46', '2020-10-18 23:09:46');
-INSERT INTO `order` VALUES (10, 2, 'Việt Anh', '0346741998', 'Số nhà 34 Ngõ 445 Nguyễn Khang ,Yên Hòa, Cầu Giấy, Hà Nội', NULL, '0', '1', 400000, 30000, 0, 430000, 'COD', '2020-10-18 23:09:46', '2020-10-18 23:09:46');
-INSERT INTO `order` VALUES (11, 2, 'Việt Anh', '0346741998', 'Số nhà 34 Ngõ 445 Nguyễn Khang ,Yên Hòa, Cầu Giấy, Hà Nội', NULL, '0', '1', 400000, 30000, 0, 430000, 'COD', '2020-10-18 23:10:27', '2020-10-18 23:10:27');
-INSERT INTO `order` VALUES (12, 2, 'Việt Anh', '0346741998', 'Số nhà 34 Ngõ 445 Nguyễn Khang ,Yên Hòa, Cầu Giấy, Hà Nội', NULL, '0', '1', 400000, 30000, 0, 430000, 'COD', '2020-10-18 23:12:17', '2020-10-18 23:12:17');
-INSERT INTO `order` VALUES (13, 2, 'Việt Anh', '0346741998', 'Số nhà 34 Ngõ 445 Nguyễn Khang ,Yên Hòa, Cầu Giấy, Hà Nội', NULL, '0', '1', 400000, 30000, 0, 430000, 'COD', '2020-10-18 23:12:17', '2020-10-18 23:12:17');
-INSERT INTO `order` VALUES (14, 2, 'Việt Anh', '0346741998', 'Số nhà 34 Ngõ 445 Nguyễn Khang ,Yên Hòa, Cầu Giấy, Hà Nội', NULL, '0', '1', 350000, 30000, 0, 380000, 'COD', '2020-10-19 08:53:01', '2020-10-19 08:53:01');
-INSERT INTO `order` VALUES (15, 2, 'Việt Anh', '0346741998', 'Số nhà 34 Ngõ 445 Nguyễn Khang ,Yên Hòa, Cầu Giấy, Hà Nội', NULL, '0', '1', 350000, 30000, 0, 380000, 'COD', '2020-10-19 08:53:02', '2020-10-19 08:53:02');
+INSERT INTO `order` VALUES (24, 2, 'Việt Anh', '0346741998', 'Số nhà 34 Ngõ 445 Nguyễn Khang ,Yên Hòa, Cầu Giấy, Hà Nội', NULL, '1', '0', 1050000, 0, 945000, 105000, 'COD', '2020-10-25 23:31:48', '2020-10-25 23:34:09');
 
 -- ----------------------------
 -- Table structure for order_detail
@@ -487,6 +481,7 @@ CREATE TABLE `order_detail`  (
   `order_id` bigint UNSIGNED NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
   `size_id` bigint UNSIGNED NOT NULL,
+  `color_id` bigint UNSIGNED NOT NULL,
   `quantity` int NOT NULL,
   `unit_price` decimal(12, 0) NOT NULL,
   `total_price` decimal(12, 0) NOT NULL,
@@ -496,18 +491,17 @@ CREATE TABLE `order_detail`  (
   INDEX `order_detail_order_id_foreign`(`order_id`) USING BTREE,
   INDEX `order_detail_product_id_foreign`(`product_id`) USING BTREE,
   INDEX `order_detail_size_id_foreign`(`size_id`) USING BTREE,
+  INDEX `order_detail_color_id_foreign`(`color_id`) USING BTREE,
+  CONSTRAINT `order_detail_color_id_foreign` FOREIGN KEY (`color_id`) REFERENCES `colors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `order_detail_order_id_foreign` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `order_detail_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `shop_products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `order_detail_size_id_foreign` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_detail
 -- ----------------------------
-INSERT INTO `order_detail` VALUES (1, 11, 2, 1, 1, 400000, 400000, '2020-10-18 23:10:27', '2020-10-18 23:10:27');
-INSERT INTO `order_detail` VALUES (2, 12, 2, 1, 1, 400000, 400000, '2020-10-18 23:12:17', '2020-10-18 23:12:17');
-INSERT INTO `order_detail` VALUES (3, 13, 2, 1, 1, 400000, 400000, '2020-10-18 23:12:17', '2020-10-18 23:12:17');
-INSERT INTO `order_detail` VALUES (4, 14, 1, 1, 1, 350000, 350000, '2020-10-19 08:53:01', '2020-10-19 08:53:01');
+INSERT INTO `order_detail` VALUES (7, 24, 1, 1, 1, 3, 350000, 1050000, '2020-10-25 23:31:48', '2020-10-25 23:31:48');
 
 -- ----------------------------
 -- Table structure for password_resets
@@ -584,21 +578,11 @@ CREATE TABLE `product_properties`  (
   CONSTRAINT `product_properties_color_id_foreign` FOREIGN KEY (`color_id`) REFERENCES `colors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `product_properties_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `shop_products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `product_properties_size_id_foreign` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of product_properties
 -- ----------------------------
-INSERT INTO `product_properties` VALUES (1, 1, 1, 1, 5, '2020-10-19 10:25:16', '2020-10-19 10:25:19');
-INSERT INTO `product_properties` VALUES (2, 1, 1, 2, 10, '2020-10-19 10:33:11', '2020-10-19 10:33:11');
-INSERT INTO `product_properties` VALUES (4, 1, 1, 3, 20, '2020-10-19 11:36:39', '2020-10-19 11:36:39');
-INSERT INTO `product_properties` VALUES (5, 1, 4, 4, 10, '2020-10-19 13:34:29', '2020-10-19 13:34:32');
-INSERT INTO `product_properties` VALUES (6, 1, 2, 1, 4, '2020-10-19 13:34:29', '2020-10-19 13:34:29');
-INSERT INTO `product_properties` VALUES (7, 1, 2, 3, 10, '2020-10-19 13:34:29', '2020-10-19 13:34:29');
-INSERT INTO `product_properties` VALUES (8, 2, 3, 1, 10, '2020-10-19 13:34:29', '2020-10-19 13:34:29');
-INSERT INTO `product_properties` VALUES (9, 2, 3, 2, 4, '2020-10-19 13:34:29', '2020-10-19 13:34:29');
-INSERT INTO `product_properties` VALUES (10, 2, 3, 3, 11, '2020-10-19 13:34:29', '2020-10-19 13:34:29');
-INSERT INTO `product_properties` VALUES (11, 1, 2, 4, 7, '2020-10-19 15:42:17', '2020-10-19 15:42:17');
 
 -- ----------------------------
 -- Table structure for role_has_permissions
@@ -908,11 +892,10 @@ CREATE TABLE `wishlist`  (
   INDEX `wishlist_product_id_foreign`(`product_id`) USING BTREE,
   CONSTRAINT `wishlist_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `shop_products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `wishlist_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of wishlist
 -- ----------------------------
-INSERT INTO `wishlist` VALUES (19, 2, 1, '2020-10-19 08:52:50', '2020-10-19 08:52:50');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -75,7 +75,7 @@ Giỏ hàng
                                             @method('PUT')
                                             @csrf
                                             <div class="pro-qty" data-id="{{ $item->id }}">
-                                                <input type="text" name="quantity" value="{{ $item->quantity }}" class="quantity-btn quantity-btn-{{ $item->id }}" data-price="{{ $item->price }}" data-stock="{{ $item->attributes->quantityStock }}" data-size="{{ $item->attributes->size_id }}" data-color="{{ $item->attributes->color_id }}" min="1" max="99" onKeyUp="if(this.value>99){this.value='99';}else if(this.value<0){this.value='0';}" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                                                <input type="text" name="quantity" value="{{ $item->quantity }}" class="quantity-btn quantity-btn-{{ $item->id }}" data-quantity="{{ $item->quantity }}" data-price="{{ $item->price }}" data-stock="{{ $item->attributes->quantityStock }}" data-size="{{ $item->attributes->size_id }}" data-color="{{ $item->attributes->color_id }}" min="1" max="99" onKeyUp="if(this.value>99){this.value='99';}else if(this.value<0){this.value='0';}" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
                                             </div>
                                         </form>
                                     </div>
@@ -161,4 +161,138 @@ Giỏ hàng
     </div>
 </section>
 <!-- Shopping Cart Section End -->
+<script>
+    $(document).ready(function() {
+        $(document).on('change', '.quantity-btn', function(e) {
+            e.preventDefault();
+            var update_cart_url = '<?php echo url('cart') ?>';
+            var id = $(this).closest('.pro-qty').attr('data-id');
+            var quantity = parseInt($('.quantity-btn-' + id).val());
+            var quantityStock = parseInt($('.quantity-btn-' + id).attr('data-stock'));
+            var product_price = $('.quantity-btn-' + id).attr('data-price');
+            var color_id = $('.quantity-btn-' + id).attr('data-color');
+            var size_id = $('.quantity-btn-' + id).attr('data-size');
+            var data_quantity = $('.quantity-btn-' + id).attr('data-quantity');
+            if (quantity > quantityStock) {
+                toastr.error('Số lượng sản phẩm trong kho không đủ');
+                $('.quantity-btn-' + id).val(data_quantity);
+                breakOut = true;
+                return false;
+            }
+            if (quantity == 0) {
+                toastr.error('Vui lòng nhập số lượng');
+                $('.quantity-btn-' + id).val(data_quantity);
+                breakOut = true;
+                return false;
+            }
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: update_cart_url,
+                dataType: 'json',
+                type: 'PUT',
+                data: {
+                    id: id,
+                    quantity: quantity,
+                    product_price: product_price,
+                    quantityStock: quantityStock,
+                    color_id: color_id,
+                    size_id: size_id,
+                },
+            }).done(function(result) {
+                $('.quantity-btn-' + id).attr('data-quantity', quantity);
+                $('.countCart').html(result.quantityCart);
+                $('.totalPricre' + result.id).html(result.totalPrice);
+                $('.cart-price, .subTotal').html(result.subTotal);
+                $('#totalCart').html(result.total);
+                $('.select-total').html('<span>Tổng tiền:</span><h5>' + result.total + '</h5>');
+                $('.quantityCart' + result.id).html(result.quantity);
+                $('.quantityCart' + result.id).attr('data-quantity-' + result.id + '', result.quantity);
+
+            });
+        })
+        $('.inc').on('click', function(e) {
+            e.preventDefault();
+            var update_cart_url = '<?php echo url('cart') ?>';
+            var id = $(this).closest('.pro-qty').attr('data-id');
+            var quantity = parseInt($('.quantity-btn-' + id).val()) + 1;
+            var product_price = $('.quantity-btn-' + id).attr('data-price');
+            var quantityStock = parseInt($('.quantity-btn-' + id).attr('data-stock'));
+            var color_id = $('.quantity-btn-' + id).attr('data-color');
+            var size_id = $('.quantity-btn-' + id).attr('data-size');
+            var data_quantity = $('.quantity-btn-' + id).attr('data-quantity');
+            if (quantity > quantityStock) {
+                breakOut = true;
+                return false;
+            }
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: update_cart_url,
+                dataType: 'json',
+                type: 'PUT',
+                data: {
+                    id: id,
+                    quantity: quantity,
+                    product_price: product_price,
+                    quantityStock: quantityStock,
+                    color_id: color_id,
+                    size_id: size_id,
+                },
+            }).done(function(result) {
+                $('.quantity-btn-' + id).attr('data-quantity', quantity);
+                $('.countCart').html(result.quantityCart);
+                $('.totalPricre' + result.id).html(result.totalPrice);
+                $('.cart-price, .subTotal').html(result.subTotal);
+                $('#totalCart').html(result.total);
+                $('.select-total').html('<span>Tổng tiền:</span><h5>' + result.total + '</h5>');
+                $('.quantityCart' + result.id).html(result.quantity);
+                $('.quantityCart' + result.id).attr('data-quantity-' + result.id + '', result.quantity);
+            });
+        })
+        $('.dec').on('click', function(e) {
+            e.preventDefault();
+            var update_cart_url = '<?php echo url('cart') ?>';
+            var id = $(this).closest('.pro-qty').attr('data-id');
+            var quantity = parseInt($('.quantity-btn-' + id).val()) - 1;
+            var product_price = $('.quantity-btn-' + id).attr('data-price');
+            var quantityStock = $('.quantity-btn-' + id).attr('data-stock');
+            var color_id = $('.quantity-btn-' + id).attr('data-color');
+            var size_id = $('.quantity-btn-' + id).attr('data-size');
+            var data_quantity = $('.quantity-btn-' + id).attr('data-quantity');
+            if (quantity == 0) {
+                breakOut = true;
+                return false;
+            }
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: update_cart_url,
+                dataType: 'json',
+                type: 'PUT',
+                data: {
+                    id: id,
+                    quantity: quantity,
+                    product_price: product_price,
+                    quantityStock: quantityStock,
+                    color_id: color_id,
+                    size_id: size_id,
+                },
+            }).done(function(result) {
+                $('.quantity-btn-' + id).attr('data-quantity', quantity);
+                $('.countCart').html(result.quantityCart);
+                $('.totalPricre' + result.id).html(result.totalPrice);
+                $('.cart-price, .subTotal').html(result.subTotal);
+                $('#totalCart').html(result.total);
+                $('.select-total').html('<span>Tổng tiền:</span><h5>' + result.total + '</h5>');
+                $('.quantityCart' + result.id).html(result.quantity);
+                $('.quantityCart' + result.id).attr('data-quantity-' + result.id + '', result.quantity);
+            });
+        })
+    })
+</script>
 @endsection

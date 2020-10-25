@@ -17,11 +17,9 @@ class ShopOrderController extends Controller
 {
     public function index()
     {
-
         $orders = ShopOrderModel::all();
         $data = array();
         $data['orders'] = $orders;
-
         return view('admin.content.order.index', $data);
     }
 
@@ -33,7 +31,8 @@ class ShopOrderController extends Controller
             B.id AS orderDetail_id, B.quantity, B.unit_price, B.total_price, 
             C.id AS product_id, C.name AS product_name, C.images,
             D.email,
-            E.id AS size_id, E.name AS size_name 
+            E.id AS size_id, E.name AS size_name,
+            F.id AS color_id, F.name AS color_name 
             FROM `order` AS A
             INNER JOIN `order_detail` AS B 
             ON A.id = B.order_id
@@ -43,6 +42,8 @@ class ShopOrderController extends Controller
             ON A.user_id = D.id
             INNER JOIN `sizes` AS E
             ON B.size_id = E.id
+            INNER JOIN `colors` AS F
+            ON B.color_id = F.id
             WHERE A.id = ' . $id . '
             ORDER BY orderDetail_id, product_id ASC');
 
@@ -74,6 +75,10 @@ class ShopOrderController extends Controller
                         'size'              => [
                             'id'            => $row->size_id,
                             'name'          => $row->size_name
+                        ],
+                        'color'              => [
+                            'id'            => $row->color_id,
+                            'name'          => $row->color_name
                         ]
                     ];
                     continue;
@@ -106,6 +111,10 @@ class ShopOrderController extends Controller
                             'size'              => [
                                 'id'            => $row->size_id,
                                 'name'          => $row->size_name
+                            ],
+                            'color'              => [
+                                'id'            => $row->color_id,
+                                'name'          => $row->color_name
                             ]
                         ]
                     ]
@@ -116,7 +125,6 @@ class ShopOrderController extends Controller
             'order' => array_values($order),
         ];
         return response($response);
-
         // $returnHTML = view('admin.content.order.detail', $response)->render();
         // return response()->json(array('success' => true, 'html' => $returnHTML));
     }
@@ -127,6 +135,7 @@ class ShopOrderController extends Controller
         $status         = $input['status'];
         $products       = $input['product_id'];
         $sizes          = $input['size_id'];
+        $colors          = $input['color_id'];
         $quantities     = $input['quantity'];
         $order          = ShopOrderModel::findOrFail($id);
         $statusOrigin   = $order->status;
@@ -140,9 +149,9 @@ class ShopOrderController extends Controller
             if ($statusOrigin == 1) {
                 if ($status == 2 || $status == 3) {
                     foreach ($products as $key => $product_id) {
-                        ShopProductPropertiesModel::where('product_id', $product_id)->where('size_id', $sizes[$key])->decrement('quantity', $quantities[$key]);
-                        $property = ShopProductPropertiesModel::where('product_id', $product_id)->where('size_id', $sizes[$key])->first();
-                        if($property['quantity'] == 0) {
+                        ShopProductPropertiesModel::where('product_id', $product_id)->where('size_id', $sizes[$key])->where('color_id', $colors[$key])->decrement('quantity', $quantities[$key]);
+                        $property = ShopProductPropertiesModel::where('product_id', $product_id)->where('size_id', $sizes[$key])->where('color_id', $colors[$key])->first();
+                        if ($property['quantity'] == 0) {
                             $property->delete();
                         }
                     }
@@ -150,7 +159,18 @@ class ShopOrderController extends Controller
             } elseif ($statusOrigin == 2) {
                 if ($status == 0) {
                     foreach ($products as $key => $product_id) {
-                        ShopProductPropertiesModel::where('product_id', $product_id)->where('size_id', $sizes[$key])->increment('quantity', $quantities[$key]);
+                        //delete then rollback
+                        $property = ShopProductPropertiesModel::where('product_id', $product_id)->where('size_id', $sizes[$key])->where('color_id', $colors[$key])->first();
+                        if (isset($property)) {
+                            ShopProductPropertiesModel::where('product_id', $product_id)->where('size_id', $sizes[$key])->where('color_id', $colors[$key])->increment('quantity', $quantities[$key]);
+                        } else {
+                            $item               = new ShopProductPropertiesModel();
+                            $item->product_id   = $product_id;
+                            $item->color_id     = $colors[$key];
+                            $item->size_id      = $sizes[$key];
+                            $item->quantity     = $quantities[$key];
+                            $item->save();
+                        }
                     }
                 }
             }
@@ -159,7 +179,7 @@ class ShopOrderController extends Controller
             DB::rollBack();
         }
 
-        if($status == 3) {
+        if ($status == 3) {
             $email = $input['email'];
             event(new SuccessShipped($email));
         }
@@ -170,7 +190,6 @@ class ShopOrderController extends Controller
     {
         $item = ShopOrderModel::find($id);
         $item->delete();
-
         \Toastr::success('Xóa thành công');
         return redirect()->route('admin.orders');
     }

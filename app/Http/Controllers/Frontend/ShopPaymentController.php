@@ -34,11 +34,10 @@ class ShopPaymentController extends Controller
         //sp trong cart
         $cartCollection = \Cart::getContent();
         $data['cart_products'] = $cartCollection;
- 
         //chi tiết sp
         $products = array();
         foreach ($cartCollection as $item) {
-            $product_id = $item->id;
+            $product_id = $item->attributes->product_id;
             $products[$product_id] = ShopProductModel::find($product_id);
         }
         $data['products'] = $products;
@@ -116,11 +115,12 @@ class ShopPaymentController extends Controller
         foreach ($detail as $product) {
             $order_detail               = new ShopOrderDetailModel();
             $order_detail->order_id     = $order->id;
-            $order_detail->product_id   = $product->id;
+            $order_detail->product_id   = $product->attributes->product_id;
             $order_detail->quantity     = $product->quantity;
             $order_detail->unit_price   = $product->price;
             $order_detail->total_price  = $product->price * $product->quantity;
-            $order_detail->size_id       = 1;
+            $order_detail->size_id      = $product->attributes->size_id;
+            $order_detail->color_id     = $product->attributes->color_id;
             $order_detail->save();
         }
         event(new OrderProduct($order, $detail));

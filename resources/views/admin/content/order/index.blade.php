@@ -100,10 +100,9 @@
 </section>
 
 <!-- Modal View -->
-
 <div class="modal fade" id="modal-lg">
     <div class="modal-dialog modal-lg">
-        <form action="{{ url('admin/orders/'.$order->id) }}" method="post">
+        <form action="{{ url('admin/orders/'.$order->id) }}" method="post" id="quickForm">
             @csrf
             @method('PUT')
             <div class="modal-content">
@@ -213,7 +212,7 @@
                                     <span class="input-group-text"><i class="fas fa-truck"></i></span>
                                 </div>
                                 <select class="form-control custom-select" id="shipment" name="shipment">
-                                    <option value="0" data-id="1" id="sm0">-- Chọn --</option>
+                                    <option value="">-- Chọn --</option>
                                     <option value="1" data-id="1" id="sm1">Grab</option>
                                     <option value="2" data-id="2" id="sm2">GHTK</option>
                                     <option value="3" data-id="3" id="sm3">VNPost</option>
@@ -243,6 +242,7 @@
                                 <th scope="col">Ảnh</th>
                                 <th scope="col">Sản phẩm</th>
                                 <th scope="col">Size</th>
+                                <th scope="col">Màu</th>
                                 <th scope="col">Số Lượng</th>
                                 <th scope="col">Giá tiền</th>
                                 <th scope="col">Thành tiền</th>
@@ -266,6 +266,7 @@
 </div>
 <!-- /.modal -->
 @foreach($orders as $order)
+
 <!-- Modal Delete -->
 <div id="myModal{{$order->id}}" class="modal fade">
     <div class="modal-dialog modal-confirm">
@@ -292,10 +293,9 @@
     </div>
 </div>
 @endforeach
+<!-- Jquery -->
 
 @endsection
-
-<!-- Jquery -->
 @include('admin.partials.index-jquery');
 <script>
     $(document).ready(function() {
@@ -335,6 +335,7 @@
                     $('#address').val(order[i].address);
                     $('#sub_total').val(order[i].sub_total);
                     $('#promotion').val(order[i].promotion);
+                    $('#ship_price').val(order[i].ship_price);
                     $('#total').val(order[i].total);
                     $('#payment_method').val(order[i].payment_method);
                     $('#shipment').val(order[i].shipment);
@@ -358,11 +359,13 @@
                             '<th scope="row">' + order[i].orderDetails[j].product.id + '</th>' +
                             '<input type="hidden" name="product_id[]" value="' + order[i].orderDetails[j].product.id + '">' +
                             '<input type="hidden" name="size_id[]" value="' + order[i].orderDetails[j].size.id + '">' +
+                            '<input type="hidden" name="color_id[]" value="' + order[i].orderDetails[j].color.id + '">' +
                             '<input type="hidden" name="quantity[]" value="' + order[i].orderDetails[j].quantity + '">' +
                             '<input type="hidden" name="email" value="' + order[i].email + '">' +
                             '<td class="imgProduct"></td>' +
                             '<td>' + order[i].orderDetails[j].product.name + '</td>' +
                             '<td>' + order[i].orderDetails[j].size.name + '</td>' +
+                            '<td>' + order[i].orderDetails[j].color.name + '</td>' +
                             '<td>' + order[i].orderDetails[j].unit_price + '</td>' +
                             '<td>' + order[i].orderDetails[j].quantity + '</td>' +
                             '<td>' + order[i].orderDetails[j].total_price + '</td>' +

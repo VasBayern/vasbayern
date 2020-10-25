@@ -44,6 +44,9 @@
                 color: {
                     required: true,
                 },
+                shipment: {
+                    required: true,
+                }
             },
             messages: {
                 name: {
@@ -63,6 +66,9 @@
                 },
                 color: {
                     required: "Vui lòng nhập màu",
+                },
+                shipment: {
+                    required: "Vui lòng chọn đơn vị vận chuyển",
                 },
             },
             errorElement: 'span',

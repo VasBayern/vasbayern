@@ -230,6 +230,8 @@
     $(document).ready(function() {
         //change color
         $("input[name='color_id']").change(function(e) {
+            $('#quantity').val(1);
+            $('#quantity').attr('data-quantity',1);
             $('.size_id').prop('checked', false);
             $('.size').removeClass('active');
             var colorName = $(this).attr('data-name');
@@ -258,6 +260,8 @@
                 }
             }
             $("input[name='size_id']").change(function(e) {
+                $('#quantity').val(1);
+                $('#quantity').attr('data-quantity',1);
                 size_id = $(this).val();
                 var i;
                 for (i = 0; i < sizes.length; i++) {
@@ -276,52 +280,36 @@
             e.preventDefault();
             var quantity = parseInt($('#quantity').val());
             var nextQuantity = quantity + 1;
-            $('#quantity').attr('data-quantity', nextQuantity);
             var quantityStock = $('.quantity-stock').attr('data-quantity');
             if (nextQuantity > quantityStock) {
-                $('#quantity').val(quantityStock);
-                $('#quantity').html(quantityStock);
-                $('#quantity').attr('data-quantity', quantityStock);
-                toastr.error('Vui lòng chọn số lượng ít hơn');
-                $(this).css({
-                    "pointer-events": "none"
-                });
+                breakOut = true;
+                return false;
             }
         });
         $('.dec').on('click', function(e) {
             e.preventDefault();
             var quantity = parseInt($('#quantity').val());
             var nextQuantity = quantity - 1;
-            $('#quantity').attr('data-quantity', nextQuantity);
-            var quantityStock = $('.quantity-stock').attr('data-quantity');
-            if (nextQuantity < quantityStock) {
-                $('.inc').css({
-                    "pointer-events": "auto"
-                });
-            }
             if (nextQuantity == 0) {
-                $('.dec').css({
-                    "pointer-events": "none"
-                });
+                breakOut = true;
+                return false;
             }
         })
         $('#quantity').on('change', function(e) {
             e.preventDefault();
             var quantity = parseInt($('#quantity').val());
-            var quantityStock = $('.quantity-stock').attr('data-quantity');
+            var quantityStock = parseInt($('.quantity-stock').attr('data-quantity'));
             if (quantity > quantityStock) {
                 $('#quantity').val(quantityStock);
-                $('#quantity').html(quantityStock);
-                $('#quantity').attr('data-quantity', quantityStock);
                 toastr.error('Vui lòng chọn số lượng ít hơn');
-                $('.inc').css({
-                    "pointer-events": "none"
-                });
+                breakOut = true;
+                return false;
             }
             if (quantity == 0) {
-                $('.dec').css({
-                    "pointer-events": "none"
-                });
+                $('#quantity').val(1);
+                toastr.error('Vui lòng chọn số lượng');
+                breakOut = true;
+                return false;
             }
         })
     })
