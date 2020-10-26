@@ -175,7 +175,6 @@
     })
   </script>
 
-
   <script type="text/javascript">
     //show hide login register
     $(document).ready(function() {
@@ -244,7 +243,7 @@
               for (i = 0; i < 1000; i++) {
                 html += '<tr class="rowCart' + result.id + '">' +
                   '<td class="si-pic">' +
-                  '<img src="{{ asset(' + result.image + ') }}" alt="" style="width: 100px; ">' +
+                  '<img src="' + result.image + '" alt="" style="width: 100px; ">' +
                   '</td>' +
                   '<td class="si-text">' +
                   '<div class="product-selected">' +
@@ -264,13 +263,6 @@
           }
         });
       });
-
-      //update cart
-      //var updateCart = function(e) {}
-      //$('.quantity-btn-' + id).on('change', updateCart);
-      //$('.inc').on('click', updateCart);
-      //$('.dec').on('click', updateCart);
-     
 
       //remove cart
       $('.ti-close').on('click', function(e) {
@@ -318,6 +310,10 @@
           if (result.msg === 'success') {
             toastr.success('Xoá giỏ hàng thành công');
             $('.contentCart').remove();
+            $('.rowCart').remove();
+            $('.cart-price').html('0 VNĐ');
+            $('.countCart').html(0);
+            $('.select-total').html('<span class="emptyCart">Chưa có sản phẩm</span>');
             html = '';
             html += '<div class="col-lg-12 empty-cart" style="text-align: center; margin-bottom: 80px;">' +
               '<img src="" alt="" style="width: 200px;">' +
@@ -387,7 +383,6 @@
     //add wishlist
     $(document).on('click', '#add-wish-list', function(e) {
       e.preventDefault();
-     
       var url = $(this).attr('href');
       $.ajax({
         headers: {
@@ -396,15 +391,31 @@
         type: 'post',
         url: url,
       }).done(function(result) {
+        console.log(result);
         if (result['msg'] === 'success') {
           toastr.success('Thêm sản phẩm yêu thích thành công');
           $('.fa-heart-o').removeClass('fa-heart-o').addClass('fa-heart');
-          // let html = '';
-          // html += '<tr class="row-wishlist-'+ result.id + '">' +
-          //   '<td class="si-pic"><a href=""><img src="" alt="" style="width: 100px; "></a></td>' +
-          //   '<td class="si-text"><div class="product-selected"><p></p><h6></h6></div></td>' +
-          //   '<td class="si-close"><a href="" class="remove-wish-list">x</a></td>' +
-          //   '</tr>';
+          let html = '';
+          html += '<tr class="row-wishlist-' + result.id + '">' +
+            '<td class="si-pic">' +
+            '<a href="' + result.linkProduct + '"><img src="' + result.image + '" alt="" style="width: 100px; "></a>' +
+            '</td>' +
+            '<td class="si-text">' +
+            '<div class="product-selected">';
+          if (result.sale > 0) {
+            html += '<p>' + result.priceSale + '</p>';
+          } else {
+            html += '<p>' + result.priceCore + '</p>';
+          }
+          html += '<h6>' + result.name + '</h6>' +
+            '</div>' +
+            '</td>' +
+            '<td class="si-close">' +
+            '<a href="' + result.linkWishlist + '" class="remove-wish-list">x</a>' +
+            '</td>' +
+            '</tr>';
+            $('.select-heart').remove();
+            $('.heartBody').append(html);
         } else if (result['msg'] === 'wishlist exist') {
           toastr.error('Sản phẩm đã được thêm từ trước');
         } else if (result['msg'] === 'product not exist') {
@@ -441,32 +452,4 @@
         })
       })
     })
-
-    //update cart
-    // function updateCart(quantity, product_id, product_price) {
-    //   var update_cart_url = '<?php echo url('cart') ?>';
-    //   var dataPost = {
-    //     quantity: quantity,
-    //     product_id: product_id,
-    //     product_price: product_price
-    //   };
-    //   $.ajax({
-    //     headers: {
-    //       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //     },
-    //     url: update_cart_url,
-    //     dataType: 'json',
-    //     type: 'PUT',
-    //     data: dataPost,
-    //   }).done(function(result) {
-    //     $('.countCart').html(result.quantityCart);
-    //     $('.totalPricre' + result.id).html(result.totalPrice);
-    //     $('.cart-price, .subTotal').html(result.subTotal);
-    //     $('#totalCart').html(result.total);
-    //     $('.select-total').html('<span>Tổng tiền:</span>' +
-    //       '<h5>' + result.total + '</h5>');
-    //     $('.quantityCart' + result.id).html(result.quantity);
-    //     $('.quantityCart' + result.id).attr('data-quantity-' + result.id + '', result.quantity);
-    //   });
-    // };
   </script>

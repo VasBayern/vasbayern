@@ -97,7 +97,7 @@
                                         $listSize = json_encode($property);
                                         $sizeOfColor = json_encode($sizes)
                                         ?>
-                                        <label class="radio-inline" style="background-color: {{ $property['color'] }}">
+                                        <label class="radio-inline" style="background-color: {{ $property['color'] }}" title="{{ $property['color_name']}}">
                                             <input type="radio" name="color_id" class="radio-color" value="{{ $property['color_id'] }}" data-name="{{ $property['color_name']}}" data-size="{{ $sizeOfColor }}" data-color="{{ $listSize }}">
                                         </label>
                                         @endforeach

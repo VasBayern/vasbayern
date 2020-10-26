@@ -329,7 +329,7 @@
                                     </table>
                                 </div>
                                 @else
-                                <div class="select-total">
+                                <div class="select-heart">
                                     <span class="emptyHeart">Chưa có sản phẩm</span>
                                 </div>
                                 @endif
@@ -406,7 +406,7 @@
                     <span>Tất cả danh mục</span>
                     <ul class="depart-hover">
                         <?php
-                        $categories = \App\Models\ShopCategoryModel::where('parent_id', 0)->get();
+                        $categories = \App\Models\ShopCategoryModel::get();
                         ?>
                         @foreach($categories as $category)
                         <li>

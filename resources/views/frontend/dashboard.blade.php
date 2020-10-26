@@ -37,7 +37,7 @@ Trang chủ
     <div class="banner-section spad">
         <div class="container-fluid">
             <div class="row">
-                @foreach($parent_1_categories as $parent_category)
+                @foreach($parent_categories as $parent_category)
                 <div class="col-lg-4">
                     <div class="single-banner">
                         <img src="{{ asset($parent_category->image) }}" alt="" height="200px">

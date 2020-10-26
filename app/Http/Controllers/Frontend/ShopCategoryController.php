@@ -44,59 +44,99 @@ class ShopCategoryController extends Controller
     {
         $input = $request->dataPost;
 
+        // $sql = 'SELECT
+        // MAX(A.id) AS id, A.name, A.slug, A.images, A.priceCore, A.priceSale,
+        // B.id AS category_id, B.name AS cat_name,
+        // C.id AS brand_id,
+        // E.id as size_id, E.name AS size_name,
+        // F.id as color_id, F.name AS color_name, F.color AS color
+        // FROM shop_products AS A
+        // JOIN shop_categories AS B ON A.cat_id = B.id
+        // JOIN shop_brands AS C ON A.brand_id = C.id
+        // JOIN product_properties AS D ON A.id = D.product_id
+        // JOIN sizes AS E ON D.size_id = E.id
+        // JOIN colors AS F ON D.color_id = F.id
+        // WHERE 1=1 ';
         $sql = 'SELECT
-        A.id, A.name, A.slug, A.images, A.priceCore, A.priceSale,
-        B.name AS cat_name,
-        C.id AS brand_id,
-        E.id as size_id, E.name AS size_name,
-        F.id as color_id, F.name AS color_name, F.color AS color
+        MAX(A.id) AS id, MAX(A.name) AS name, MAX(A.slug) AS slug, MAX(A.images) AS images, MAX(A.priceCore) AS priceCore,
+        MAX(A.priceSale) AS priceSale, MAX(A.new) AS new,
+        MAX(B.id) AS cat_id, MAX(B.name) AS cat_name,
+        MAX(C.id) AS brand_id,
+        MAX(E.id) as size_id, MAX(E.name) AS size_name,
+        MAX(F.id) as color_id, MAX(F.name) AS color_name, MAX(F.color) AS color
         FROM shop_products AS A
         JOIN shop_categories AS B ON A.cat_id = B.id
         JOIN shop_brands AS C ON A.brand_id = C.id
         JOIN product_properties AS D ON A.id = D.product_id
         JOIN sizes AS E ON D.size_id = E.id
         JOIN colors AS F ON D.color_id = F.id
-        WHERE 1=1 AND ';
+        WHERE 1=1 ';
 
         if (isset($input)) {
             foreach ($input as $key => $value) {
                 switch ($key) {
                     case 0:
-                        foreach ($value as $brandID) {
-                            $sql .= ' brand_id = ' . $brandID . ' OR ';
+                        $sql .= ' AND ';
+                        foreach ($value as $key => $categoryID) {
+                            if (!next($value)) {
+                                $sql .= ' cat_id = ' . $categoryID;
+                            } else {
+                                $sql .= ' cat_id = ' . $categoryID . ' OR ';
+                            }
                         }
                         break;
                     case 1:
-                        foreach ($value as $sizeID) {
-                            $sql .= ' size_id = ' . $sizeID . ' OR ';
+                        $sql .= ' AND ';
+                        foreach ($value as $key => $brandID) {
+                            if (!next($value)) {
+                                $sql .= ' brand_id = ' . $brandID;
+                            } else {
+                                $sql .= ' brand_id = ' . $brandID . ' OR ';
+                            }
                         }
                         break;
                     case 2:
-                        foreach ($value as $colorID) {
-                            $sql .= ' size_id = ' . $colorID . ' OR ';
+                        $sql .= ' AND ';
+                        foreach ($value as $key => $sizeID) {
+                            if (!next($value)) {
+                                $sql .= ' size_id = ' . $sizeID;
+                            } else {
+                                $sql .= ' size_id = ' . $sizeID . ' OR ';
+                            }
+                        }
+                        break;
+                    case 3:
+                        $sql .= ' AND ';
+                        foreach ($value as $key => $colorID) {
+                            if (!next($value)) {
+                                $sql .= ' color_id = ' . $colorID;
+                            } else {
+                                $sql .= ' color_id = ' . $colorID . ' OR ';
+                            }
                         }
                         break;
                     default:
-                        $sql .= ' 2 = 2';
                         break;
                 }
             }
         }
+        $sql .= ' GROUP BY A.id';
         $exec = DB::select($sql);
         $filterProduct = [];
         foreach ($exec as $row) {
             $images = json_decode($row->images);
-            foreach ($images as $image) {
-                $image = $images[0];
-            }
-            $filterProduct = [
+            $filter = [
+                'id'        => $row->id,
                 'name'      => $row->name,
-                'slug'      => $row->slug,
-                'image'     => $image,
-                'priceCore' => $row->priceCore,
-                'priceSale' => $row->priceSale,
+                'link'      => url('products/'.$row->slug),
+                'image'     => $images[0],
+                'sale'      => $row->priceSale,
+                'priceCore' => number_format($row->priceCore).' VNĐ',
+                'priceSale' => number_format($row->priceSale).' VNĐ',
+                'new'       => $row->new,
                 'cat_name'  => $row->cat_name,
             ];
+            array_push($filterProduct, $filter);
         }
         $response = array_values($filterProduct);
         return response($response);

@@ -24,86 +24,90 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
-                <form action="" method="post">
-                    @csrf
-                    <div class="filter-widget">
-                        <h4 class="fw-title">Danh Mục</h4>
-                        <ul class="filter-catagories">
-                            @foreach($categories as $cat)
-                            <li><a href="{{ url('categories/'.$cat->slug) }}">{{ $cat->name }}</a></li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <div class="filter-widget">
-                        <h4 class="fw-title">Brand</h4>
-                        <div class="fw-brand-check">
-                            @foreach($brands as $brand)
-                            <div class="bc-item">
-                                <label>
-                                    {{ $brand->name }}
-                                    <input type="checkbox" id="bc-polo brand" name="brand_id" value="{{ $brand->id }}">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
+                @csrf
+                <div class="filter-widget">
+                    <h4 class="fw-title">Danh Mục</h4>
+                    <ul class="fw-brand-check">
+                        @foreach($categories as $category)
+                        <div class="bc-item">
+                            <label>
+                                {{ $category->name }}
+                                <input type="checkbox" id="bc-polo" name="category_id" value="{{ $category->id }}">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="filter-widget">
+                    <h4 class="fw-title">Brand</h4>
+                    <div class="fw-brand-check">
+                        @foreach($brands as $brand)
+                        <div class="bc-item">
+                            <label>
+                                {{ $brand->name }}
+                                <input type="checkbox" id="bc-polo" name="brand_id" value="{{ $brand->id }}">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
 
-                            @endforeach
-                        </div>
+                        @endforeach
                     </div>
-                    <div class="filter-widget">
-                        <h4 class="fw-title">Size</h4>
-                        <div class="fw-size-choose">
-                            @foreach($sizes as $size)
-                            <div class="sc-item">
-                                <label>
-                                    <input type="checkbox" name="size_id" id="size" value="{{ $size->id }}">
-                                    {{ $size->name }}
-                                </label>
-                            </div>
-                            @endforeach
+                </div>
+                <div class="filter-widget">
+                    <h4 class="fw-title">Size</h4>
+                    <div class="fw-size-choose">
+                        @foreach($sizes as $size)
+                        <div class="sc-item">
+                            <label>
+                                <input type="checkbox" name="size_id" id="size" value="{{ $size->id }}">
+                                {{ $size->name }}
+                            </label>
                         </div>
+                        @endforeach
                     </div>
-                    <div class="filter-widget">
-                        <h4 class="fw-title">Màu</h4>
-                        <div class="fw-color-choose">
-                            @foreach($colors as $color)
-                            <div class="sc-item">
-                                <label style="background-color: {{ $color->color }}" title="{{ $color->name }}">
-                                    <input type="checkbox" name="color_id" id="color" value="{{ $color->id }}">
-                                </label>
-                            </div>
-                            @endforeach
+                </div>
+                <div class="filter-widget">
+                    <h4 class="fw-title">Màu</h4>
+                    <div class="fw-color-choose">
+                        @foreach($colors as $color)
+                        <div class="sc-item">
+                            <label style="background-color: {{ $color->color }}" title="{{ $color->name }}">
+                                <input type="checkbox" name="color_id" id="color" value="{{ $color->id }}">
+                            </label>
                         </div>
+                        @endforeach
                     </div>
-                    <div class="filter-widget">
-                        <h4 class="fw-title">Price</h4>
-                        <div class="filter-range-wrap">
-                            <div class="range-slider">
-                                <div class="price-input">
-                                    <input type="text" id="minamount">
-                                    <input type="text" id="maxamount">
-                                </div>
-                            </div>
-                            <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="0" data-max="5000000">
-                                <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                </div>
+                <div class="filter-widget">
+                    <h4 class="fw-title">Price</h4>
+                    <div class="filter-range-wrap">
+                        <div class="range-slider">
+                            <div class="price-input">
+                                <input type="text" id="minamount">
+                                <input type="text" id="maxamount">
                             </div>
                         </div>
-                        <a href="#" class="filter-btn">Filter</a>
-                    </div>
-                    <div class="filter-widget">
-                        <h4 class="fw-title">Tags</h4>
-                        <div class="fw-tags">
-                            <a href="#">Towel</a>
-                            <a href="#">Shoes</a>
-                            <a href="#">Coat</a>
-                            <a href="#">Dresses</a>
-                            <a href="#">Trousers</a>
-                            <a href="#">Men's hats</a>
-                            <a href="#">Backpack</a>
+                        <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="0" data-max="5000000">
+                            <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
                         </div>
                     </div>
-                </form>
+                    <a href="#" class="filter-btn">Filter</a>
+                </div>
+                <div class="filter-widget">
+                    <h4 class="fw-title">Tags</h4>
+                    <div class="fw-tags">
+                        <a href="#">Towel</a>
+                        <a href="#">Shoes</a>
+                        <a href="#">Coat</a>
+                        <a href="#">Dresses</a>
+                        <a href="#">Trousers</a>
+                        <a href="#">Men's hats</a>
+                        <a href="#">Backpack</a>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-9 order-1 order-lg-2">
                 <div class="product-show-option">
@@ -124,7 +128,7 @@
                     </div>
                 </div>
                 <div class="product-list">
-                    <div class="row">
+                    <div class="row rowCategory">
                         @foreach($products as $product)
                         <div class="col-lg-4 col-sm-6">
                             <ul class="product-item">
@@ -383,9 +387,13 @@
     //     $('.mdb-select').materialSelect();
     // });
     $(document).ready(function() {
-
         $('input').on('click', function() {
             dataPost = [];
+            let categoryID = $('input[name="category_id"]:checked').map(function() {
+                return this.value;
+            }).toArray();
+            dataPost.push(categoryID);
+
             let brandID = $('input[name="brand_id"]:checked').map(function() {
                 return this.value;
             }).toArray();
@@ -400,7 +408,7 @@
                 return this.value;
             }).toArray();
             dataPost.push(colorID);
-            
+
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -408,9 +416,45 @@
                 url: '<?php echo url('categories') ?>',
                 type: 'POST',
                 dataType: 'JSON',
-                data: {dataPost}
+                data: {
+                    dataPost
+                }
             }).done(function(response) {
                 console.log(response);
+                let i;
+                let html = '';
+                for (i = 0; i < response.length; i++) {
+                    html += '<div class="col-lg-4 col-sm-6">';
+                    html += '<ul class="product-item">';
+                    html += '<li class="pi-pic">';
+                    html += '<img src="'+ response[i].image +'" alt="">';
+                    if (response[i].sale > 0) {
+                        html += '<div class="sale pp-sale" style="border-radius: 20px;">Sale</div>';
+                    }
+                    if (response[i].new == 1) {
+                        html += '<div class="new pp-new">New</div>';
+                    }
+                    html += '<ul>';
+                    html += '<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>';
+                    html += '<li class="quick-view"><a href="#" data-toggle="modal" data-target="#modalQuickView' + response[i].id + '">+ Xem nhanh</a></li>';
+                    html += '<li class="w-icon active"><a href="" title="Thêm sản phẩm yêu thích" id="add-wish-list"><i class="fa fa-heart-o"></i></a></li>';
+                    html += '</ul>';
+                    html += '</li>';
+                    html += '<div class="pi-text">';
+                    html += '<div class="catagory-name">' + response[i].cat_name + '</div>';
+                    html += '<a href="'+ response[i].link +'">';
+                    html += '<h5>' + response[i].name + '</h5>';
+                    html += '</a>';
+                    if (response[i].sale == 0) {
+                        html += '<div class="product-price">' + response[i].priceCore + '</div>';
+                    } else {
+                        html += '<div class="product-price">' + response[i].priceSale + '<span style="margin-left: 10px;">' + response[i].priceCore + '</span></div>';
+                    }
+                    html += '</div>';
+                    html += '</ul>';
+                    html += '</div>';
+                }
+                $('.rowCategory').html(html);
             })
         })
     })

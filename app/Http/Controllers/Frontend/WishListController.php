@@ -31,7 +31,6 @@ class WishListController extends Controller
     {
         if ($request->ajax()) {
             $product = ShopProductModel::find($id);
-
             DB::beginTransaction();
             try {
                 if (!$product) {
@@ -44,13 +43,26 @@ class WishListController extends Controller
                 if (count($wishlist) != 0) {
                     $response = ['msg' => 'wishlist exist'];
                 } else {
+                    $wishlistID = DB::table('wishlist')->max('id');
+                    $nextWishListID = $wishlistID + 1;
                     DB::table('wishlist')->insert([
-                        'product_id' => $id,
-                        'user_id' => Auth::id(),
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
+                        'id'        => $nextWishListID,
+                        'product_id'=> $id,
+                        'user_id'   => Auth::id(),
+                        'created_at'=> Carbon::now(),
+                        'updated_at'=> Carbon::now(),
                     ]);
-                    $response = ['msg' => 'success'];
+                    $response = [
+                        'msg'           => 'success',
+                        'id'            => $nextWishListID,
+                        'name'          => $product->name,
+                        'image'         => json_decode($product->images)[0],
+                        'sale'          => $product->priceSale,
+                        'priceCore'     => number_format($product->priceCore).' VNĐ',
+                        'priceSale'     => number_format($product->priceSale).' VNĐ',
+                        'linkWishlist'  => url('wishlists/'.$nextWishListID),
+                        'linkProduct'   => url('products/'.$product->slug),
+                    ];
                     DB::commit();
                 }
             } catch (Exception $e) {

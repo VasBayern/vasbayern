@@ -162,6 +162,7 @@ Giỏ hàng
 </section>
 <!-- Shopping Cart Section End -->
 <script>
+    //update cart
     $(document).ready(function() {
         $(document).on('change', '.quantity-btn', function(e) {
             e.preventDefault();

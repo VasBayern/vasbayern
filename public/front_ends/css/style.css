@@ -723,13 +723,13 @@ ol {
 	cursor: pointer;
 }
 
-.inner-header .nav-right li.heart-icon .heart-hover .select-total {
+.inner-header .nav-right li.heart-icon .heart-hover .select-heart {
 	overflow: hidden;
 	border-top: 1px solid #e5e5e5;
 	padding-top: 26px;
 }
 
-.inner-header .nav-right li.heart-icon .heart-hover .select-total span {
+.inner-header .nav-right li.heart-icon .heart-hover .select-heart span {
 	font-size: 14px;
 	color: #e7ab3c;
 	text-transform: uppercase;
@@ -1831,12 +1831,14 @@ ol {
 
 .filter-widget .fw-brand-check .bc-item {
 	margin-bottom: 3px;
+	display: inline-block;
+	width: 129px;
 }
 
 .filter-widget .fw-brand-check .bc-item label {
 	position: relative;
 	cursor: pointer;
-	padding-left: 28px;
+	padding-left: 20px;
 }
 
 .filter-widget .fw-brand-check .bc-item label input {
@@ -2354,9 +2356,10 @@ ol {
 }
 
 .product-details .pd-size-choose .sc-item label.active {
-	border: 1px solid #252525;
-	/* background: #252525;
-	color: #ffffff; */
+	border-color: #f36;
+	background-image: url('/front_ends/img/select-pro.png');
+	background-position: right bottom;
+	background-repeat: no-repeat;
 }
 
 .product-details .quantity {

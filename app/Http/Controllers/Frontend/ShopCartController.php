@@ -72,8 +72,9 @@ class ShopCartController extends Controller
             $cartCollection = \Cart::getContent();
             $images = json_decode($product->images);
             $response = [
+                'id'            => $property['id'],
                 'quantityCart'  => $quantityCart,
-                'id'            => $product_id,
+                'product_id'    => $product_id,
                 'name'          => $product->name,
                 'price'         => $price,
                 'quantity'      => $quantity,

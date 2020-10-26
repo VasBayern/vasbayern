@@ -362,7 +362,7 @@
                             '<input type="hidden" name="color_id[]" value="' + order[i].orderDetails[j].color.id + '">' +
                             '<input type="hidden" name="quantity[]" value="' + order[i].orderDetails[j].quantity + '">' +
                             '<input type="hidden" name="email" value="' + order[i].email + '">' +
-                            '<td class="imgProduct"></td>' +
+                            '<td><img src="' + order[i].orderDetails[j].product.image + '" style="width:100px"></td>' +
                             '<td>' + order[i].orderDetails[j].product.name + '</td>' +
                             '<td>' + order[i].orderDetails[j].size.name + '</td>' +
                             '<td>' + order[i].orderDetails[j].color.name + '</td>' +
@@ -371,11 +371,6 @@
                             '<td>' + order[i].orderDetails[j].total_price + '</td>' +
                             '</tr>';
                     }
-                    $("imgProduct").css("background-image",
-                        '{{ URL::asset(' / images / flags / ') }}' + $("select#lang").val() + '.png)');
-
-                    //         var imageUrl = '{{ asset("'+ order[i].orderDetail.product.image +'")}}';
-                    // console.log(imageUrl);
                 }
                 $('#orderProduct').html(html);
             });
