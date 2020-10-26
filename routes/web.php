@@ -63,11 +63,14 @@ Route::post('/email/verification-notification', function (HttpRequest $request) 
 
     return back()->with('status', 'verification-link-sent');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
+/**
+ * Category
+ */
+Route::get('categories/{slug}', [FrontendShopCategoryController::class, 'index'] );
+Route::post('categories', [FrontendShopCategoryController::class, 'filter'] );
 /**
  *  Product
  */
-Route::get('categories/{slug}', [FrontendShopCategoryController::class, 'index'] );
 Route::get('products/{slug}', [FrontendShopProductController::class, 'index']);
 Route::post('products/{slug}/comment', [FrontendShopProductController::class, 'comment']);
 

@@ -1946,56 +1946,6 @@ ol {
 	display: inline-block;
 	text-transform: uppercase;
 }
-
-/* .filter-widget .fw-color-choose .cs-item {
-	width: 50%;
-	float: left;
-	margin-bottom: 4px;
-}
-
-.filter-widget .fw-color-choose .cs-item input {
-	position: absolute;
-	visibility: hidden;
-}
-
-.filter-widget .fw-color-choose .cs-item label {
-	cursor: pointer;
-	position: relative;
-	padding-left: 33px;
-	font-size: 16px;
-	color: #636363;
-}
-
-.filter-widget .fw-color-choose .cs-item label.cs-violet:before {
-	background: #8230E3;
-}
-
-.filter-widget .fw-color-choose .cs-item label.cs-blue:before {
-	background: #2773BE;
-}
-
-.filter-widget .fw-color-choose .cs-item label.cs-yellow:before {
-	background: #EEEE21;
-}
-
-.filter-widget .fw-color-choose .cs-item label.cs-red:before {
-	background: #DC3232;
-}
-
-.filter-widget .fw-color-choose .cs-item label.cs-green:before {
-	background: #81D742;
-}
-
-.filter-widget .fw-color-choose .cs-item label:before {
-	position: absolute;
-	left: 0;
-	top: 4px;
-	height: 18px;
-	width: 18px;
-	background: #252525;
-	border-radius: 50%;
-	content: "";
-} */
 .filter-widget .fw-color-choose .sc-item {
 	display: inline-block;
 	margin-right: 5px;
@@ -2014,8 +1964,8 @@ ol {
 	font-size: 16px;
 	color: #252525;
 	font-weight: 700;
-	height: 40px;
-	width: 47px;
+	height: 30px;
+	width: 30px;
 	border: 1px solid #ebebeb;
 	text-align: center;
 	line-height: 40px;
@@ -2024,8 +1974,10 @@ ol {
 }
 
 .filter-widget .fw-color-choose .sc-item label.active {
-	background: #252525;
-	color: #ffffff;
+	border-color: #f36;
+	background-image: url('/front_ends/img/select-pro.png');
+	background-position: right bottom;
+	background-repeat: no-repeat;
 }
 
 .filter-widget .fw-size-choose .sc-item {
@@ -2056,10 +2008,6 @@ ol {
 }
 
 .filter-widget .fw-size-choose .sc-item label.active {
-	background: #252525;
-	color: #ffffff;
-}
-.filter-widget .fw-color-choose label.active {
 	background: #252525;
 	color: #ffffff;
 }
@@ -2360,7 +2308,10 @@ ol {
 	margin-bottom: 0;
 }
 .product-details .pd-color .pd-color-choose  label.active {
-	border: 1px solid #252525;
+	border-color: #f36;
+	background-image: url('/front_ends/img/select-pro.png');
+	background-position: right bottom;
+	background-repeat: no-repeat;
 }
 
 .product-details .pd-color .pd-color-choose .cc-item label.cc-yellow {

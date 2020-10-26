@@ -12,6 +12,7 @@
     .radio-inline {
         height: 30px;
         width: 30px;
+        border: 1px solid #ebebeb;
         cursor: pointer;
         margin-right: 10px;
     }

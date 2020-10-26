@@ -24,93 +24,86 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
-                <div class="filter-widget">
-                    <h4 class="fw-title">Danh Mục</h4>
-                    <ul class="filter-catagories">
-                        @foreach($categories as $cat)
-                        <li><a href="{{ url('categories/'.$cat->slug) }}">{{ $cat->name }}</a></li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div class="filter-widget">
-                    <h4 class="fw-title">Brand</h4>
-                    <div class="fw-brand-check">
-                        @foreach($brands as $brand)
-                        <div class="bc-item">
-                            <label>
-                                {{ $brand->name }}
-                                <input type="checkbox" id="bc-polo">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
+                <form action="" method="post">
+                    @csrf
+                    <div class="filter-widget">
+                        <h4 class="fw-title">Danh Mục</h4>
+                        <ul class="filter-catagories">
+                            @foreach($categories as $cat)
+                            <li><a href="{{ url('categories/'.$cat->slug) }}">{{ $cat->name }}</a></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="filter-widget">
+                        <h4 class="fw-title">Brand</h4>
+                        <div class="fw-brand-check">
+                            @foreach($brands as $brand)
+                            <div class="bc-item">
+                                <label>
+                                    {{ $brand->name }}
+                                    <input type="checkbox" id="bc-polo brand" name="brand_id" value="{{ $brand->id }}">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
 
-                        @endforeach
-                    </div>
-                </div>
-                <div class="filter-widget">
-                    <h4 class="fw-title">Size</h4>
-                    <div class="fw-size-choose">
-                        @foreach($sizes as $size)
-                        <div class="sc-item">
-                            <label>
-                                <input type="checkbox" name="size_id" value="{{ $size->id }}">
-                                {{ $size->name }}
-                            </label>
+                            @endforeach
                         </div>
-                        @endforeach
                     </div>
-                </div>
-                <div class="filter-widget">
-                    <h4 class="fw-title">Màu</h4>
-                    <div class="fw-color-choose">
-                        @foreach($colors as $color)
-                        <div class="sc-item">
-                            <label style="background-color: {{ $color->color }}">
-                                <input type="checkbox" name="color" value="{{ $color->id }}">
-                            </label>
+                    <div class="filter-widget">
+                        <h4 class="fw-title">Size</h4>
+                        <div class="fw-size-choose">
+                            @foreach($sizes as $size)
+                            <div class="sc-item">
+                                <label>
+                                    <input type="checkbox" name="size_id" id="size" value="{{ $size->id }}">
+                                    {{ $size->name }}
+                                </label>
+                            </div>
+                            @endforeach
                         </div>
-                        @endforeach
                     </div>
-                </div>
-                <div class="filter-widget">
-                    <h4 class="fw-title">Price</h4>
-                    <div class="filter-range-wrap">
-                        <div class="range-slider">
-                            <div class="price-input">
-                                <input type="text" id="minamount">
-                                <input type="text" id="maxamount">
+                    <div class="filter-widget">
+                        <h4 class="fw-title">Màu</h4>
+                        <div class="fw-color-choose">
+                            @foreach($colors as $color)
+                            <div class="sc-item">
+                                <label style="background-color: {{ $color->color }}" title="{{ $color->name }}">
+                                    <input type="checkbox" name="color_id" id="color" value="{{ $color->id }}">
+                                </label>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="filter-widget">
+                        <h4 class="fw-title">Price</h4>
+                        <div class="filter-range-wrap">
+                            <div class="range-slider">
+                                <div class="price-input">
+                                    <input type="text" id="minamount">
+                                    <input type="text" id="maxamount">
+                                </div>
+                            </div>
+                            <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="0" data-max="5000000">
+                                <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
                             </div>
                         </div>
-                        <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="0" data-max="5000000">
-                            <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                        <a href="#" class="filter-btn">Filter</a>
+                    </div>
+                    <div class="filter-widget">
+                        <h4 class="fw-title">Tags</h4>
+                        <div class="fw-tags">
+                            <a href="#">Towel</a>
+                            <a href="#">Shoes</a>
+                            <a href="#">Coat</a>
+                            <a href="#">Dresses</a>
+                            <a href="#">Trousers</a>
+                            <a href="#">Men's hats</a>
+                            <a href="#">Backpack</a>
                         </div>
                     </div>
-                    <a href="#" class="filter-btn">Filter</a>
-                </div>
-                <!-- <div class="filter-widget">
-                    <h4 class="fw-title">Color</h4>
-                    <div class="fw-color-choose">
-                        <div class="cs-item">
-                            <input type="radio" id="cs-green">
-                            <label class="cs-green" for="cs-green">Green</label>
-                        </div>
-                    </div>
-                </div> -->
-
-                <div class="filter-widget">
-                    <h4 class="fw-title">Tags</h4>
-                    <div class="fw-tags">
-                        <a href="#">Towel</a>
-                        <a href="#">Shoes</a>
-                        <a href="#">Coat</a>
-                        <a href="#">Dresses</a>
-                        <a href="#">Trousers</a>
-                        <a href="#">Men's hats</a>
-                        <a href="#">Backpack</a>
-                    </div>
-                </div>
+                </form>
             </div>
             <div class="col-lg-9 order-1 order-lg-2">
                 <div class="product-show-option">
@@ -389,5 +382,37 @@
     // $(document).ready(function() {
     //     $('.mdb-select').materialSelect();
     // });
+    $(document).ready(function() {
+
+        $('input').on('click', function() {
+            dataPost = [];
+            let brandID = $('input[name="brand_id"]:checked').map(function() {
+                return this.value;
+            }).toArray();
+            dataPost.push(brandID);
+
+            let sizeID = $('input[name="size_id"]:checked').map(function() {
+                return this.value;
+            }).toArray();
+            dataPost.push(sizeID);
+
+            let colorID = $('input[name="color_id"]:checked').map(function() {
+                return this.value;
+            }).toArray();
+            dataPost.push(colorID);
+            
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '<?php echo url('categories') ?>',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {dataPost}
+            }).done(function(response) {
+                console.log(response);
+            })
+        })
+    })
 </script>
 @endsection
