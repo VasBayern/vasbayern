@@ -1947,7 +1947,7 @@ ol {
 	text-transform: uppercase;
 }
 
-.filter-widget .fw-color-choose .cs-item {
+/* .filter-widget .fw-color-choose .cs-item {
 	width: 50%;
 	float: left;
 	margin-bottom: 4px;
@@ -1995,6 +1995,37 @@ ol {
 	background: #252525;
 	border-radius: 50%;
 	content: "";
+} */
+.filter-widget .fw-color-choose .sc-item {
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.filter-widget .fw-color-choose .sc-item:last-child {
+	margin-right: 0;
+}
+
+.filter-widget .fw-color-choose .sc-item input {
+	position: absolute;
+	visibility: hidden;
+}
+
+.filter-widget .fw-color-choose .sc-item label {
+	font-size: 16px;
+	color: #252525;
+	font-weight: 700;
+	height: 40px;
+	width: 47px;
+	border: 1px solid #ebebeb;
+	text-align: center;
+	line-height: 40px;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+.filter-widget .fw-color-choose .sc-item label.active {
+	background: #252525;
+	color: #ffffff;
 }
 
 .filter-widget .fw-size-choose .sc-item {
@@ -2028,7 +2059,10 @@ ol {
 	background: #252525;
 	color: #ffffff;
 }
-
+.filter-widget .fw-color-choose label.active {
+	background: #252525;
+	color: #ffffff;
+}
 .filter-widget .fw-tags a {
 	display: inline-block;
 	font-size: 16px;
@@ -2324,6 +2358,9 @@ ol {
 	border-radius: 50%;
 	cursor: pointer;
 	margin-bottom: 0;
+}
+.product-details .pd-color .pd-color-choose  label.active {
+	border: 1px solid #252525;
 }
 
 .product-details .pd-color .pd-color-choose .cc-item label.cc-yellow {

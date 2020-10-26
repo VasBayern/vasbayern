@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ShopCouponController;
 use App\Http\Controllers\Admin\ShopOrderController;
 use App\Http\Controllers\Admin\ShopProductController;
 use App\Http\Controllers\Admin\ShopSizeController;
+use App\Http\Controllers\Auth\LoginAssociationController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CustomerController;
 use App\Http\Controllers\Frontend\HomeController as FrontendHomeController;
@@ -23,7 +24,6 @@ use App\Http\Controllers\Frontend\ShopCategoryController as FrontendShopCategory
 use App\Http\Controllers\Frontend\ShopPaymentController;
 use App\Http\Controllers\Frontend\ShopProductController as FrontendShopProductController;
 use App\Http\Controllers\Frontend\WishListController;
-use App\Models\ShopColorModel;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Route;
@@ -125,6 +125,15 @@ Route::post('comment', [PageController::class, 'comment'])->name('comment');
 Route::post('followBlog', [PageController::class, 'followBlog'])->name('followBlog');
 Route::post('searchAuto', [PageController::class, 'searchAuto'])->name('searchProduct');
 Route::post('search', [PageController::class, 'searchProduct']);
+
+/**
+ * Associate
+ */
+// Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->where('provider','twitter|facebook|linkedin|google|github');;
+// Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->where('provider','twitter|facebook|linkedin|google|github');;
+//Route::get('redirect/{driver}', 'Auth\LoginController@redirectToProvider')->name('login.provider')->where('driver', implode('|', config('auth.socialite.drivers')));
+Route::get('/redirect', [LoginAssociationController::class, 'redirectToProvider']);
+Route::get('/callback', [LoginAssociationController::class, 'handleProviderCallback']);
 
 /**
  * -----------------------------------ADMIN-----------------------------------
@@ -288,8 +297,3 @@ Route::prefix('admin')->name('admin.')->group(function () {
 // Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
 //     \UniSharp\LaravelFilemanager\Lfm::routes();
 // });
-
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
-    Route::get('/laravel-filemanager', '\UniSharp\LaravelFilemanager\Controllers\LfmController@show');
-    Route::post('/laravel-filemanager/upload', '\UniSharp\LaravelFilemanager\Controllers\UploadController@upload');
-});

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\ShopBrandModel;
 use App\Models\ShopCategoryModel;
+use App\Models\ShopColorModel;
 use App\Models\ShopProductModel;
 use App\Models\ShopSizeModel;
 use App\Models\WishListModel;
@@ -31,6 +32,9 @@ class ShopCategoryController extends Controller
 
         $sizes = ShopSizeModel::all();
         $data['sizes'] = $sizes;
+
+        $colors = ShopColorModel::all();
+        $data['colors'] = $colors;
 
         return view('frontend.shop.category', $data);
     }

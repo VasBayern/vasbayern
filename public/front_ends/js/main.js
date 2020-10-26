@@ -200,6 +200,10 @@
         $(".fw-size-choose .sc-item label, .pd-size-choose .sc-item label").removeClass('active');
         $(this).addClass('active');
     });
+    $(".pd-color-choose label").on('click', function () {
+        $(".pd-color-choose label").removeClass('active');
+        $(this).addClass('active');
+    });
     
     /*-------------------
 		Nice Select

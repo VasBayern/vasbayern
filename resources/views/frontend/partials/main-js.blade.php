@@ -216,7 +216,6 @@
         e.preventDefault();
         var add_cart_url = '<?php echo url('cart') ?>';
         var dataPost = $(this).closest('form').serializeArray();
-        console.log(dataPost);
         $.ajax({
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

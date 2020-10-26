@@ -65,6 +65,9 @@
                                 <td style="font-weight: bold; font-size:18px">{{ number_format($order->total) }} vnđ</td>
                                 <?php
                                 switch ($order->status) {
+                                    case 1:
+                                        echo '<td style="font-weight: 700;">Chờ xác nhận</td>';
+                                        break;
                                     case 2:
                                         echo '<td style="font-weight: 700; color: #337AB7">Đã giao hàng</td>';
                                         break;
@@ -75,7 +78,7 @@
                                         echo '<td style="font-weight: 700; color: #D9534F">Đã hủy</td>';
                                         break;
                                     default:
-                                        echo '<td style="font-weight: 700;">Chờ xác nhận</td>';
+                                        throw 'Error';
                                 }
                                 ?>
                                 <td>
@@ -212,7 +215,6 @@
                                     <span class="input-group-text"><i class="fas fa-truck"></i></span>
                                 </div>
                                 <select class="form-control custom-select" id="shipment" name="shipment">
-                                    <option value="">-- Chọn --</option>
                                     <option value="1" data-id="1" id="sm1">Grab</option>
                                     <option value="2" data-id="2" id="sm2">GHTK</option>
                                     <option value="3" data-id="3" id="sm3">VNPost</option>
@@ -266,7 +268,6 @@
 </div>
 <!-- /.modal -->
 @foreach($orders as $order)
-
 <!-- Modal Delete -->
 <div id="myModal{{$order->id}}" class="modal fade">
     <div class="modal-dialog modal-confirm">
@@ -294,7 +295,6 @@
 </div>
 @endforeach
 <!-- Jquery -->
-
 @endsection
 @include('admin.partials.index-jquery');
 <script>

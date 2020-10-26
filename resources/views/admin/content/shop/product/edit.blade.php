@@ -185,6 +185,7 @@ Sửa sản phẩm
                             </thead>
                             <tbody>
                                 <?php $stt = 1; ?>
+                                @if(isset($product->product_properties))
                                 @foreach($product->product_properties as $productProperty)
                                 <tr>
                                     <th scope="row">{{ $stt }}</th>
@@ -200,6 +201,7 @@ Sửa sản phẩm
                                 </tr>
                                 <?php $stt++; ?>
                                 @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -263,7 +265,7 @@ Sửa sản phẩm
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="quantity">Số Lượng</label>
-                            <input type="text" name="quantity" value="{{ $productProperty->quantity }}" class="form-control" id="quantity" placeholder="Vui lòng nhập số lượng" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            <input type="text" name="quantity" class="form-control" id="quantity" placeholder="Vui lòng nhập số lượng" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                         </div>
                     </div>
@@ -279,7 +281,7 @@ Sửa sản phẩm
     </div>
     <!-- /.modal-dialog -->
 </div>
-
+@if(isset($product->product_properties))
 @foreach($product->product_properties as $productProperty)
 <!-- Modal Edit -->
 <div class="modal fade" id="modal-default-{{ $productProperty->id }}">
@@ -349,6 +351,7 @@ Sửa sản phẩm
     </div>
 </div>
 @endforeach
+@endif
 @endsection
 <!-- Jquery -->
 @include('admin.partials.admin-jquery');

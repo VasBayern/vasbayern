@@ -139,7 +139,7 @@
 <script>
     $(document).ready(function() {
         $('.lfm-btn').filemanager('image', {
-            'prefix': 'http://localhost/vasbayern/public/laravel-filemanager'
+            'prefix': '/laravel-filemanager'
         });
         
         $('.plus-image').on('click', function(e) {
@@ -171,7 +171,7 @@
             var box = $(this).closest('.form-group');
             $(html).insertBefore(box);
             $('.lfm-btn').filemanager('image', {
-                'prefix': 'http://localhost/vasbayern/public/laravel-filemanager'
+                'prefix': '/laravel-filemanager'
             });
         })
         $(document).on('click', '.remove-image', function(e) {

@@ -181,7 +181,7 @@
                                                                 <i class="fa fa-facebook fa-fw"></i> Đăng nhập bằng Facebook
                                                             </a>
 
-                                                            <a href="{{ url('login/google') }}" class="google social-btn"><i class="fa fa-google fa-fw">
+                                                            <a href="{{ url('/redirect') }}" class="google social-btn"><i class="fa fa-google fa-fw">
                                                                 </i> Đăng nhập bằng Google
                                                             </a>
                                                         </div>

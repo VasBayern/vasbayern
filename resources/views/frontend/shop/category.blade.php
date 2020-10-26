@@ -53,8 +53,20 @@
                         @foreach($sizes as $size)
                         <div class="sc-item">
                             <label>
-                                <input type="radio" name="size_id" value="{{ $size->id }}">
+                                <input type="checkbox" name="size_id" value="{{ $size->id }}">
                                 {{ $size->name }}
+                            </label>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="filter-widget">
+                    <h4 class="fw-title">Màu</h4>
+                    <div class="fw-color-choose">
+                        @foreach($colors as $color)
+                        <div class="sc-item">
+                            <label style="background-color: {{ $color->color }}">
+                                <input type="checkbox" name="color" value="{{ $color->id }}">
                             </label>
                         </div>
                         @endforeach
@@ -377,6 +389,5 @@
     // $(document).ready(function() {
     //     $('.mdb-select').materialSelect();
     // });
-    
 </script>
 @endsection
