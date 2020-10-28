@@ -78,6 +78,27 @@
             display: none;
         }
     }
+
+
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu>a:after {
+        content: ">";
+        float: right;
+    }
+
+    .dropdown-submenu>.dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: 0px;
+        margin-left: 0px;
+    }
+
+    .dropdown-submenu:hover>.dropdown-menu {
+        display: block;
+    }
 </style>
 <!-- Page Preloder -->
 <div id="preloder">
@@ -103,7 +124,7 @@
                     <li class="nav-item dropdown" style="background: #fff">
                         <a class="nav-link dropdown-toggle profile" data-toggle="dropdown" href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false" style="border: none; font-size: 16px;">
                             @if(isset(Auth::user()->avatar) && !empty(Auth::user()->avatar) )
-                            <img src="{{ URL::to('/') }}/front_ends/img/user_avatar/{{ Auth::user()->avatar }}" style="border-radius: 50%; width: 35px; margin-right: 10px;" />
+                            <img src="{{ URL::to('/') }}/front_ends/img/user_avatar/{{ Auth::user()->avatar }}" style="border-radius: 50%; width: 35px; height:35px; margin-right: 10px;" />
                             @else
                             <img src="{{ URL::to('/') }}/front_ends/img/user_avatar/avt.jpg" style="border-radius: 50%; width: 35px; margin-right: 10px;" />
                             @endif
@@ -278,7 +299,7 @@
                     <div class="advanced-search">
                         <form action="{{ url('search') }}" method="POST">
                             @csrf
-                            <button type="button" class="category-btn">All Categories</button>
+                            <button type="button" class="category-btn">Danh mục</button>
                             <div class="input-group">
                                 <input type="text" placeholder="What do you need?" id="search" name="name">
                                 <button type="submit"><i class="ti-search"></i></button>
@@ -295,10 +316,10 @@
                                 <span class="countWhislist">{{ count($wishlists) }}</span>
                             </a>
                             <div class="heart-hover">
-                                @if(count($wishlists) > 0)
                                 <div class="select-items">
                                     <table>
                                         <tbody class="heartBody">
+                                            @if(count($wishlists) > 0)
                                             @foreach($wishlists as $item)
                                             <tr class="row-wishlist-{{ $item->id }}">
                                                 <?php
@@ -325,14 +346,14 @@
                                                 </td>
                                             </tr>
                                             @endforeach
+                                            @else
+                                            <div class="select-heart">
+                                                <span class="emptyHeart">Chưa có sản phẩm</span>
+                                            </div>
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
-                                @else
-                                <div class="select-heart">
-                                    <span class="emptyHeart">Chưa có sản phẩm</span>
-                                </div>
-                                @endif
                             </div>
                         </li>
                         <li class="cart-icon">
@@ -404,6 +425,36 @@
                 <div class="depart-btn">
                     <i class="ti-menu"></i>
                     <span>Tất cả danh mục</span>
+                    <!-- multi  level -->
+                    <!-- <div class="btn-group">
+                        <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle" href="">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+                            <li><a class="dropdown-item" href="#">level 1</a></li>
+                            <li><a class="dropdown-item" href="#">level 1</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item" tabindex="-1" href="#">
+                                    level 1
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" tabindex="-1" href="#">level 2</a></li>
+                                    <li class="dropdown-submenu">
+                                        <a class="dropdown-item" href="#">
+                                            level 2
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">3rd level</a></li>
+                                            <li><a class="dropdown-item" href="#">3rd level</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">level 2</a></li>
+                                    <li><a class="dropdown-item" href="#">level 2</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div> -->
                     <ul class="depart-hover">
                         <?php
                         $categories = \App\Models\ShopCategoryModel::get();
@@ -419,7 +470,7 @@
             <nav class="nav-menu mobile-menu">
                 <ul>
                     <li class="active"><a href="{{ url('/') }}">Home</a></li>
-                    <li><a href="#1">Danh mục</a>
+                    <li><a href="" id="dLabel" data-toggle="dropdown">Danh mục</a>
                         <ul class="dropdown">
                             <?php
                             $category = \App\Models\ShopCategoryModel::where('parent_id', 0)->get();
@@ -448,3 +499,14 @@
         </div>
     </div>
 </header>
+<script>
+    $(".btn-group, .dropdown").hover(
+        function() {
+            $('>.dropdown-menu', this).stop(true, true).fadeIn("fast");
+            $(this).addClass('open');
+        },
+        function() {
+            $('>.dropdown-menu', this).stop(true, true).fadeOut("fast");
+            $(this).removeClass('open');
+        });
+</script>

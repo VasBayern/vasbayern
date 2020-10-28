@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 @section('title')
-Màu sắc
+Tag
 @endsection
 
 @section('content')
@@ -10,12 +10,12 @@ Màu sắc
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Màu sắc</h1>
+                <h1>Thẻ</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">Màu sắc</li>
+                    <li class="breadcrumb-item active">Thẻ</li>
                 </ol>
             </div>
         </div>
@@ -42,23 +42,27 @@ Màu sắc
                                 <tr>
                                     <th>Id</th>
                                     <th>Tên</th>
-                                    <th>Mã màu</th>
-                                    <th>Màu</th>
+                                    <th>Loại</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $stt = 1; ?>
-                                @foreach($colors as $color)
+                                @foreach($tags as $tag)
                                 <th scope="row">{{ $stt }}</th>
-                                <td>{{ $color->name }}</td>
-                                <td>{{ $color->color }}</td>
+                                <td>{{ $tag->name }}</td>
+                                <td>{{ $tag->slug }}</td>
                                 <td>
-                                    <p style="width: 30px; height: 30px; margin: 0 auto; border:1px solid #ebebeb; background-color:{{ $color->color }}"></p>
+                                    @if($tag->tag_type == 1)
+                                    <i class="fas fa-tshirt"></i>
+                                    @elseif($tag->tag_type == 2)
+                                    <i class="far fa-newspaper"></i>
+                                    @endif
+
                                 </td>
                                 <td>
-                                    <a href="#myModal" class="btn btn-primary" title="Sửa" data-toggle="modal" data-target="#modal-default-{{ $color->id }}"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="#myModal{{$color->id}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="#myModal" class="btn btn-primary" title="Sửa" data-toggle="modal" data-target="#modal-default-{{ $tag->id }}"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="#myModal{{$tag->id}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                                 </tr>
                                 <?php $stt++; ?>
@@ -80,10 +84,10 @@ Màu sắc
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url('admin/colors') }}" method="post" enctype="multipart/form-data" id="quickForm">
+            <form action="{{ url('admin/tags') }}" method="post" enctype="multipart/form-data" id="quickForm">
                 @csrf
                 <div class="modal-header">
-                    <h4 class="modal-title">Thêm màu </h4>
+                    <h4 class="modal-title">Thêm thẻ</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -102,18 +106,19 @@ Màu sắc
                     </div>
                     @endif
                     <div class="form-group">
+                        <label for="homepage">Loại</label>
+                        <select name="type" class="form-control custom-select">
+                            <option value="1">Sản phẩm</option>
+                            <option value="2">Bài viết</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="name">Tên</label>
-                        <input type="text" name="name" value="{{ old('name') }}" class="form-control" id="name" placeholder="Vui lòng nhập tên">
+                        <input type="text" name="name" value="{{ old('name') }}" class="form-control" id="name" placeholder="Vui lòng nhập thẻ">
                     </div>
                     <div class="form-group">
-                        <label for="color">Mã màu</label>
-                        <input type="text" name="color" value="{{ old('color') }}" class="form-control" id="color" placeholder="Vui lòng nhập màu">
-                    </div>
-                    <div class="form-group">
-                        <label for="color">Màu</label>
-                        <p style="width: 80px; height: 50px;  position:relative">
-                            <span class="bg-color" style="width: 40px; height: 30px; position:absolute; top: 8px; left: 20px"></span>
-                        </p>
+                        <label for="slug">Slug</label>
+                        <input type="slug" name="slug" value="{{ old('slug') }}" class="form-control" id="slug" placeholder="Vui lòng nhập slug">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -128,16 +133,16 @@ Màu sắc
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-@foreach($colors as $color)
+@foreach($tags as $tag)
 <!-- Modal Edit -->
-<div class="modal fade" id="modal-default-{{ $color->id }}">
+<div class="modal fade" id="modal-default-{{ $tag->id }}">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url('admin/colors/'.$color->id) }}" method="post" enctype="multipart/form-data" id="quickForm">
+            <form action="{{ url('admin/tags/'.$tag->id) }}" method="post" enctype="multipart/form-data" id="quickForm">
                 @method('PUT')
                 @csrf
                 <div class="modal-header">
-                    <h4 class="modal-title">Sửa màu {{ $color->name }}</h4>
+                    <h4 class="modal-title">Sửa thẻ {{ $tag->name }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -156,18 +161,19 @@ Màu sắc
                     </div>
                     @endif
                     <div class="form-group">
+                        <label for="type">Loại</label>
+                        <select name="type" class="form-control custom-select">
+                            <option value="1" <?php echo ($tag->tag_type == 1) ? 'selected' : '' ?>>Sản phẩm </option>
+                            <option value="2" <?php echo ($tag->tag_type == 2) ? 'selected' : '' ?>>Bài viết</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="name">Tên</label>
-                        <input type="text" name="name" value="{{ $color->name }}" class="form-control" id="name" placeholder="Vui lòng nhập tên">
+                        <input type="text" name="name" value="{{ $tag->name }}" class="form-control" id="name" placeholder="Vui lòng nhập thẻ">
                     </div>
                     <div class="form-group">
-                        <label for="color">Mã Màu</label>
-                        <input type="text" name="color" value="{{ $color->color }}" class="form-control" id="color" placeholder="Vui lòng nhập màu">
-                    </div>
-                    <div class="form-group">
-                        <label for="color">Màu</label>
-                        <p style="width: 80px; height: 50px;  position:relative">
-                            <span class="bg-color" style="width: 30px; height: 30px; position:absolute; top: 8px; left: 20px; border:1px solid #ebebeb; background-color: {{ $color->color }}"></span>
-                        </p>
+                        <label for="slug">Slug</label>
+                        <input type="text" name="slug" value="{{ $tag->slug }}" class="form-control" id="slug" placeholder="Vui lòng nhập slug">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -183,7 +189,7 @@ Màu sắc
 </div>
 
 <!-- Modal Delete -->
-<div id="myModal{{$color->id}}" class="modal fade">
+<div id="myModal{{$tag->id}}" class="modal fade">
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
             <div class="modal-header flex-column">
@@ -197,7 +203,7 @@ Màu sắc
                 <p>Lưu ý : Hành động này không thể hoàn tác</p>
             </div>
             <div class="modal-footer justify-content-center">
-                <form name="brand" action="{{ url('admin/colors/'.$color->id) }}" method="post" class="form-horizontal">
+                <form name="brand" action="{{ url('admin/tags/'.$tag->id) }}" method="post" class="form-horizontal">
                     @method('DELETE')
                     @csrf
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
@@ -212,15 +218,3 @@ Màu sắc
 
 <!-- Jquery -->
 @include('admin.partials.index-jquery');
-<script>
-    $(document).ready(function() {
-        $(document).on('change', '#color', function(e) {
-            e.preventDefault();
-            var color = $(this).val();
-            $('.bg-color').css({
-                "background-color": color,
-                "border": "1px solid #ebebeb"
-            });
-        });
-    });
-</script>

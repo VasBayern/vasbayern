@@ -200,16 +200,20 @@
     /*-------------------
         Radio Btn
     --------------------- */
-    $(".pd-size-choose .sc-item label").on('click', function () {
+    $(document).on('click', ".pd-size-choose .sc-item label", function () {
         $(".pd-size-choose .sc-item label").removeClass('active');
         $(this).addClass('active');
     });
-    $(".pd-color-choose label").on('click', function () {
+    $(document).on('click', ".pd-color-choose label", function () {
         $(".pd-color-choose label").removeClass('active');
         $(this).addClass('active');
     });
-    $(".fw-size-choose .sc-item input, .fw-color-choose .sc-item input").on('click', function () {
+    $(document).on('click', ".fw-size-choose .sc-item input, .fw-color-choose .sc-item input", function () {
         $(this).closest('label').toggleClass('active');
+    })
+    $(document).on('click', ".modal-size-choose .sc-item input, .modal-color-choose .sc-item input", function () {
+        $(".modal-size-choose .sc-item input, .modal-color-choose .sc-item input").closest('label').removeClass('active');
+        $(this).closest('label').addClass('active');
     })
 
     /*-------------------

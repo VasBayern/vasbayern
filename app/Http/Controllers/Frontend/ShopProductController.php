@@ -24,7 +24,6 @@ class ShopProductController extends Controller
         JOIN sizes AS B ON A.size_id = B.id WHERE A.product_id = ' . $product->id .' ORDER BY size_id');
         $data['sizes'] = $sizes;
 
- 
         $sql = DB::select('SELECT B.id AS size_id, B.name AS size_name, C.id AS color_id, C.name AS color_name, C.color, A.quantity
         FROM product_properties AS A
         JOIN sizes AS B ON A.size_id = B.id
@@ -53,14 +52,6 @@ class ShopProductController extends Controller
                     ]
                 ],
             ];
-        }
-        foreach ($property as $row) {
-            // return response($property);
-            // return response($row);
-            // return response($row['sizes']);
-            foreach ($row['sizes'] as  $size) {
-                //return response($size['size_id']);
-            }
         }
         $data['properties'] = $property;
 

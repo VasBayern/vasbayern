@@ -40,9 +40,9 @@ Danh mục sản phẩm
                                 <tr>
                                     <th style="width: 30px">Id</th>
                                     <th>Tên</th>
-                                    <th>Slug</th>
-                                    <th>Ảnh</th>
+                                    <th>Danh mục</th>
                                     <th>Cha</th>
+                                    <th>Ảnh</th>
                                     <th>Hiển thị</th>
                                     <th></th>
                                 </tr>
@@ -51,31 +51,22 @@ Danh mục sản phẩm
                                 <?php $stt = 1; ?>
                                 @foreach($categories as $category)
                                 <th scope="row">{{ $stt }}</th>
-                                <td>{{ $category->name }}</td>
-                                <td>{{ $category->slug }}</td>
+                                <td>{{ $category['name'] }}</td>
+                                <td>{{ str_repeat('-', $category['level'] - 1) . ' ' . $category['name'] }}</td>
+                                <td>{{ $category['parent_id'] }}</td>
                                 <td>
-                                    <img src="{{ asset($category->image) }}" style="margin-top:10px;max-width:240px;">
+                                    <img src="{{ asset($category['image']) }}" style="margin-top:10px;max-width:240px;">
                                 </td>
                                 <td>
-                                    @if($category->parent_id == 0)
-                                    {{ "Gốc" }}
+                                    @if($category['homepage'] == 1)
+                                    <i class="far fa-check-square" style="color: #007BFF;"></i>
                                     @else
-                                    <?php
-                                    $item = DB::table('shop_categories')->where("id", $category->parent_id)->first();
-                                    echo $item->name;
-                                    ?>
+                                    <i class="far fa-window-close" style="color: #ff0a0a;"></i>
                                     @endif
                                 </td>
                                 <td>
-                                    @if($category->homepage == 1)
-                                    {{ "Có" }}
-                                    @else
-                                    {{ "Không" }}
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ url('admin/category/'.$category->slug) }}" class="btn btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="#myModal{{$category->slug}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="{{ url('admin/category/'.$category['slug']) }}" class="btn btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="#myModal{{$category['slug']}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                                 </tr>
                                 <?php $stt++; ?>
@@ -95,7 +86,7 @@ Danh mục sản phẩm
 </section>
 <!-- Modal HTML -->
 @foreach($categories as $category)
-<div id="myModal{{$category->slug}}" class="modal fade">
+<div id="myModal{{$category['slug']}}" class="modal fade">
     <div class="modal-dialog modal-confirm">
         <div class="modal-content">
             <div class="modal-header flex-column">
@@ -109,7 +100,7 @@ Danh mục sản phẩm
                 <p>Lưu ý : Hành động này không thể hoàn tác</p>
             </div>
             <div class="modal-footer justify-content-center">
-                <form name="category" action="{{ url('admin/category/'.$category->slug) }}" method="post" class="form-horizontal">
+                <form name="category" action="{{ url('admin/category/'.$category['slug']) }}" method="post" class="form-horizontal">
                     @method('DELETE')
                     @csrf
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>

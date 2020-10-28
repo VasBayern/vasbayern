@@ -191,7 +191,7 @@ Sửa sản phẩm
                                     <th scope="row">{{ $stt }}</th>
                                     <td>{{ $productProperty->size->name }}</td>
                                     <td>
-                                        <p style="width: 40px; height: 30px; margin: 0 auto; background-color:{{ $productProperty->color->color }}"></p>
+                                        <p style="width: 30px; height: 30px; margin: 0 auto; background-color:{{ $productProperty->color->color }}; border:1px solid #ebebeb; "></p>
                                     </td>
                                     <td>{{ $productProperty->quantity }}</td>
                                     <td>

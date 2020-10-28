@@ -1981,7 +1981,43 @@ ol {
 	background-position: right bottom;
 	background-repeat: no-repeat;
 }
+/* modal color*/
+.filter-widget .modal-color-choose .sc-item {
+	display: inline-block;
+	margin-right: 5px;
+}
 
+.filter-widget .modal-color-choose .sc-item:last-child {
+	margin-right: 0;
+}
+
+.filter-widget .modal-color-choose .sc-item input {
+	position: absolute;
+	visibility: hidden;
+}
+
+.filter-widget .modal-color-choose .sc-item label {
+	font-size: 16px;
+	color: #252525;
+	font-weight: 700;
+	height: 30px;
+	width: 30px;
+	border: 1px solid #ebebeb;
+	text-align: center;
+	line-height: 40px;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+.filter-widget .modal-color-choose .sc-item label.active {
+	border-color: #f36;
+	background-image: url('/front_ends/img/select-pro.png');
+	background-position: right bottom;
+	background-repeat: no-repeat;
+}
+/* end modal color */
+
+/*  */
 .filter-widget .fw-size-choose .sc-item {
 	display: inline-block;
 	margin-right: 5px;
@@ -2009,10 +2045,45 @@ ol {
 	cursor: pointer;
 }
 
-.filter-widget .fw-size-choose .sc-item label.active {
+.filter-widget .modal-size-choose .sc-item label.active {
+	border-color: #f36;
+	background-image: url('/front_ends/img/select-pro.png');
+	background-position: right bottom;
+	background-repeat: no-repeat;
+}
+/* modal size */
+.filter-widget .modal-size-choose .sc-item {
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.filter-widget .modal-size-choose .sc-item:last-child {
+	margin-right: 0;
+}
+
+.filter-widget .modal-size-choose .sc-item input {
+	position: absolute;
+	visibility: hidden;
+}
+
+.filter-widget .modal-size-choose .sc-item label {
+	font-size: 16px;
+	color: #252525;
+	font-weight: 700;
+	height: 40px;
+	width: 47px;
+	border: 1px solid #ebebeb;
+	text-align: center;
+	line-height: 40px;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+.filter-widget .modal-size-choose .sc-item label.active {
 	background: #252525;
 	color: #ffffff;
 }
+/* end modal size */
 .filter-widget .fw-tags a {
 	display: inline-block;
 	font-size: 16px;

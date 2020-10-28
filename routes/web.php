@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ShopCouponController;
 use App\Http\Controllers\Admin\ShopOrderController;
 use App\Http\Controllers\Admin\ShopProductController;
 use App\Http\Controllers\Admin\ShopSizeController;
+use App\Http\Controllers\Admin\TagProductController;
 use App\Http\Controllers\Auth\LoginAssociationController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CustomerController;
@@ -68,6 +69,7 @@ Route::post('/email/verification-notification', function (HttpRequest $request) 
  */
 Route::get('categories/{slug}', [FrontendShopCategoryController::class, 'index'] );
 Route::post('categories', [FrontendShopCategoryController::class, 'filter'] );
+
 /**
  *  Product
  */
@@ -128,6 +130,7 @@ Route::post('comment', [PageController::class, 'comment'])->name('comment');
 Route::post('followBlog', [PageController::class, 'followBlog'])->name('followBlog');
 Route::post('searchAuto', [PageController::class, 'searchAuto'])->name('searchProduct');
 Route::post('search', [PageController::class, 'searchProduct']);
+Route::post('addToCart', [PageController::class, 'addToCart']);
 
 /**
  * Associate
@@ -235,6 +238,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('orders/{id}',  [ShopOrderController::class, 'update']);
         Route::delete('orders/{id}',  [ShopOrderController::class, 'destroy']);
 
+        /**
+         * Tags
+         */
+        Route::get('tags', [TagProductController::class, 'index'])->name('tag');
+        Route::post('tags', [TagProductController::class, 'store']);
+        Route::put('tags/{id}', [TagProductController::class, 'update']);
+        Route::delete('tags/{id}', [TagProductController::class, 'destroy']);
+
         Route::prefix('blog')->name('blog.')->group(function () {
             /**
              * Blog Category
@@ -253,16 +264,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('posts', [BlogPostController::class, 'store']);
             Route::put('posts/{slug}', [BlogPostController::class, 'update']);
             Route::delete('posts/{slug}', [BlogPostController::class, 'destroy']);
-
-            /**
-             * Blog Tag
-             */
-            Route::get('tags/list', [BlogCategoryController::class, 'index'])->name('tag');
-            Route::get('tags', [BlogCategoryController::class, 'create']);
-            Route::get('tags/{slug}', [BlogCategoryController::class, 'edit']);
-            Route::post('tags', [BlogCategoryController::class, 'store']);
-            Route::put('tags/{slug}', [BlogCategoryController::class, 'update']);
-            Route::delete('tags/{slug}', [BlogCategoryController::class, 'destroy']);
 
             /**
              * Blog Comment

@@ -33,4 +33,7 @@ class ShopProductModel extends Model
     {
         return $this->hasMany('App\Models\WishListModel', 'product_id', 'id');
     }
+    public function tag_product() {
+        return $this->belongsToMany('App\Models\TagProductModel');
+    }
 }

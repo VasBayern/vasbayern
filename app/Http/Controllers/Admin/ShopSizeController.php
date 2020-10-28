@@ -51,5 +51,4 @@ class ShopSizeController extends Controller
         \Toastr::success('Xóa thành công');
         return redirect()->route('admin.size');
     }
-
 }

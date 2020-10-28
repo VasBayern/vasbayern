@@ -127,6 +127,16 @@ Thêm sản phẩm
             <div class="col-md-6">
                 <div class="card card-secondary">
                     <div class="card-header">
+                        <div class="form-group">
+                            <label for="tag">Thẻ</label>
+                            <select name="tag" class="form-control custom-select">
+                                @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}">{{ $tag->slug }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-header">
                         <h3 class="card-title">Mô tả</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -156,7 +166,7 @@ Thêm sản phẩm
         <div class="row">
             <div class="col-12">
                 <a href="{{ route('admin.product') }}" class="btn btn-secondary">Hủy</a>
-                <input type="submit" value="Sửa" class="btn btn-success">
+                <input type="submit" value="Thêm" class="btn btn-success">
             </div>
         </div>
     </form>

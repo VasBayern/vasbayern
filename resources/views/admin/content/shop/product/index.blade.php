@@ -74,9 +74,9 @@ Sản phẩm
                                 <td>{{ number_format($product->priceSale) }} VNĐ</td>
                                 <td>
                                     @if($product->homepage == 1)
-                                    {{ "Có" }}
+                                    <i class="far fa-check-square" style="color: #007BFF;"></i>
                                     @else
-                                    {{ "Không" }}
+                                    <i class="far fa-window-close" style="color: #ff0a0a;"></i>
                                     @endif
                                 </td>
                                 <td>

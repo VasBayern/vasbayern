@@ -75,7 +75,7 @@ Giỏ hàng
                                             @method('PUT')
                                             @csrf
                                             <div class="pro-qty" data-id="{{ $item->id }}">
-                                                <input type="text" name="quantity" value="{{ $item->quantity }}" class="quantity-btn quantity-btn-{{ $item->id }}" data-quantity="{{ $item->quantity }}" data-price="{{ $item->price }}" data-stock="{{ $item->attributes->quantityStock }}" data-size="{{ $item->attributes->size_id }}" data-color="{{ $item->attributes->color_id }}" min="1" max="99" onKeyUp="if(this.value>99){this.value='99';}else if(this.value<0){this.value='0';}" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
+                                                <input type="text" name="quantity" value="{{ $item->quantity }}" class="quantity-btn quantity-btn-{{ $item->id }}" data-quantity="{{ $item->quantity }}" data-price="{{ $item->price }}" data-stock="{{ $item->attributes->quantityStock }}" min="1" max="99" onKeyUp="if(this.value>99){this.value='99';}else if(this.value<0){this.value='0';}" onkeypress='return event.charCode >= 48 && event.charCode <= 57' />
                                             </div>
                                         </form>
                                     </div>
@@ -171,8 +171,6 @@ Giỏ hàng
             var quantity = parseInt($('.quantity-btn-' + id).val());
             var quantityStock = parseInt($('.quantity-btn-' + id).attr('data-stock'));
             var product_price = $('.quantity-btn-' + id).attr('data-price');
-            var color_id = $('.quantity-btn-' + id).attr('data-color');
-            var size_id = $('.quantity-btn-' + id).attr('data-size');
             var data_quantity = $('.quantity-btn-' + id).attr('data-quantity');
             if (quantity > quantityStock) {
                 toastr.error('Số lượng sản phẩm trong kho không đủ');
@@ -198,8 +196,6 @@ Giỏ hàng
                     quantity: quantity,
                     product_price: product_price,
                     quantityStock: quantityStock,
-                    color_id: color_id,
-                    size_id: size_id,
                 },
             }).done(function(result) {
                 $('.quantity-btn-' + id).attr('data-quantity', quantity);
@@ -220,8 +216,6 @@ Giỏ hàng
             var quantity = parseInt($('.quantity-btn-' + id).val()) + 1;
             var product_price = $('.quantity-btn-' + id).attr('data-price');
             var quantityStock = parseInt($('.quantity-btn-' + id).attr('data-stock'));
-            var color_id = $('.quantity-btn-' + id).attr('data-color');
-            var size_id = $('.quantity-btn-' + id).attr('data-size');
             var data_quantity = $('.quantity-btn-' + id).attr('data-quantity');
             if (quantity > quantityStock) {
                 breakOut = true;
@@ -240,8 +234,6 @@ Giỏ hàng
                     quantity: quantity,
                     product_price: product_price,
                     quantityStock: quantityStock,
-                    color_id: color_id,
-                    size_id: size_id,
                 },
             }).done(function(result) {
                 $('.quantity-btn-' + id).attr('data-quantity', quantity);
@@ -261,8 +253,6 @@ Giỏ hàng
             var quantity = parseInt($('.quantity-btn-' + id).val()) - 1;
             var product_price = $('.quantity-btn-' + id).attr('data-price');
             var quantityStock = $('.quantity-btn-' + id).attr('data-stock');
-            var color_id = $('.quantity-btn-' + id).attr('data-color');
-            var size_id = $('.quantity-btn-' + id).attr('data-size');
             var data_quantity = $('.quantity-btn-' + id).attr('data-quantity');
             if (quantity == 0) {
                 breakOut = true;
@@ -280,8 +270,6 @@ Giỏ hàng
                     quantity: quantity,
                     product_price: product_price,
                     quantityStock: quantityStock,
-                    color_id: color_id,
-                    size_id: size_id,
                 },
             }).done(function(result) {
                 $('.quantity-btn-' + id).attr('data-quantity', quantity);

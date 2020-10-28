@@ -334,6 +334,19 @@ Trang chủ
     <!-- Js Plugins -->
     @include('frontend.partials.main-js')
     <!-- Js Plugins End -->
+
+    @foreach($products as $product)
+    <!-- Modal: modalQuickView -->
+    <div class="modal fade" id="modalQuickView{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
     <script>
         // slide category
         $(document).ready(function() {

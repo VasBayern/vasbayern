@@ -24,9 +24,6 @@ class HomeController extends Controller
         $parent_3_categories = ShopCategoryModel::where('parent_id',3)->where('homepage',1)->limit(3)->get();
         $data['parent_3_categories'] = $parent_3_categories;
 
-        // $product_special = ShopProductModel::where('homepage',1)->inRandomOrder()->take(2)->get();
-        // $data['product_special'] = $product_special;
-
         $data['banner_mains'] = $banner_mains = ShopBannerModel::getBannerByLocation(1);
         $data['banner_sale_1'] = $banner_sale_1 = ShopBannerModel::getBannerByLocation(2);
         $data['banner_sale_2'] = $banner_sale_2 = ShopBannerModel::getBannerByLocation(3);

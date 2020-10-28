@@ -35,8 +35,8 @@ class ShopCartController extends Controller
         $input      = $request->all();
         $product_id = (int) $input['product_id'];
         $quantity   = (int) $input['quantity'];
-        $size_id    =  $input['size_id'];
-        $color_id   = $input['color_id'];
+        $size_id    =  $input['size'];
+        $color_id   = $input['color'];
         $quantityStock   = $input['quantityStock'];
         $size       = ShopSizeModel::find($size_id);
         $color      = ShopColorModel::find($color_id);
@@ -96,8 +96,6 @@ class ShopCartController extends Controller
         $quantity       = (int) $input['quantity'];
         $product_price  = (int) $input['product_price'];
         $quantityStock  = (int) $input['product_price'];
-        $color_id       = (int) $input['color_id'];
-        $size_id        = (int) $input['size_id'];
         \Cart::update($id, array(
             'quantity'      => array(
                 'relative'  => false,

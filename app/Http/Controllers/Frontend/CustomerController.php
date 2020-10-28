@@ -42,6 +42,7 @@ class CustomerController extends Controller
             $item->password = bcrypt($request->get('new_password'));
         }
         if (isset($avatar)) {
+            unlink(public_path('/front_ends/img/user_avatar/').$item->avatar);
             $item->avatar   = $avatarName;
         }
         $item->save();

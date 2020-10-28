@@ -109,15 +109,16 @@
                 <p>Bình luận</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="{{ route('admin.blog.tag') }}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Thẻ / Nhãn</p>
-              </a>
-            </li>
           </ul>
         </li>
-
+        <li class="nav-item has-treeview">
+          <a href="{{ route('admin.tag') }}" class="nav-link">
+            <i class="nav-icon fas fa-tags"></i>
+            <p>
+              Thẻ / Nhãn
+            </p>
+          </a>
+        </li>
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-shopping-cart"></i>

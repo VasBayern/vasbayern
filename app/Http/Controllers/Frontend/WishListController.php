@@ -52,6 +52,7 @@ class WishListController extends Controller
                         'created_at'=> Carbon::now(),
                         'updated_at'=> Carbon::now(),
                     ]);
+                    $countWishlist = count(WishListModel::where('user_id', Auth::id())->get());
                     $response = [
                         'msg'           => 'success',
                         'id'            => $nextWishListID,
@@ -62,6 +63,7 @@ class WishListController extends Controller
                         'priceSale'     => number_format($product->priceSale).' VNĐ',
                         'linkWishlist'  => url('wishlists/'.$nextWishListID),
                         'linkProduct'   => url('products/'.$product->slug),
+                        'countWishlist' => $countWishlist,
                     ];
                     DB::commit();
                 }

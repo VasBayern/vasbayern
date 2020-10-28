@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ShopSizeModel extends Model
+class TagProductModel extends Model
 {
     use HasFactory;
 
-    public $table = 'sizes';
+    public $table = 'tags';
 
     protected $fillable = [
         'name',
     ];
 
-    public function product_properties() {
-        return $this->hasMany('App\Models\ShopProductPropertiesModel','size_id','id');
+    public function tag_product() {
+        return $this->belongsToMany('App\Models\ShopProductModel');
     }
 }

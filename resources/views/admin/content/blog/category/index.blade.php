@@ -150,7 +150,7 @@ Danh mục bài viết
                         <input type="text" name="name" value="{{ $category->name }}" class="form-control" id="name" placeholder="Vui lòng nhập tên">
                     </div>
                     <div class="form-group">
-                        <label for="slug">Tên</label>
+                        <label for="slug">Slug</label>
                         <input type="text" name="slug" value="{{ $category->slug }}" class="form-control" id="slug" placeholder="Vui lòng nhập slug">
                     </div>
                 </div>

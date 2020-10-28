@@ -22,8 +22,8 @@
         font-weight: 500;
         margin-left: 15px;
     }
-   
 </style>
+
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
     <div class="container">
@@ -98,7 +98,7 @@
                                         $sizeOfColor = json_encode($sizes)
                                         ?>
                                         <label class="radio-inline" style="background-color: {{ $property['color'] }}" title="{{ $property['color_name']}}">
-                                            <input type="radio" name="color_id" class="radio-color" value="{{ $property['color_id'] }}" data-name="{{ $property['color_name']}}" data-size="{{ $sizeOfColor }}" data-color="{{ $listSize }}">
+                                            <input type="radio" name="color" class="radio-color" value="{{ $property['color_id'] }}" data-name="{{ $property['color_name']}}" data-size="{{ $sizeOfColor }}" data-color="{{ $listSize }}">
                                         </label>
                                         @endforeach
                                     </div>
@@ -109,7 +109,7 @@
                                         @foreach($sizes as $size)
                                         <div class="sc-item">
                                             <label class="size size-{{$size->size_id}}">
-                                                <input type="radio" class="size_id" name="size_id" value="{{ $size->size_id }}" data-size="{{ $sizeOfColor }}" data-color="{{ $listSize }}" data-quantity="">
+                                                <input type="radio" class="size_id" name="size" value="{{ $size->size_id }}">
                                                 {{ $size->size_name }}
                                             </label>
                                         </div>
@@ -124,11 +124,11 @@
                                         <input type="text" id="quantity" name="quantity" data-quantity="" value="1" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                                     </div>
                                     <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                    <input type="hidden" name="quantityStock" class="quantityStock" value="{{ $product->id }}">
+                                    <input type="hidden" name="quantityStock" class="quantityStock" value="">
                                     @if(count($sizes) > 0)
-                                    <button type="submit" class="primary-btn pd-cart" id="add-to-cart" data-product-id="{{ $product->id  }}" style="border:none; padding: 14px 25px 10px;">Thêm vào giỏ hàng</button>
+                                    <button type="submit" class="primary-btn pd-cart" id="add-to-cart" style="border:none; padding: 14px 25px 10px;">Thêm vào giỏ hàng</button>
                                     @else
-                                    <button type="submit" disabled class="primary-btn pd-cart" id="add-to-cart" data-product-id="{{ $product->id  }}" style="border:none; background: darkgray;">Hết hàng</button>
+                                    <button type="submit" disabled class="primary-btn pd-cart" id="add-to-cart" style="border:none; background: darkgray;">Hết hàng</button>
                                     @endif
                                 </div>
                                 <p class="amount"></p>
@@ -183,13 +183,13 @@
                         @endif
                         <ul>
                             <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                            <li class="quick-view"><a href="{{ url('product/'.$related_product->id) }}">+ Quick View</a></li>
+                            <li class="quick-view"><a href="#" id="quick-view" data-toggle="modal" data-target="#modalQuickView{{$related_product->id}}" data-id="{{ $related_product->id }}">+ Xem nhanh</a></li>
                             <li class="w-icon active"><a href="#"> <i class="icon_heart_alt"></i></a></li>
                         </ul>
                     </div>
                     <div class="pi-text">
                         <div class="catagory-name">{{ $related_product->category->name }}</div>
-                        <a href="{{ url('product/'.$related_product->id) }}">
+                        <a href="{{ url('products/'.$related_product->slug) }}">
                             <h5>{{ $related_product->name }}</h5>
                         </a>
                         @if($related_product->priceSale == 0)
@@ -227,54 +227,19 @@
 
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        //change color
-        $("input[name='color_id']").change(function(e) {
-            $('#quantity').val(1);
-            $('#quantity').attr('data-quantity',1);
-            $('.size_id').prop('checked', false);
-            $('.size').removeClass('active');
-            var colorName = $(this).attr('data-name');
-            $('.color-name').html(colorName);
-            var i, j;
-            var html = '';
-            var sizeColor = [];
-            var color = JSON.parse($(this).attr('data-color'));
-            var sizes = Object.values(color.sizes);
-            for (i = 0; i < sizes.length; i++) {
-                sizeColor.push(sizes[i].size_id);
-            }
-            var listSize = JSON.parse($(this).attr('data-size'));
-            for (j = 0; j < listSize.length; j++) {
-                if (sizeColor.indexOf(listSize[j].size_id) > -1) {
-                    $('.size-' + listSize[j].size_id).css({
-                        "background-color": "#ffffff",
-                        "cursor": "pointer",
-                        "pointer-events": "auto"
-                    });
-                } else {
-                    $('.size-' + listSize[j].size_id).css({
-                        "background-color": "#cccccc",
-                        "pointer-events": "none",
-                    });
-                }
-            }
-            $("input[name='size_id']").change(function(e) {
-                $('#quantity').val(1);
-                $('#quantity').attr('data-quantity',1);
-                size_id = $(this).val();
-                var i;
-                for (i = 0; i < sizes.length; i++) {
-                    if (size_id == sizes[i].size_id) {
-                        $('.amount').html('Còn lại <span class="quantity-stock" style="font-weight: bold;" data-quantity="' + sizes[i].quantity + '">' + sizes[i].quantity + '</span> sản phẩm');
-                        $('.quantityStock').val(sizes[i].quantity);
-                    }
-                }
-            })
-        });
-    })
+@foreach($related_products as $related_product)
+<!-- Modal: modalQuickView -->
+<div class="modal fade" id="modalQuickView{{$related_product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
 
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+<script>
     $(document).ready(function() {
         // change quantity
         $('.inc').on('click', function(e) {
@@ -292,23 +257,6 @@
             var quantity = parseInt($('#quantity').val());
             var nextQuantity = quantity - 1;
             if (nextQuantity == 0) {
-                breakOut = true;
-                return false;
-            }
-        })
-        $('#quantity').on('change', function(e) {
-            e.preventDefault();
-            var quantity = parseInt($('#quantity').val());
-            var quantityStock = parseInt($('.quantity-stock').attr('data-quantity'));
-            if (quantity > quantityStock) {
-                $('#quantity').val(quantityStock);
-                toastr.error('Vui lòng chọn số lượng ít hơn');
-                breakOut = true;
-                return false;
-            }
-            if (quantity == 0) {
-                $('#quantity').val(1);
-                toastr.error('Vui lòng chọn số lượng');
                 breakOut = true;
                 return false;
             }

@@ -10,43 +10,45 @@ use Illuminate\Http\Request;
 
 class ShopCategoryController extends Controller
 {
-  
-    public function index() {
 
-        $categories = ShopCategoryModel::all();
+    public function index()
+    {
+        $categories = ShopCategoryModel::getCategoryRecursive();
         $data = array();
         $data['categories'] = $categories;
-
+        //dd($categories);
         return view('admin.content.shop.category.index', $data);
     }
 
-    public function create() {
-
+    public function create()
+    {
         $data = array();
         $categories = ShopCategoryModel::all();
         $data['categories'] = $categories;
         $data['parent_categories'] = ShopCategoryModel::getCategoryRecursive();
-
         return view('admin.content.shop.category.add', $data);
     }
 
-    public function edit($slug) {
+    public function edit($slug)
+    {
 
         $data = array();
         $item = ShopCategoryModel::where('slug', $slug)->first();
+        $id= $item['id'];
         $data['category'] = $item;
-        $data['parent_categories'] = ShopCategoryModel::getCategoryRecursiveExcept($slug);
-
-        return view('admin.content.shop.category.edit', $data );
+        $data['parent_categories'] = ShopCategoryModel::getCategoryRecursiveExcept($id);
+        //dd($data['parent_categories']);
+        return view('admin.content.shop.category.edit', $data);
     }
 
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
 
         $validatedData = $request->validate([
             'name'          => 'unique:shop_categories',
             'slug'          => 'unique:shop_categories',
-        ],[
+        ], [
             'name.unique'   => 'Danh mục đã tồn tại',
             'slug.unique'   => 'Slug đã tồn tại',
         ]);
@@ -66,7 +68,8 @@ class ShopCategoryController extends Controller
         return redirect()->route('admin.category');
     }
 
-    public function update(Request $request, $slug) {
+    public function update(Request $request, $slug)
+    {
 
         $input              = $request->all();
         $item               = ShopCategoryModel::where('slug', $slug)->first();
@@ -83,7 +86,8 @@ class ShopCategoryController extends Controller
         return redirect()->route('admin.category');
     }
 
-    public function destroy($slug) {
+    public function destroy($slug)
+    {
         $item = ShopCategoryModel::where('slug', $slug)->first();
         $item->delete();
 

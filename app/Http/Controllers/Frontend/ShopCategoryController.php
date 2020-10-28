@@ -44,19 +44,6 @@ class ShopCategoryController extends Controller
     {
         $input = $request->dataPost;
 
-        // $sql = 'SELECT
-        // MAX(A.id) AS id, A.name, A.slug, A.images, A.priceCore, A.priceSale,
-        // B.id AS category_id, B.name AS cat_name,
-        // C.id AS brand_id,
-        // E.id as size_id, E.name AS size_name,
-        // F.id as color_id, F.name AS color_name, F.color AS color
-        // FROM shop_products AS A
-        // JOIN shop_categories AS B ON A.cat_id = B.id
-        // JOIN shop_brands AS C ON A.brand_id = C.id
-        // JOIN product_properties AS D ON A.id = D.product_id
-        // JOIN sizes AS E ON D.size_id = E.id
-        // JOIN colors AS F ON D.color_id = F.id
-        // WHERE 1=1 ';
         $sql = 'SELECT
         MAX(A.id) AS id, MAX(A.name) AS name, MAX(A.slug) AS slug, MAX(A.images) AS images, MAX(A.priceCore) AS priceCore,
         MAX(A.priceSale) AS priceSale, MAX(A.new) AS new,
@@ -128,11 +115,11 @@ class ShopCategoryController extends Controller
             $filter = [
                 'id'        => $row->id,
                 'name'      => $row->name,
-                'link'      => url('products/'.$row->slug),
+                'link'      => url('products/' . $row->slug),
                 'image'     => $images[0],
                 'sale'      => $row->priceSale,
-                'priceCore' => number_format($row->priceCore).' VNĐ',
-                'priceSale' => number_format($row->priceSale).' VNĐ',
+                'priceCore' => number_format($row->priceCore) . ' VNĐ',
+                'priceSale' => number_format($row->priceSale) . ' VNĐ',
                 'new'       => $row->new,
                 'cat_name'  => $row->cat_name,
             ];
@@ -141,4 +128,6 @@ class ShopCategoryController extends Controller
         $response = array_values($filterProduct);
         return response($response);
     }
+
+    
 }

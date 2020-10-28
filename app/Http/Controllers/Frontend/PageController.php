@@ -14,19 +14,22 @@ use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
-    public function getFaq() {
+    public function getFaq()
+    {
         return view('frontend.content.faq');
     }
 
-    public function getContact() {
+    public function getContact()
+    {
         return view('frontend.content.contact');
     }
 
-    public function comment(Request $request) {
+    public function comment(Request $request)
+    {
         $validatedData = $request->validate([
             'comment' => 'required',
             'email' => 'required|email'
-        ],[
+        ], [
             'comment.required' => 'Bạn chưa bình luận',
         ]);
 
@@ -39,30 +42,33 @@ class PageController extends Controller
         $item->status = 0;
         $item->save();
 
-        \Toastr::success('Vui lòng chờ email phản hồi','Gửi thành công' );
+        \Toastr::success('Vui lòng chờ email phản hồi', 'Gửi thành công');
         return redirect()->back();
     }
 
-    public function followBlog(Request $request) {
+    public function followBlog(Request $request)
+    {
         $email = $request->email;
-        if(NewsletterModel::where('email', '=', $email)->exists()) {
-            \Toastr::error('Vui lòng nhập email khác','Email này đã được đăng ký' );
+        if (NewsletterModel::where('email', '=', $email)->exists()) {
+            \Toastr::error('Vui lòng nhập email khác', 'Email này đã được đăng ký');
         } else {
             $item = new NewsletterModel();
             $item->email = $email;
             $item->save();
-            \Toastr::success('Hệ thống sẽ gửi tin mới nhất qua email của bạn','Đăng kí thành công' );
+            \Toastr::success('Hệ thống sẽ gửi tin mới nhất qua email của bạn', 'Đăng kí thành công');
         }
         return redirect()->back();
     }
 
-    public function searchAuto(Request $request) {
+    public function searchAuto(Request $request)
+    {
         $products = DB::table('shop_products')->select('name')->get()->toArray();
         return response($products);
     }
 
-    public function searchProduct(Request $request) {
-        $products = ShopProductModel::where('name', 'like', '%'.$request->name.'%')->get();
+    public function searchProduct(Request $request)
+    {
+        $products = ShopProductModel::where('name', 'like', '%' . $request->name . '%')->get();
         $data = array();
         $data['products'] = $products;
 
@@ -76,5 +82,51 @@ class PageController extends Controller
         $data['sizes'] = $sizes;
 
         return view('frontend.content.searchProduct', $data);
+    }
+
+    public function addToCart(Request $request)
+    {
+        $id = $request->id;
+        $product = ShopProductModel::find($id);
+
+        $sizes = DB::select('SELECT DISTINCT B.id AS size_id, B.name AS size_name
+        FROM product_properties AS A
+        JOIN sizes AS B ON A.size_id = B.id WHERE A.product_id = ' . $id . ' ORDER BY size_id');
+
+        $sql = DB::select('SELECT B.id AS size_id, B.name AS size_name, C.id AS color_id, C.name AS color_name, C.color, A.quantity
+        FROM product_properties AS A
+        JOIN sizes AS B ON A.size_id = B.id
+        JOIN colors AS C ON A.color_id = C.id
+        JOIN shop_products AS D ON A.product_id = D.id
+        WHERE D.id = ' . $id . ' ORDER BY color_id');
+        $properties = [];
+        foreach ($sql as $row) {
+            if (array_key_exists($row->color_id, $properties)) {
+                $properties[$row->color_id]['sizes'][$row->size_id] = [
+                    'size_id'       => $row->size_id,
+                    'size_name'     => $row->size_name,
+                    'quantity'      => $row->quantity,
+                ];
+                continue;
+            }
+            $properties[$row->color_id] = [
+                'color_id'      => $row->color_id,
+                'color_name'    => $row->color_name,
+                'color'         => $row->color,
+                'sizes'         => [
+                    $row->size_id   => [
+                        'size_id'       => $row->size_id,
+                        'size_name'     => $row->size_name,
+                        'quantity'      => $row->quantity,
+                    ]
+                ],
+            ];
+        }
+        $response = [
+            'product'       => $product,
+            'sizes'         => $sizes,
+            'properties'    => $properties,
+        ];
+        return response()->json(view('frontend.shop.quickView-modal', $response)->render());
     }
 }

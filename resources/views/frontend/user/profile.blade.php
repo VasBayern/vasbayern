@@ -48,7 +48,7 @@ Thông tin tài khoản
                         <div class="row">
                             <div class="avatar-image col-lg-2">
                                 @if(isset(Auth::user()->avatar) && !empty(Auth::user()->avatar) )
-                                <img class="avt-image" src="{{ URL::to('/') }}/front_ends/img/user_avatar/{{ Auth::user()->avatar }}" style="border-radius: 50%" />
+                                <img class="avt-image" src="{{ URL::to('/') }}/front_ends/img/user_avatar/{{ Auth::user()->avatar }}" style="border-radius: 50%; width:140px; height:140px"/>
                                 @else
                                 <img class="avt-image" src="{{ URL::to('/') }}/front_ends/img/user_avatar/avt.jpg" style="border-radius: 50%;" />
                                 @endif
