@@ -2,6 +2,9 @@
 @section('title')
 Thêm bài viết
 @endsection
+<!-- Select2 -->
+<link rel="stylesheet" href="{{asset('admin_assets/plugins/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('admin_assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 @section('content')
 
 <!-- Content Header (Page header) -->
@@ -76,6 +79,14 @@ Thêm bài viết
                             <img id="holder1" style="max-height:100px;">
                         </div>
                         <div class="form-group">
+                            <label>Thẻ</label>
+                            <select class="select2" multiple="multiple" data-placeholder="Chọn thẻ" style="width: 100%;" name="tag[]">
+                                @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}">{{ $tag->slug }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="intro">Giới thiệu</label>
                             <div class="mb-3">
                                 <textarea class="textarea" name="intro" id="intro" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
@@ -96,6 +107,7 @@ Thêm bài viết
                         </div>
                     </div>
                     <div class="card-body">
+
                         <div class="form-group">
                             <label for="desc">Bài viết</label>
                             <div class="mb-3">

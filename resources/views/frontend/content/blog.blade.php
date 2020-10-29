@@ -80,22 +80,21 @@ Tin tức
                             </a>
                         </div>
                     </div>
-                    <div class="blog-tags">
-                        <h4>Product Tags</h4>
-                        <div class="tag-item">
-                            <a href="#">Towel</a>
-                            <a href="#">Shoes</a>
-                            <a href="#">Coat</a>
-                            <a href="#">Dresses</a>
-                            <a href="#">Trousers</a>
-                            <a href="#">Men's hats</a>
-                            <a href="#">Backpack</a>
+                    <div class="filter-widget">
+                        <h4 class="fw-title">Tags</h4>
+                        <div class="fw-tags">
+                            @foreach($tags as $tag)
+                            <label>
+                                <input type="checkbox" name="tag_id" id="tag" value="{{ $tag->id }}">
+                                {{ $tag->slug }}
+                            </label>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-9 order-1 order-lg-2">
-                <div class="row">
+                <div class="row rowCategory">
                     @foreach($posts as $post)
                     <div class="col-lg-6 col-sm-6">
                         <div class="blog-item">
@@ -125,9 +124,55 @@ Tin tức
                             </div>
                         </div> -->
                 </div>
-                {{ $posts->links() }}
             </div>
         </div>
     </div>
 </section>
+<script>
+    $(document).ready(function() {
+        $('input').on('click', function() {
+            dataPost = [];
+            let tagID = $('input[name="tag_id"]:checked').map(function() {
+                return this.value;
+            }).toArray();
+            dataPost.push(tagID);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '<?php echo url('blogs') ?>',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    dataPost
+                }
+            }).done(function(response) {
+                console.log(response);
+                let i;
+                let html = '';
+                for (i = 0; i < response.length; i++) {
+                    html += '<div class="col-lg-6 col-sm-6">' +
+                        '<div class="blog-item">' +
+                        '<div class="bi-pic">' +
+                        '<a href="' + response[i].link + '">' +
+                        '<img src="' + response[i].image + '" style="width: 400px;height: 200px;" alt="">' +
+                        '</a>' +
+                        '</div>' +
+                        '<div class="bi-text">' +
+                        '<a href="' + response[i].link + '">' +
+                        '<h4>' + response[i].name + '</h4>' +
+                        '</a>' +
+                        '<p style="letter-spacing: 0">' + response[i].cat_name +
+                        '<span>' + response[i].updated_at + '</span>' +
+                        '</p>' +
+                        '</div>' +
+                        '<div class="intro">' + response[i].intro + '</div>' +
+                        '</div>' +
+                        '</div>';
+                }
+                $('.rowCategory').html(html);
+            })
+        })
+    })
+</script>
 @endsection

@@ -42,6 +42,7 @@ Tag
                                 <tr>
                                     <th>Id</th>
                                     <th>Tên</th>
+                                    <th>Slug</th>
                                     <th>Loại</th>
                                     <th></th>
                                 </tr>

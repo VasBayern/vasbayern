@@ -208,7 +208,7 @@
         $(".pd-color-choose label").removeClass('active');
         $(this).addClass('active');
     });
-    $(document).on('click', ".fw-size-choose .sc-item input, .fw-color-choose .sc-item input", function () {
+    $(document).on('click', ".fw-size-choose .sc-item input, .fw-color-choose .sc-item input, .fw-tags input", function () {
         $(this).closest('label').toggleClass('active');
     })
     $(document).on('click', ".modal-size-choose .sc-item input, .modal-color-choose .sc-item input", function () {

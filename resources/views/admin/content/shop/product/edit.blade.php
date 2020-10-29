@@ -2,8 +2,10 @@
 @section('title')
 Sửa sản phẩm
 @endsection
+<!-- Select2 -->
+<link rel="stylesheet" href="{{asset('admin_assets/plugins/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('admin_assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 @section('content')
-
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
@@ -89,15 +91,31 @@ Sửa sản phẩm
                                 <option value="1" <?php echo ($product->homepage == 1) ? 'selected' : '' ?>>Hiển thị</option>
                             </select>
                         </div>
+                        <div class="form-group clearfix">
+                            <label for="homepage">Trạng thái</label>
+                            <div style="display:block">
+                                <div class="icheck-primary d-inline">
+                                    <input type="radio" name="new" value="1" id="radioPrimary1" <?php echo ($product->new == 1) ? 'checked' : '' ?>>Mới
+                                    <label for="radioPrimary1">
+                                    </label>
+                                </div>
+                                <div class="icheck-primary d-inline">
+                                    <input type="radio" id="radioPrimary2" name="new" value="2" <?php echo ($product->new == 2) ? 'checked' : '' ?>>Cũ
+                                    <label for="radioPrimary2">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
-                            <label for="new">Trạng thái</label>
-                            <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" data-on-color="success">
-                            <label class="radio-inline">
-                                <input name="new" value="1" <?php echo ($product->new == 1) ? 'checked' : '' ?> type="radio">Mới
-                            </label>
-                            <label class="radio-inline">
-                                <input name="new" value="2" <?php echo ($product->new == 2) ? 'checked' : '' ?> type="radio">Cũ
-                            </label>
+                            <label>Thẻ</label>
+                            <select class="select2" multiple="multiple" data-placeholder="Chọn thẻ" style="width: 100%;" name="tag[]">
+                                @foreach($tags as $tag)
+                                <?php
+                                $selected = in_array($tag->id, $tagProductIDs) ? 'selected' : '';
+                                ?>
+                                <option value="{{ $tag->id }}" {{ $selected }}>{{ $tag->slug }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <?php
                         $images = $product->images ? json_decode($product->images) : array();

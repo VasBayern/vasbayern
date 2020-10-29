@@ -98,13 +98,12 @@
                 <div class="filter-widget">
                     <h4 class="fw-title">Tags</h4>
                     <div class="fw-tags">
-                        <a href="#">Towel</a>
-                        <a href="#">Shoes</a>
-                        <a href="#">Coat</a>
-                        <a href="#">Dresses</a>
-                        <a href="#">Trousers</a>
-                        <a href="#">Men's hats</a>
-                        <a href="#">Backpack</a>
+                        @foreach($tags as $tag)
+                        <label>
+                            <input type="checkbox" name="tag_id" id="tag" value="{{ $tag->id }}">
+                            {{ $tag->slug }}
+                        </label>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -217,7 +216,11 @@
                 return this.value;
             }).toArray();
             dataPost.push(colorID);
-
+            
+            let tagID = $('input[name="tag_id"]:checked').map(function(){
+                return this.value;
+            }).toArray();
+            dataPost.push(tagID);
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

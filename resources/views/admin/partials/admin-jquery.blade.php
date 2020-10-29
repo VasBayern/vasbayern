@@ -6,6 +6,14 @@
 <script src="{{asset('admin_assets/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('admin_assets/dist/js/demo.js')}}"></script>
+<!-- Select2 -->
+<script src="{{asset('admin_assets/plugins/select2/js/select2.full.min.js')}}"></script>
+<script>
+    $(function() {
+        //Initialize Select2 Elements
+        $('.select2').select2();
+    })
+</script>
 <!-- jquery-validation -->
 <script src="{{asset('admin_assets/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
 <script type="text/javascript">
@@ -51,6 +59,9 @@
                 quantity: {
                     required: true,
                 },
+                'tag[]': {
+                    required: true,
+                },
             },
             messages: {
                 name: {
@@ -92,6 +103,9 @@
                 quantity: {
                     required: "Vui lòng chọn số lượng",
                 },
+                'tag[]': {
+                    required: "Vui lòng chọn thẻ",
+                },
             },
             errorElement: 'span',
             errorPlacement: function(error, element) {
@@ -119,10 +133,10 @@
             height: 250
         });
         $('.textareaDescProduct').summernote({
-            height: 420
+            height: 523
         });
         $('.textareaPost').summernote({
-            height: 512
+            height: 613
         });
     })
 </script>
@@ -141,7 +155,7 @@
         $('.lfm-btn').filemanager('image', {
             'prefix': '/laravel-filemanager'
         });
-        
+
         $('.plus-image').on('click', function(e) {
             e.preventDefault();
             var countLfm = parseInt($('.lfm-btn').length);

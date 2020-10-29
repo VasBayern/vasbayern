@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\BlogCategoryModel;
 use App\Models\BlogPostModel;
 use App\Models\NewsletterModel;
+use App\Models\TagModel;
 use App\Notifications\NewPostNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BlogPostController extends Controller
 {
@@ -26,6 +28,8 @@ class BlogPostController extends Controller
         $data = array();
         $categories = BlogCategoryModel::all();
         $data['categories'] = $categories;
+        $tags = TagModel::where('tag_type', 2)->get();
+        $data['tags'] = $tags;
 
         return view('admin.content.blog.post.add', $data);
     }
@@ -37,7 +41,19 @@ class BlogPostController extends Controller
         $data['post'] = $post;
         $categories = BlogCategoryModel::all();
         $data['categories'] = $categories;
+        $tags = TagModel::where('tag_type', 2)->get();
+        $data['tags'] = $tags;
 
+        $sql = DB::select('SELECT A.id
+        FROM tags AS A
+        JOIN taggables AS B ON A.id = B.tag_id
+        JOIN content_post AS C ON C.id = B.post_id
+        WHERE A.tag_type = 2 AND C.id = '.$post->id);
+        $tagPostIDs = [];
+        foreach($sql as $row) {
+            array_push($tagPostIDs, $row->id);
+        }
+        $data['tagPostIDs'] = $tagPostIDs;
         return view('admin.content.blog.post.edit', $data);
     }
 
@@ -71,6 +87,16 @@ class BlogPostController extends Controller
         foreach ($users as $user) {
             $user->notify(new NewPostNotification($post));
         }
+
+        foreach ($input['tag'] as $tag) {
+            DB::table('taggables')->insertOrIgnore([
+                'post_id'       => $post->id,
+                'product_id'    => NULL,
+                'tag_id'        => $tag,
+                'created_at'    => now(),
+                'updated_at'    => now(),
+            ]);
+        }
         \Toastr::success('Đã gửi mail tới khách hàng', 'Thêm thành công');
         return redirect()->route('admin.blog.post');
     }
@@ -96,6 +122,27 @@ class BlogPostController extends Controller
         $item->author_id    =   Auth::id();
         $item->view         =   0;
         $item->save();
+
+        $getAllTag = [];
+        $getTag = DB::table('taggables')->where('post_id', $item->id)->get();
+        foreach ($getTag as $tag) {
+            array_push($getAllTag, $tag->tag_id);
+        }
+        $duplicateTags = array_intersect($getAllTag, $input['tag']);
+        $removeTags = array_diff($getAllTag, $duplicateTags);
+        $addTags = array_diff($input['tag'], $duplicateTags);
+        foreach ($removeTags as $tag) {
+            DB::table('taggables')->where('post_id', $item->id)->where('tag_id', $tag)->delete();
+        }
+        foreach ($addTags as $tag) {
+            DB::table('taggables')->insertOrIgnore([
+                'post_id'       => $item->id,
+                'product_id'    => NULL,
+                'tag_id'        => $tag,
+                'created_at'    => now(),
+                'updated_at'    => now(),
+            ]);
+        }
 
         \Toastr::success('Sửa thành công');
         return redirect()->route('admin.blog.post');

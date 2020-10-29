@@ -13,14 +13,12 @@ class ShopProductModel extends Model
 
     public function category()
     {
-        return $this->belongsTo('App\Models\ShopCategoryModel','cat_id','id');
+        return $this->belongsTo('App\Models\ShopCategoryModel', 'cat_id', 'id');
     }
-
     public function brand()
     {
-        return $this->belongsTo('App\Models\ShopBrandModel','brand_id','id');
+        return $this->belongsTo('App\Models\ShopBrandModel', 'brand_id', 'id');
     }
-
     public function product_properties()
     {
         return $this->hasMany('App\Models\ShopProductPropertiesModel', 'product_id', 'id');
@@ -33,7 +31,8 @@ class ShopProductModel extends Model
     {
         return $this->hasMany('App\Models\WishListModel', 'product_id', 'id');
     }
-    public function tag_product() {
-        return $this->belongsToMany('App\Models\TagProductModel');
+    public function tag()
+    {
+        return $this->belongsToMany('App\Models\TagModel', 'taggables', 'tag_id', 'product_id');
     }
 }

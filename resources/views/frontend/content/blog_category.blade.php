@@ -40,8 +40,9 @@ Tin tức
                         <ul>
                             @foreach($categoryPosts as $categoryPost)
                             <!-- <?php $default = $category->id == $categoryPost->id ? 'default-cat' : '' ?> -->
-                            <li><a href="{{ url('blogs/category/'.$categoryPost->slug) }}"
-                             <?php if ($category->id == $categoryPost->id) {echo 'style="color: #E7AB3C"'; } ?>>{{ $categoryPost->name }}</a></li>
+                            <li><a href="{{ url('blogs/category/'.$categoryPost->slug) }}" <?php if ($category->id == $categoryPost->id) {
+                                                                                                echo 'style="color: #E7AB3C"';
+                                                                                            } ?>>{{ $categoryPost->name }}</a></li>
                             @endforeach
                         </ul>
                     </div>
@@ -86,16 +87,15 @@ Tin tức
                             </a>
                         </div>
                     </div>
-                    <div class="blog-tags">
-                        <h4>Product Tags</h4>
-                        <div class="tag-item">
-                            <a href="#">Towel</a>
-                            <a href="#">Shoes</a>
-                            <a href="#">Coat</a>
-                            <a href="#">Dresses</a>
-                            <a href="#">Trousers</a>
-                            <a href="#">Men's hats</a>
-                            <a href="#">Backpack</a>
+                    <div class="filter-widget">
+                        <h4 class="fw-title">Tags</h4>
+                        <div class="fw-tags">
+                            @foreach($tags as $tag)
+                            <label>
+                                <input type="checkbox" name="tag_id" id="tag" value="{{ $tag->id }}">
+                                {{ $tag->slug }}
+                            </label>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -131,7 +131,6 @@ Tin tức
                             </div>
                         </div> -->
                 </div>
-                {{ $posts->links() }}
             </div>
         </div>
     </div>

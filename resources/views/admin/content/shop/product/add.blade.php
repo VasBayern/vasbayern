@@ -2,6 +2,9 @@
 @section('title')
 Thêm sản phẩm
 @endsection
+<!-- Select2 -->
+<link rel="stylesheet" href="{{asset('admin_assets/plugins/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('admin_assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 @section('content')
 
 <!-- Content Header (Page header) -->
@@ -88,15 +91,28 @@ Thêm sản phẩm
                                 <option value="1">Có</option>
                             </select>
                         </div>
+                        <div class="form-group clearfix">
+                            <label for="homepage">Trạng thái</label>
+                            <div style="display:block">
+                                <div class="icheck-primary d-inline">
+                                    <input type="radio" name="new" value="1" id="radioPrimary1" checked>Mới
+                                    <label for="radioPrimary1">
+                                    </label>
+                                </div>
+                                <div class="icheck-primary d-inline">
+                                    <input type="radio" id="radioPrimary2" name="new" value="2">Cũ
+                                    <label for="radioPrimary2">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
-                            <label for="new" style="margin-right: 20px;">Trạng thái</label>
-                            <input type="checkbox" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" data-on-color="success">
-                            <label class="radio-inline">
-                                <input name="new" value="1" checked="" type="radio">Mới
-                            </label>
-                            <label class="radio-inline">
-                                <input name="new" value="2" type="radio">Cũ
-                            </label>
+                            <label>Thẻ</label>
+                            <select class="select2" multiple="multiple" data-placeholder="Chọn thẻ" style="width: 100%;" name="tag[]">
+                                @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}">{{ $tag->slug }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="image">Ảnh</label>
@@ -126,16 +142,6 @@ Thêm sản phẩm
             </div>
             <div class="col-md-6">
                 <div class="card card-secondary">
-                    <div class="card-header">
-                        <div class="form-group">
-                            <label for="tag">Thẻ</label>
-                            <select name="tag" class="form-control custom-select">
-                                @foreach($tags as $tag)
-                                <option value="{{ $tag->id }}">{{ $tag->slug }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
                     <div class="card-header">
                         <h3 class="card-title">Mô tả</h3>
                         <div class="card-tools">

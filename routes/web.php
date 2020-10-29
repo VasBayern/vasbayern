@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ShopCouponController;
 use App\Http\Controllers\Admin\ShopOrderController;
 use App\Http\Controllers\Admin\ShopProductController;
 use App\Http\Controllers\Admin\ShopSizeController;
+use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TagProductController;
 use App\Http\Controllers\Auth\LoginAssociationController;
 use App\Http\Controllers\Frontend\BlogController;
@@ -68,6 +69,7 @@ Route::post('/email/verification-notification', function (HttpRequest $request) 
  * Category
  */
 Route::get('categories/{slug}', [FrontendShopCategoryController::class, 'index'] );
+Route::get('categories?tag={slug}', [FrontendShopCategoryController::class, 'index'] );
 Route::post('categories', [FrontendShopCategoryController::class, 'filter'] );
 
 /**
@@ -96,6 +98,7 @@ Route::post('payment/ship', [ShopPaymentController::class, 'chooseShip']);
  *  Blog
  */
 Route::get('blogs', [BlogController::class, 'index'])->name('blog');
+Route::post('blogs', [BlogController::class, 'filter']);
 Route::get('blogs/category/{slug}', [BlogController::class, 'getBlogCategory']);
 Route::get('blogs/post/{slug}', [BlogController::class, 'getBlogPost']);
 Route::post('blogs/comment', [BlogController::class, 'commentBlog']);
@@ -124,6 +127,7 @@ Route::delete('wishlists/{id}', [WishListController::class, 'destroy']);
 /**
  *  Page
  */
+Route::get('tag/{slug}', [PageController::class, 'getTag'])->name('tag');
 Route::get('faq', [PageController::class, 'getFaq'])->name('faq');
 Route::get('contact', [PageController::class, 'getContact'])->name('contact');
 Route::post('comment', [PageController::class, 'comment'])->name('comment');
@@ -241,10 +245,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         /**
          * Tags
          */
-        Route::get('tags', [TagProductController::class, 'index'])->name('tag');
-        Route::post('tags', [TagProductController::class, 'store']);
-        Route::put('tags/{id}', [TagProductController::class, 'update']);
-        Route::delete('tags/{id}', [TagProductController::class, 'destroy']);
+        Route::get('tags', [TagController::class, 'index'])->name('tag');
+        Route::post('tags', [TagController::class, 'store']);
+        Route::put('tags/{id}', [TagController::class, 'update']);
+        Route::delete('tags/{id}', [TagController::class, 'destroy']);
 
         Route::prefix('blog')->name('blog.')->group(function () {
             /**

@@ -2044,7 +2044,10 @@ ol {
 	text-transform: uppercase;
 	cursor: pointer;
 }
-
+.filter-widget .fw-size-choose .sc-item label.active {
+	background: #252525;
+	color: #ffffff;
+}
 .filter-widget .modal-size-choose .sc-item label.active {
 	border-color: #f36;
 	background-image: url('/front_ends/img/select-pro.png');
@@ -2084,7 +2087,7 @@ ol {
 	color: #ffffff;
 }
 /* end modal size */
-.filter-widget .fw-tags a {
+.filter-widget .fw-tags label {
 	display: inline-block;
 	font-size: 16px;
 	color: #636363;
@@ -2093,8 +2096,16 @@ ol {
 	margin-right: 5px;
 	margin-bottom: 9px;
 	border-radius: 2px;
+	cursor: pointer;
 }
-
+.filter-widget .fw-tags input {
+	position: absolute;
+	visibility: hidden;
+} 
+.filter-widget .fw-tags label.active {
+	background: #252525;
+	color: #ffffff;
+}
 .checkmark:after {
 	position: absolute;
 	content: "";

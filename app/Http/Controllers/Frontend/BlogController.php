@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BlogCategoryModel;
 use App\Models\BlogCommentModel;
 use App\Models\BlogPostModel;
+use App\Models\TagModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,8 +17,10 @@ class BlogController extends Controller
         $data = array();
         $categories = BlogCategoryModel::all();
         $data['categories'] = $categories;
-        $posts = BlogPostModel::orderBy('created_at', 'desc')->paginate(4);
+        $posts = BlogPostModel::orderBy('created_at', 'desc')->get();
         $data['posts'] = $posts;
+        $tags = TagModel::where('tag_type', 2)->get();
+        $data['tags'] = $tags;
         return view('frontend.content.blog', $data);
     }
 
@@ -30,8 +33,11 @@ class BlogController extends Controller
         $category = BlogCategoryModel::where('slug', $slug)->first();
         $data['category'] = $category;
 
-        $posts = BlogPostModel::where('category_id', $category->id)->orderBy('created_at', 'desc')->paginate(4);
+        $posts = BlogPostModel::where('category_id', $category->id)->orderBy('created_at', 'desc')->get();
         $data['posts'] = $posts;
+
+        $tags = TagModel::where('tag_type', 2)->get();
+        $data['tags'] = $tags;
 
         return view('frontend.content.blog_category', $data);
     }
@@ -51,7 +57,56 @@ class BlogController extends Controller
         $count_cmt = BlogCommentModel::where('post_id', $post->id)->count();
         $data['count_cmt'] = $count_cmt;
 
+        $sql = DB::select('SELECT A.id, A.slug
+        FROM tags AS A
+        JOIN taggables AS B ON A.id = B.tag_id
+        JOIN content_post AS C ON B.post_id = C.id
+        WHERE A.tag_type = 2 AND C.id = ' . $post->id);
+        $data['tags'] = $sql;
+
         return view('frontend.content.blog_post', $data);
+    }
+
+    public function filter(Request $request)
+    {
+        $input = $request->dataPost;
+
+        $sql = 'SELECT A.id, A.name, A.slug, A.image, A.updated_at, D.name AS cat_name, A.intro
+        FROM content_post AS A
+        JOIN taggables AS B ON A.id = B.post_id
+        JOIN tags AS C ON B.tag_id = C.id
+        JOIN content_category AS D ON A.category_id = D.id
+        WHERE 1=1 ';
+        
+        if (isset($input)) {
+            foreach ($input as $key => $value) {
+                $sql .= ' AND ';
+                foreach ($value as $key => $tagID) {
+                    if (!next($value)) {
+                        $sql .= ' tag_id = ' . $tagID;
+                    } else {
+                        $sql .= ' tag_id = ' . $tagID . ' OR ';
+                    }
+                }
+            }
+        }
+        $sql .= ' ORDER BY A.updated_at';
+        $exec = DB::select($sql);
+        $filterPost = [];
+        foreach ($exec as $row) {
+            $filter = [
+                'id'        => $row->id,
+                'name'      => $row->name,
+                'link'      => url('blogs/post/' . $row->slug),
+                'image'     => $row->image,
+                'cat_name'  => $row->cat_name,
+                'updated_at'=> $row->updated_at,
+                'intro'     => $row->intro,
+            ];
+            array_push($filterPost, $filter);
+        }
+        $response = array_values($filterPost);
+        return response($response);
     }
 
     public function commentBlog(Request $request)

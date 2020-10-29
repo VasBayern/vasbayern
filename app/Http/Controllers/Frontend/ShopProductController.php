@@ -21,7 +21,7 @@ class ShopProductController extends Controller
 
         $sizes = DB::select('SELECT DISTINCT B.id AS size_id, B.name AS size_name
         FROM product_properties AS A
-        JOIN sizes AS B ON A.size_id = B.id WHERE A.product_id = ' . $product->id .' ORDER BY size_id');
+        JOIN sizes AS B ON A.size_id = B.id WHERE A.product_id = ' . $product->id . ' ORDER BY size_id');
         $data['sizes'] = $sizes;
 
         $sql = DB::select('SELECT B.id AS size_id, B.name AS size_name, C.id AS color_id, C.name AS color_name, C.color, A.quantity
@@ -71,6 +71,13 @@ class ShopProductController extends Controller
         $count_wishlist = count($wishlist);
         $data['count_wishlist'] = $count_wishlist;
 
+        $sql = DB::select('SELECT A.id, A.slug
+        FROM tags AS A
+        JOIN taggables AS B ON A.id = B.tag_id
+        JOIN shop_products AS C ON B.product_id = C.id
+        WHERE A.tag_type = 1 AND C.id = ' . $product->id);
+        $data['tags'] = $sql;
+    
         return view('frontend.shop.product', $data);
     }
 

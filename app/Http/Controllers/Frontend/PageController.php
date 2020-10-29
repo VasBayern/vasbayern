@@ -9,11 +9,31 @@ use App\Models\ShopBrandModel;
 use App\Models\ShopCategoryModel;
 use App\Models\ShopProductModel;
 use App\Models\ShopSizeModel;
+use App\Models\TagModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
+    public function getTag($slug)
+    {
+        $tag = TagModel::where('slug', $slug)->get();
+        if ($tag['tag_type'] == 1) {
+            $sql = DB::select('SELECT A.id, A.slug, A.name, A.priceCore, A.priceSale, A.new
+            FROM shop_products AS A
+            JOIN taggables AS B ON A.id = B.product_id
+            JOIN tag AS C ON B.tag_id = C.id
+            WHERE C.tag_type = 1 AND C.id = ' . $tag->id);
+            return view('frontend.content.tag');
+        } elseif ($tag['tag_type'] == 2) {
+            $sql = DB::select('SELECT A.id, A.slug, A.name, A.priceCore, A.priceSale, A.new
+            FROM shop_products AS A
+            JOIN taggables AS B ON A.id = B.product_id
+            JOIN tag AS C ON B.tag_id = C.id
+            WHERE C.tag_type = 2 AND C.id = ' . $tag->id);
+            return view('frontend.content.tag');
+        }
+    }
     public function getFaq()
     {
         return view('frontend.content.faq');

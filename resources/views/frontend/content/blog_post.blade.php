@@ -36,13 +36,15 @@ Bài viết
                         <div class="details-tag">
                             <ul>
                                 <li><i class="fa fa-tags"></i></li>
-                                <li>Travel</li>
-                                <li>Beauty</li>
-                                <li>Fashion</li>
+                                @foreach($tags as $tag)
+                                <li>
+                                    <a href="" style="color: #252525;">{{ $tag->slug }}</a>
+                                </li>
+                                @endforeach
                             </ul>
                         </div>
                         <div class="blog-share">
-                            <span>Share:</span>
+                            <span>Chia sẻ:</span>
                             <div class="social-links">
                                 <a href="#"><i class="fa fa-facebook"></i></a>
                                 <a href="#"><i class="fa fa-twitter"></i></a>
@@ -95,8 +97,7 @@ Bài viết
                     </div>
                 </div>
             </div>
-            <div class="col-lg-1"></div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 offset-lg-1">
                 <div class="blog-sidebar">
                     <div class="recent-post">
                         <div class="recent-post">

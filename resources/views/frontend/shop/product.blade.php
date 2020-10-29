@@ -133,17 +133,12 @@
                                 </div>
                                 <p class="amount"></p>
                                 <ul class="pd-tags">
-                                    <li><span>CATEGORIES</span>: More Accessories, Wallets & Cases</li>
-                                    <li><span>TAGS</span>: Clothing, T-shirt, Woman</li>
+                                    <li><span>TAGS</span>:
+                                        @foreach($tags as $tag)
+                                        <a href="{{ url('categories?tag='.$tag->slug) }}" style="color:#252525; ">{{ $tag->slug}}, </a>
+                                        @endforeach
+                                    </li>
                                 </ul>
-                                <div class="pd-share">
-                                    <div class="p-code">Sku : 00012</div>
-                                    <div class="pd-social">
-                                        <a href="#"><i class="ti-facebook"></i></a>
-                                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                                        <a href="#"><i class="ti-linkedin"></i></a>
-                                    </div>
-                                </div>
                             </div>
                         </form>
                     </div>

@@ -8,6 +8,7 @@ use App\Models\ShopCategoryModel;
 use App\Models\ShopColorModel;
 use App\Models\ShopProductModel;
 use App\Models\ShopSizeModel;
+use App\Models\TagModel;
 use App\Models\WishListModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,9 @@ class ShopCategoryController extends Controller
         $colors = ShopColorModel::all();
         $data['colors'] = $colors;
 
+        $tags = TagModel::where('tag_type', 1)->get();
+        $data['tags'] = $tags;
+
         return view('frontend.shop.category', $data);
     }
 
@@ -50,13 +54,17 @@ class ShopCategoryController extends Controller
         MAX(B.id) AS cat_id, MAX(B.name) AS cat_name,
         MAX(C.id) AS brand_id,
         MAX(E.id) as size_id, MAX(E.name) AS size_name,
-        MAX(F.id) as color_id, MAX(F.name) AS color_name, MAX(F.color) AS color
+        MAX(F.id) as color_id, MAX(F.name) AS color_name, MAX(F.color) AS color,
+        MAX(G.tag_id) AS tag_id
+        
         FROM shop_products AS A
         JOIN shop_categories AS B ON A.cat_id = B.id
         JOIN shop_brands AS C ON A.brand_id = C.id
         JOIN product_properties AS D ON A.id = D.product_id
         JOIN sizes AS E ON D.size_id = E.id
         JOIN colors AS F ON D.color_id = F.id
+        JOIN taggables AS G ON A.id = G.product_id
+        JOIN tags AS H ON G.tag_id = H.id
         WHERE 1=1 ';
 
         if (isset($input)) {
@@ -102,12 +110,22 @@ class ShopCategoryController extends Controller
                             }
                         }
                         break;
+                    case 4:
+                        $sql .= ' AND ';
+                        foreach ($value as $key => $tagID) {
+                            if (!next($value)) {
+                                $sql .= ' tag_id = ' . $tagID;
+                            } else {
+                                $sql .= ' tag_id = ' . $tagID . ' OR ';
+                            }
+                        }
+                        break;
                     default:
                         break;
                 }
             }
         }
-        $sql .= ' GROUP BY A.id';
+        $sql .= ' GROUP BY A.updated_at';
         $exec = DB::select($sql);
         $filterProduct = [];
         foreach ($exec as $row) {
@@ -128,6 +146,4 @@ class ShopCategoryController extends Controller
         $response = array_values($filterProduct);
         return response($response);
     }
-
-    
 }

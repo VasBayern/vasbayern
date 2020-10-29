@@ -9,6 +9,8 @@ use App\Models\ShopColorModel;
 use App\Models\ShopProductModel;
 use App\Models\ShopProductPropertiesModel;
 use App\Models\ShopSizeModel;
+use App\Models\TagModel;
+use App\Models\TagProductModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -30,6 +32,8 @@ class ShopProductController extends Controller
         $data['categories'] = $categories;
         $brands = ShopBrandModel::all();
         $data['brands'] = $brands;
+        $tags = TagModel::where('tag_type', 1)->get();
+        $data['tags'] = $tags;
         $data['category_parents'] = ShopCategoryModel::getCategoryRecursive();
 
         return view('admin.content.shop.product.add', $data);
@@ -52,12 +56,22 @@ class ShopProductController extends Controller
         $item->intro        = isset($input['intro'])    ?  $input['intro']              : '';
         $item->desc         = isset($input['desc'])     ?  $input['desc']               : '';
         $item->priceCore    = $input['priceCore'];
-        $item->priceSale    = isset($input['priceSale']) ?  $input['priceSale']          : 0;
+        $item->priceSale    = isset($input['priceSale']) ?  $input['priceSale']         : 0;
         $item->cat_id       = $input['cat_id'];
         $item->brand_id     = $input['brand_id'];
         $item->new          = $input['new'];
         $item->homepage     = $input['homepage'];
         $item->save();
+
+        foreach ($input['tag'] as $tag) {
+            DB::table('taggables')->insertOrIgnore([
+                'product_id'    => $item->id,
+                'post_id'       => NULL,
+                'tag_id'        => $tag,
+                'created_at'    => now(),
+                'updated_at'    => now(),
+            ]);
+        }
 
         \Toastr::success('Thêm thành công');
         return redirect()->route('admin.product');
@@ -77,7 +91,19 @@ class ShopProductController extends Controller
         $colors = ShopColorModel::all();
         $data['colors'] = $colors;
         $data['category_parents'] = ShopCategoryModel::getCategoryRecursive($slug);
+        $tags = TagModel::where('tag_type', 1)->get();
+        $data['tags'] = $tags;
 
+        $sql = DB::select('SELECT A.id
+        FROM tags AS A
+        JOIN taggables AS B ON A.id = B.tag_id
+        JOIN shop_products AS C ON B.product_id = C.id
+        WHERE A.tag_type = 1 AND C.id = ' . $product->id);
+        $tagProductIDs = [];
+        foreach ($sql as $row) {
+            array_push($tagProductIDs, $row->id);
+        }
+        $data['tagProductIDs'] = $tagProductIDs;
         return view('admin.content.shop.product.edit', $data);
     }
 
@@ -98,6 +124,26 @@ class ShopProductController extends Controller
         $item->homepage     = $input['homepage'];
         $item->save();
 
+        $getAllTag = [];
+        $getTag = DB::table('taggables')->where('product_id', $item->id)->get();
+        foreach ($getTag as $tag) {
+            array_push($getAllTag, $tag->tag_id);
+        }
+        $duplicateTags = array_intersect($getAllTag, $input['tag']);
+        $removeTags = array_diff($getAllTag, $duplicateTags);
+        $addTags = array_diff($input['tag'], $duplicateTags);
+        foreach ($removeTags as $tag) {
+            DB::table('taggables')->where('product_id', $item->id)->where('tag_id', $tag)->delete();
+        }
+        foreach ($addTags as $tag) {
+            DB::table('taggables')->insert([
+                'product_id'    => $item->id,
+                'post_id'       => NULL,
+                'tag_id'        => $tag,
+                'created_at'    => now(),
+                'updated_at'    => now(),
+            ]);
+        }
         \Toastr::success('Sửa thành công');
         return redirect()->route('admin.product');
     }
