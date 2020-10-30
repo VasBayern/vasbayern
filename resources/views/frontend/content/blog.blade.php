@@ -31,11 +31,17 @@ Tin tức
                             <button type="submit"><i class="fa fa-search"></i></button>
                         </form>
                     </div>
-                    <div class="blog-catagory">
-                        <h4>Danh Mục</h4>
-                        <ul>
+                    <div class="filter-widget">
+                        <h4 class="fw-title">Danh Mục</h4>
+                        <ul class="fw-brand-check">
                             @foreach($categories as $category)
-                            <li><a href="{{ url('blogs/category/'.$category->slug) }}">{{ $category->name }}</a></li>
+                            <div class="bc-item" style="display: block;">
+                                <label>
+                                    {{ $category->name }}
+                                    <input type="checkbox" id="bc-polo" name="category_id" value="{{ $category->id }}">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
                             @endforeach
                         </ul>
                     </div>
@@ -116,13 +122,13 @@ Tin tức
                     </div>
                     @endforeach
                     <!-- <div class="col-lg-12">
-                            <div class="loading-more">
-                                <i class="icon_loading"></i>
-                                <a href="#">
-                                    Loading More
-                                </a>
-                            </div>
-                        </div> -->
+                        <div class="loading-more">
+                            <i class="icon_loading"></i>
+                            <a href="#">
+                                Loading More
+                            </a>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -132,10 +138,16 @@ Tin tức
     $(document).ready(function() {
         $('input').on('click', function() {
             dataPost = [];
+            let categoryID = $('input[name="category_id"]:checked').map(function() {
+                return this.value;
+            }).toArray();
+            dataPost.push(categoryID);
+
             let tagID = $('input[name="tag_id"]:checked').map(function() {
                 return this.value;
             }).toArray();
             dataPost.push(tagID);
+
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -163,7 +175,7 @@ Tin tức
                         '<h4>' + response[i].name + '</h4>' +
                         '</a>' +
                         '<p style="letter-spacing: 0">' + response[i].cat_name +
-                        '<span>' + response[i].updated_at + '</span>' +
+                        '<span style="margin-left:5px">' + response[i].updated_at + '</span>' +
                         '</p>' +
                         '</div>' +
                         '<div class="intro">' + response[i].intro + '</div>' +

@@ -99,7 +99,6 @@ Route::post('payment/ship', [ShopPaymentController::class, 'chooseShip']);
  */
 Route::get('blogs', [BlogController::class, 'index'])->name('blog');
 Route::post('blogs', [BlogController::class, 'filter']);
-Route::get('blogs/category/{slug}', [BlogController::class, 'getBlogCategory']);
 Route::get('blogs/post/{slug}', [BlogController::class, 'getBlogPost']);
 Route::post('blogs/comment', [BlogController::class, 'commentBlog']);
 Route::post('blogs/searchAuto', [BlogController::class, 'searchByName']);
@@ -206,10 +205,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         /**
          * Color
          */
-        Route::get('colors', [ShopColorController::class, 'index'])->name('color');
-        Route::post('colors', [ShopColorController::class, 'store']);
-        Route::put('colors/{id}', [ShopColorController::class, 'update']);
-        Route::delete('colors/{id}', [ShopColorController::class, 'destroy']);
+        // Route::get('colors', [ShopColorController::class, 'index'])->name('color');
+        // Route::post('colors', [ShopColorController::class, 'store']);
+        // Route::put('colors/{id}', [ShopColorController::class, 'update']);
+        // Route::delete('colors/{id}', [ShopColorController::class, 'destroy']);
         
         /**
          * Shop Product

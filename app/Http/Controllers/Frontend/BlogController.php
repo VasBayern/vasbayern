@@ -24,24 +24,6 @@ class BlogController extends Controller
         return view('frontend.content.blog', $data);
     }
 
-    public function getBlogCategory($slug)
-    {
-        $data = array();
-        $categoryPosts = BlogCategoryModel::all();
-        $data['categoryPosts'] = $categoryPosts;
-
-        $category = BlogCategoryModel::where('slug', $slug)->first();
-        $data['category'] = $category;
-
-        $posts = BlogPostModel::where('category_id', $category->id)->orderBy('created_at', 'desc')->get();
-        $data['posts'] = $posts;
-
-        $tags = TagModel::where('tag_type', 2)->get();
-        $data['tags'] = $tags;
-
-        return view('frontend.content.blog_category', $data);
-    }
-
     public function getBlogPost($slug)
     {
         $data = array();
@@ -71,26 +53,43 @@ class BlogController extends Controller
     {
         $input = $request->dataPost;
 
-        $sql = 'SELECT A.id, A.name, A.slug, A.image, A.updated_at, D.name AS cat_name, A.intro
+        $sql = 'SELECT MAX(A.id) AS id, MAX(A.name) AS name, MAX(A.slug) AS slug, MAX(A.image) AS image, MAX(A.updated_at) AS updated_at,
+        MAX(D.name) AS cat_name, MAX(A.intro) AS intro, MAX(A.category_id) AS category_id
         FROM content_post AS A
         JOIN taggables AS B ON A.id = B.post_id
         JOIN tags AS C ON B.tag_id = C.id
         JOIN content_category AS D ON A.category_id = D.id
         WHERE 1=1 ';
-        
+
         if (isset($input)) {
             foreach ($input as $key => $value) {
-                $sql .= ' AND ';
-                foreach ($value as $key => $tagID) {
-                    if (!next($value)) {
-                        $sql .= ' tag_id = ' . $tagID;
-                    } else {
-                        $sql .= ' tag_id = ' . $tagID . ' OR ';
-                    }
+                switch ($key) {
+                    case 0:
+                        $sql .= ' AND ';
+                        foreach ($value as $key => $categoryID) {
+                            if (!next($value)) {
+                                $sql .= ' category_id = ' . $categoryID;
+                            } else {
+                                $sql .= ' category_id = ' . $categoryID . ' OR ';
+                            }
+                        }
+                        break;
+                    case 1:
+                        $sql .= ' AND ';
+                        foreach ($value as $key => $tagID) {
+                            if (!next($value)) {
+                                $sql .= ' tag_id = ' . $tagID;
+                            } else {
+                                $sql .= ' tag_id = ' . $tagID . ' OR ';
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
         }
-        $sql .= ' ORDER BY A.updated_at';
+        $sql .= ' GROUP BY A.updated_at';
         $exec = DB::select($sql);
         $filterPost = [];
         foreach ($exec as $row) {
@@ -100,7 +99,7 @@ class BlogController extends Controller
                 'link'      => url('blogs/post/' . $row->slug),
                 'image'     => $row->image,
                 'cat_name'  => $row->cat_name,
-                'updated_at'=> $row->updated_at,
+                'updated_at' => date("d-m-Y", strtotime($row->updated_at)),
                 'intro'     => $row->intro,
             ];
             array_push($filterPost, $filter);
