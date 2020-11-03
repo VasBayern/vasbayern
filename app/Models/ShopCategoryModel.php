@@ -73,7 +73,6 @@ class ShopCategoryModel extends Model
         return $result;
     }
 
-
     public static function getCategoryMenu()
     {
         $source = DB::table('shop_categories')->orderBy('sort_no', 'ASC')->get()->array();
@@ -98,12 +97,7 @@ class ShopCategoryModel extends Model
     //         foreach ($input_categories as $key => $category) {
     //             if ($category['parent_id'] == $parent_id) {
     //                 $category['level'] = $lvl;
-
-    //                 if ($category['type'] == 7) {
-    //                     $menu_link = $category['link'];
-    //                 } else {
-    //                     $menu_link = url($category['link']);
-    //                 }
+    //                 $menu_link = url($category['link']);
 
     //                 if ($lvl == 1) {
     //                     $li_class = (isset($category['total']) && ($category['total'] > 0)) ? 'dropdown ' : '';

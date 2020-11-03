@@ -48,9 +48,8 @@ Danh mục sản phẩm
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $stt = 1; ?>
                                 @foreach($categories as $category)
-                                <th scope="row">{{ $stt }}</th>
+                                <th scope="row">{{ $category['id'] }}</th>
                                 <td>{{ $category['name'] }}</td>
                                 <td>{{ str_repeat('-', $category['level'] - 1) . ' ' . $category['name'] }}</td>
                                 <td>{{ $category['parent_id'] }}</td>
@@ -69,7 +68,6 @@ Danh mục sản phẩm
                                     <a href="#myModal{{$category['slug']}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                 </td>
                                 </tr>
-                                <?php $stt++; ?>
                                 @endforeach
                             </tbody>
                         </table>

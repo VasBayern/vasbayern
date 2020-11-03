@@ -205,10 +205,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         /**
          * Color
          */
-        // Route::get('colors', [ShopColorController::class, 'index'])->name('color');
-        // Route::post('colors', [ShopColorController::class, 'store']);
-        // Route::put('colors/{id}', [ShopColorController::class, 'update']);
-        // Route::delete('colors/{id}', [ShopColorController::class, 'destroy']);
+        Route::get('colors', [ShopColorController::class, 'index'])->name('color');
+        Route::post('colors', [ShopColorController::class, 'store']);
+        Route::put('colors/{id}', [ShopColorController::class, 'update']);
+        Route::delete('colors/{id}', [ShopColorController::class, 'destroy']);
         
         /**
          * Shop Product

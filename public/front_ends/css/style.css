@@ -785,16 +785,46 @@ ol {
 	text-transform: uppercase;
 	margin-left: 16px;
 }
+/* Multi menu */
+.nav-item .nav-depart .depart-btn .depart-hover .parent {
+	position: relative;
+}
 
+.nav-item .nav-depart .depart-btn .depart-hover .parent:hover>ul {
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 100%;
+	opacity: 1;
+	visibility: visible;
+	background: #fff;
+	z-index: 99;
+	width: 100%;
+	-webkit-box-shadow: 0 13px 32px rgba(51, 51, 51, 0.1);
+	box-shadow: 0 13px 32px rgba(51, 51, 51, 0.1);
+	-webkit-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.nav-item .nav-depart .depart-btn .depart-hover .child {
+	display: none;
+}
+.nav-item .nav-depart .depart-btn .depart-hover .expand {
+	color: #252525;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+/* End multi menu */
 .nav-item .nav-depart .depart-btn .depart-hover {
 	position: absolute;
-	width: 100%;
+	width: 98%;
 	background: #fff;
 	left: 0;
 	top: 62px;
 	opacity: 0;
 	visibility: hidden;
-	padding-bottom: 29px;
 	-webkit-box-shadow: 0 13px 32px rgba(51, 51, 51, 0.1);
 	box-shadow: 0 13px 32px rgba(51, 51, 51, 0.1);
 	-webkit-transition: all 0.3s;
@@ -804,6 +834,8 @@ ol {
 
 .nav-item .nav-depart .depart-btn .depart-hover li {
 	list-style: none;
+	border-bottom: 1px solid #F0F0F0;
+	position: relative;
 }
 
 .nav-item .nav-depart .depart-btn .depart-hover li.active a {
@@ -815,17 +847,20 @@ ol {
 	font-size: 16px;
 	color: #000000;
 	padding-left: 40px;
-	padding-top: 16px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 	padding-right: 30px;
 	-webkit-transition: all 0.3s;
 	-o-transition: all 0.3s;
 	transition: all 0.3s;
 }
-
-.nav-item .nav-depart .depart-btn .depart-hover li a:hover {
-	color: #e7ab3c;
+.nav-item .nav-depart .depart-btn .depart-hover li:hover {
+	background-color: #e7ab3c;
 }
 
+.nav-item .nav-depart .depart-btn .depart-hover li:hover >a,  .nav-item .nav-depart .depart-btn .depart-hover li:hover >.expand{
+	color: #ffffff;
+}
 .nav-item .nav-menu {
 	display: -webkit-inline-box;
 	display: -ms-inline-flexbox;
