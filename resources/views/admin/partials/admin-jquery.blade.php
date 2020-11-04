@@ -197,7 +197,7 @@
 <!-- getSlug -->
 <script>
     $(document).ready(function() {
-        $('#name').on('change', function(e) {
+        $(document).on('change', '#name', function(e) {
             var name = $(this).val();
             var url = '<?php echo route('admin.getSlugs') ?>';
             $.ajax({

@@ -62,19 +62,19 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('admin.size') }}" class="nav-link">
+              <a href="{{ route('admin.sizes') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Size</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('admin.color') }}" class="nav-link">
+              <a href="{{ route('admin.colors') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Màu sắc</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('admin.coupon') }}" class="nav-link">
+              <a href="{{ route('admin.coupons') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Mã giảm giá</p>
               </a>
@@ -112,7 +112,7 @@
           </ul>
         </li>
         <li class="nav-item has-treeview">
-          <a href="{{ route('admin.tag') }}" class="nav-link">
+          <a href="{{ route('admin.tags') }}" class="nav-link">
             <i class="nav-icon fas fa-tags"></i>
             <p>
               Thẻ / Nhãn

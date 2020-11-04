@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\Admin\ColorController;
+use App\Http\Controllers\Api\Admin\CouponController;
+use App\Http\Controllers\Api\Admin\SizeController;
+use App\Http\Controllers\Api\Admin\TagController as AdminTagController;
 use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,9 +34,20 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('colors', [ColorController::class, 'index'])->name('color');
-    Route::post('colors', [ColorController::class, 'store']);
-    Route::put('colors/{id}', [ColorController::class, 'update']);
-    Route::delete('colors/{id}', [ColorController::class, 'destroy']);
-    
+    /**
+     * Color
+     */
+    Route::apiResource('colors', ColorController::class)->except('show')->names(['index' => 'colors']);
+    /**
+     * Size
+     */
+    Route::apiResource('sizes', SizeController::class)->except('show')->names(['index' => 'sizes']);
+    /**
+     * Tag
+     */
+    Route::apiResource('tags', AdminTagController::class)->except('show')->names(['index' => 'tags']);
+     /**
+     * Coupon
+     */
+    Route::apiResource('coupons', CouponController::class)->except('show')->names(['index' => 'coupons']);
 });

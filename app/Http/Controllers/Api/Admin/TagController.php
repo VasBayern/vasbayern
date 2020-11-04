@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ShopColorModel;
+use App\Models\TagModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ColorController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,10 @@ class ColorController extends Controller
      */
     public function index()
     {
-        $colors = ShopColorModel::all();
+        $tags = TagModel::all();
         $data = array();
-        $data['colors'] = $colors;
-        return view('admin.shop.color.index', $data);
+        $data['tags'] = $tags;
+        return view('admin.shop.tag.index', $data);
     }
 
     /**
@@ -32,22 +32,24 @@ class ColorController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($request->all(), [
-            'name' => 'unique:colors',
-            'color' => 'unique:colors',
+            'name' => 'unique:tags',
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->all()], 422);
         }
-        $item           = new ShopColorModel();
+        $input          = $request->all();
+        $item           = new TagModel();
         $item->name     = $input['name'];
-        $item->color    = $input['color'];
+        $item->slug     = $input['slug'];
+        $item->tag_type = $input['type'];
         $item->save();
         $response = [
             'success'   => true,
             'id'        => $item->id,
             'name'      => $item->name,
-            'color'     => $item->color,
-            'link'      => url('api/admin/colors/' . $item->id)
+            'slug'      => $item->slug,
+            'type'      => $item->tag_type,
+            'link'      => url('api/admin/tags/' . $item->id)
         ];
         return response()->json($response, 200);
     }
@@ -73,16 +75,18 @@ class ColorController extends Controller
     public function update(Request $request, $id)
     {
         $input          = $request->all();
-        $item           = ShopColorModel::findOrFail($id);
+        $item           = TagModel::findOrFail($id);
         $item->name     = $input['name'];
-        $item->color    = $input['color'];
+        $item->slug     = $input['slug'];
+        $item->tag_type = $input['type'];
         $item->save();
         $response = [
             'success'   => true,
-            'id'        => $id,
+            'id'        => $item->id,
             'name'      => $item->name,
-            'color'     => $item->color,
-            'link'      => url('api/admin/colors/' . $item->id)
+            'slug'      => $item->slug,
+            'type'      => $item->tag_type,
+            'link'      => url('api/admin/tags/' . $item->id)
         ];
         return response()->json($response, 200);
     }
@@ -95,7 +99,7 @@ class ColorController extends Controller
      */
     public function destroy($id)
     {
-        $item = ShopColorModel::findOrFail($id);
+        $item = TagModel::findOrFail($id);
         $item->delete();
         $response = [
             'success'   => true,

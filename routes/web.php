@@ -197,10 +197,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         /**
          * Size
          */
-        Route::get('size', [ShopSizeController::class, 'index'])->name('size');
-        Route::post('size', [ShopSizeController::class, 'store']);
-        Route::put('size/{id}', [ShopSizeController::class, 'update']);
-        Route::delete('size/{id}', [ShopSizeController::class, 'destroy']);
+        // Route::get('size', [ShopSizeController::class, 'index'])->name('size');
+        // Route::post('size', [ShopSizeController::class, 'store']);
+        // Route::put('size/{id}', [ShopSizeController::class, 'update']);
+        // Route::delete('size/{id}', [ShopSizeController::class, 'destroy']);
 
         /**
          * Color
@@ -228,10 +228,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         /**
          * Shop Coupon
          */
-        Route::get('coupon',  [ShopCouponController::class, 'index'])->name('coupon');
-        Route::post('coupon',  [ShopCouponController::class, 'store']);
-        Route::put('coupon/{id}',  [ShopCouponController::class, 'update']);
-        Route::delete('coupon/{id}',  [ShopCouponController::class, 'destroy']);
+        // Route::get('coupon',  [ShopCouponController::class, 'index'])->name('coupon');
+        // Route::post('coupon',  [ShopCouponController::class, 'store']);
+        // Route::put('coupon/{id}',  [ShopCouponController::class, 'update']);
+        // Route::delete('coupon/{id}',  [ShopCouponController::class, 'destroy']);
 
         /**
          * Shop Order
@@ -244,10 +244,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         /**
          * Tags
          */
-        Route::get('tags', [TagController::class, 'index'])->name('tag');
-        Route::post('tags', [TagController::class, 'store']);
-        Route::put('tags/{id}', [TagController::class, 'update']);
-        Route::delete('tags/{id}', [TagController::class, 'destroy']);
+        // Route::get('tags', [TagController::class, 'index'])->name('tag');
+        // Route::post('tags', [TagController::class, 'store']);
+        // Route::put('tags/{id}', [TagController::class, 'update']);
+        // Route::delete('tags/{id}', [TagController::class, 'destroy']);
 
         Route::prefix('blog')->name('blog.')->group(function () {
             /**

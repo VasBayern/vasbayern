@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ShopColorModel;
+use App\Models\ShopCouponModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class ColorController extends Controller
+class CouponController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,10 @@ class ColorController extends Controller
      */
     public function index()
     {
-        $colors = ShopColorModel::all();
+        $coupons = ShopCouponModel::all();
         $data = array();
-        $data['colors'] = $colors;
-        return view('admin.shop.color.index', $data);
+        $data['coupons'] = $coupons;
+        return view('admin.shop.coupon.index', $data);
     }
 
     /**
@@ -32,22 +32,26 @@ class ColorController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($request->all(), [
-            'name' => 'unique:colors',
-            'color' => 'unique:colors',
+            'name' => 'unique:shop_coupons',
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->all()], 422);
         }
-        $item           = new ShopColorModel();
-        $item->name     = $input['name'];
-        $item->color    = $input['color'];
+        $input              = $request->all();
+        $item               = new ShopCouponModel();
+        $item->code         = $input['code'];
+        $item->type         = $input['type'];
+        $item->value        = isset($input['value']) ? $input['value'] : 0;
+        $item->percent_off  = isset($input['percent_off']) ? $input['percent_off'] : 0;
         $item->save();
         $response = [
-            'success'   => true,
-            'id'        => $item->id,
-            'name'      => $item->name,
-            'color'     => $item->color,
-            'link'      => url('api/admin/colors/' . $item->id)
+            'success'       => true,
+            'id'            => $item->id,
+            'name'          => $item->code,
+            'type'          => $item->type,
+            'value'         => $item->value,
+            'percent_off'   => $item->percent_off,
+            'link'      => url('api/admin/coupons/' . $item->id)
         ];
         return response()->json($response, 200);
     }
@@ -72,17 +76,26 @@ class ColorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input          = $request->all();
-        $item           = ShopColorModel::findOrFail($id);
-        $item->name     = $input['name'];
-        $item->color    = $input['color'];
+        $input = $request->all();
+        $item               = ShopCouponModel::find($id);
+        $item->code         = $input['code'];
+        $item->type         = $input['type'];
+        if ( $input['type'] == '1') { 
+            $item->value        = 0;
+            $item->percent_off  = $input['percent_off'];
+        } elseif ($input['type'] == '2') {
+            $item->value        = $input['value'];
+            $item->percent_off  = 0;
+        }
         $item->save();
         $response = [
-            'success'   => true,
-            'id'        => $id,
-            'name'      => $item->name,
-            'color'     => $item->color,
-            'link'      => url('api/admin/colors/' . $item->id)
+            'success'       => true,
+            'id'            => $item->id,
+            'name'          => $item->code,
+            'type'          => $item->type,
+            'value'         => $item->value,
+            'percent_off'   => $item->percent_off,
+            'link'      => url('api/admin/coupons/' . $item->id)
         ];
         return response()->json($response, 200);
     }
@@ -95,7 +108,7 @@ class ColorController extends Controller
      */
     public function destroy($id)
     {
-        $item = ShopColorModel::findOrFail($id);
+        $item = ShopCouponModel::findOrFail($id);
         $item->delete();
         $response = [
             'success'   => true,

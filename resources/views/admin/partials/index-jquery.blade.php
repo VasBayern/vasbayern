@@ -17,6 +17,7 @@
         $("#example1").DataTable({
             "responsive": true,
             "autoWidth": false,
+            "pageLength": 25
         });
     });
 </script>
@@ -83,7 +84,7 @@
                 $(element).removeClass('is-invalid');
             },
             submitHandler: function(form) {
-                
+
             }
         });
 
@@ -92,9 +93,10 @@
 <!-- getSlug -->
 <script>
     $(document).ready(function() {
-        $('#name').on('change', function(e) {
+        $(document).on('change', '#name', function(e) {
             var name = $(this).val();
             var url = '<?php echo route('admin.getSlugs') ?>';
+            var $this = $(this);
             $.ajax({
                 url: url,
                 type: 'get',
@@ -103,7 +105,7 @@
                     name: name
                 }
             }).done(function(response) {
-                $('#slug').val(response.slug);
+                $this.closest('form').find('#slug').val(response.slug);  
             })
         });
     });

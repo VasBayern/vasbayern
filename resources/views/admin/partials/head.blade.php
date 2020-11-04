@@ -29,7 +29,8 @@
   <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
   <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
   {!! Toastr::message() !!}
-
+  <!-- Sweetalert -->
+  <script src="{{asset('js/sweetalert2.all.min.js')}}"></script>
   <style type="text/css">
     table thead tr th {
       text-align: center;
