@@ -28,7 +28,7 @@ Mã giảm giá
                 <div class="card">
                     <div class="card-header">
                         <div class="col-lg-1">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-default-add">
+                            <button type="button" class="btn btn-primary add-modal" data-toggle="modal" data-target="#modal-default-add">
                                 Thêm
                             </button>
                         </div>
@@ -96,7 +96,7 @@ Mã giảm giá
                     </div>
                     <div class="form-group">
                         <label for="type">Loại</label>
-                        <select name="type" class="form-control" id="type">
+                        <select name="type" class="form-control custom-select" id="type">
                             <option value="1">Percent</option>
                             <option value="2">Price</option>
                         </select>
@@ -167,4 +167,8 @@ Mã giảm giá
 </div>
 @endsection
 <!-- Jquery -->
+@section('footer-content')
+<script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+<script defer src="{{asset('api/admin/coupon.js')}}"></script>
+@endsection
 @include('admin.partials.index-jquery');

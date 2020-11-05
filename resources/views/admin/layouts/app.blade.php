@@ -6,7 +6,6 @@
   <div class="wrapper">
     <!-- Navbar -->
     @include('admin.partials.header')
-
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
@@ -30,8 +29,8 @@
   </div>
   <!-- ./wrapper -->
 
-  <!-- REQUIRED SCRIPTS -->
-
+  <!-- Jquery Function -->
+  @yield('footer-content')
 </body>
 
 </html>

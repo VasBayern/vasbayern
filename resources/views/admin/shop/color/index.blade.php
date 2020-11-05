@@ -2,9 +2,7 @@
 @section('title')
 Màu sắc
 @endsection
-
 @section('content')
-<script src="{{asset('api/admin/color.js')}}"></script>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
@@ -58,7 +56,7 @@ Màu sắc
                                     </td>
                                     <td>
                                         <a href="{{ url('api/admin/colors/'.$color->id) }}" class="btn btn-primary edit-modal" data-name="{{ $color->name }}" data-color="{{ $color->color }}" title="Sửa" data-toggle="modal"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="{{ url('api/admin/colors/'.$color->id) }}" class="btn btn-danger delete-color" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                        <a href="{{ url('api/admin/colors/'.$color->id) }}" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -105,7 +103,7 @@ Màu sắc
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary store-color" href="{{ url('api/admin/colors') }}">Lưu</button>
+                    <button type="submit" class="btn btn-primary store-item" href="{{ url('api/admin/colors') }}">Lưu</button>
                 </div>
             </form>
         </div>
@@ -145,7 +143,7 @@ Màu sắc
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary update-color">Lưu</button>
+                    <button type="submit" class="btn btn-primary update-item">Lưu</button>
                 </div>
             </form>
         </div>
@@ -156,4 +154,8 @@ Màu sắc
 </div>
 @endsection
 <!-- Jquery -->
+@section('footer-content')
+<script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+<script defer src="{{asset('api/admin/color.js')}}"></script>
+@endsection
 @include('admin.partials.index-jquery');

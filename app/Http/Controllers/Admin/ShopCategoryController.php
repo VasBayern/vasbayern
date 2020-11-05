@@ -16,7 +16,6 @@ class ShopCategoryController extends Controller
         $categories = ShopCategoryModel::getCategoryRecursive();
         $data = array();
         $data['categories'] = $categories;
-        //dd($categories);
         return view('admin.content.shop.category.index', $data);
     }
 

@@ -62,6 +62,9 @@
                 'tag[]': {
                     required: true,
                 },
+                sort_no: {
+                    required: true,
+                },
             },
             messages: {
                 name: {
@@ -105,6 +108,9 @@
                 },
                 'tag[]': {
                     required: "Vui lòng chọn thẻ",
+                },
+                sort_no: {
+                    required: "Vui lòng nhập thứ tự",
                 },
             },
             errorElement: 'span',
@@ -156,7 +162,7 @@
             'prefix': '/laravel-filemanager'
         });
 
-        $('.plus-image').on('click', function(e) {
+        $(document).on('click', '.plus-image' , function(e) {
             e.preventDefault();
             var countLfm = parseInt($('.lfm-btn').length);
             var nextLfm = countLfm + 1;

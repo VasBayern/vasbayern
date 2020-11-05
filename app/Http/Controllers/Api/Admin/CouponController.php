@@ -51,7 +51,7 @@ class CouponController extends Controller
             'type'          => $item->type,
             'value'         => $item->value,
             'percent_off'   => $item->percent_off,
-            'link'      => url('api/admin/coupons/' . $item->id)
+            'link'          => url('api/admin/coupons/'. $item->id)
         ];
         return response()->json($response, 200);
     }
@@ -80,10 +80,10 @@ class CouponController extends Controller
         $item               = ShopCouponModel::find($id);
         $item->code         = $input['code'];
         $item->type         = $input['type'];
-        if ( $input['type'] == '1') { 
+        if ($input['type'] == 1) {
             $item->value        = 0;
             $item->percent_off  = $input['percent_off'];
-        } elseif ($input['type'] == '2') {
+        } elseif ($input['type'] == 2) {
             $item->value        = $input['value'];
             $item->percent_off  = 0;
         }
@@ -95,7 +95,7 @@ class CouponController extends Controller
             'type'          => $item->type,
             'value'         => $item->value,
             'percent_off'   => $item->percent_off,
-            'link'      => url('api/admin/coupons/' . $item->id)
+            'link'          => url('api/admin/coupons/'. $item->id)
         ];
         return response()->json($response, 200);
     }

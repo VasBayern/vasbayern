@@ -3,7 +3,8 @@
 Tag
 @endsection
 @section('content')
-<script src="{{asset('api/admin/tag.js')}}"></script>
+<script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+<script defer src="{{asset('api/admin/tag.js')}}"></script>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
@@ -61,7 +62,7 @@ Tag
                                     </td>
                                     <td>
                                         <a href="{{ url('api/admin/tags/'.$tag->id) }}" class="btn btn-primary edit-modal" data-name="{{ $tag->name }}" data-slug="{{ $tag->slug }}" data-type="{{ $tag->tag_type }}" title="Sửa" data-toggle="modal"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="{{ url('api/admin/tags/'.$tag->id) }}" class="btn btn-danger delete-tag" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                        <a href="{{ url('api/admin/tags/'.$tag->id) }}" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -109,7 +110,7 @@ Tag
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary store-tag" href="{{ url('api/admin/tags') }}">Lưu</button>
+                    <button type="submit" class="btn btn-primary store-item" href="{{ url('api/admin/tags') }}">Lưu</button>
                 </div>
             </form>
         </div>
@@ -149,7 +150,7 @@ Tag
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary update-tag">Lưu</button>
+                    <button type="submit" class="btn btn-primary update-item">Lưu</button>
                 </div>
             </form>
         </div>
@@ -161,4 +162,8 @@ Tag
 @endsection
 
 <!-- Jquery -->
+@section('footer-content')
+<script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+<script defer src="{{asset('api/admin/tag.js')}}"></script>
+@endsection
 @include('admin.partials.index-jquery');

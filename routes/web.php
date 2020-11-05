@@ -177,12 +177,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         /**
          * Shop category
          */
-        Route::get('category/list', [ShopCategoryController::class, 'index'])->name('category');
-        Route::get('category', [ShopCategoryController::class, 'create']);
-        Route::get('category/{slug}', [ShopCategoryController::class, 'edit']);
-        Route::post('category', [ShopCategoryController::class, 'store']);
-        Route::put('category/{slug}', [ShopCategoryController::class, 'update']);
-        Route::delete('category/{slug}', [ShopCategoryController::class, 'destroy']);
+        // Route::get('category/list', [ShopCategoryController::class, 'index'])->name('category');
+        // Route::get('category', [ShopCategoryController::class, 'create']);
+        // Route::get('category/{slug}', [ShopCategoryController::class, 'edit']);
+        // Route::post('category', [ShopCategoryController::class, 'store']);
+        // Route::put('category/{slug}', [ShopCategoryController::class, 'update']);
+        // Route::delete('category/{slug}', [ShopCategoryController::class, 'destroy']);
 
         /**
          * Shop Brand

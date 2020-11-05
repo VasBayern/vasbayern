@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\ColorController;
 use App\Http\Controllers\Api\Admin\CouponController;
 use App\Http\Controllers\Api\Admin\SizeController;
@@ -34,6 +35,10 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
+    /**
+     * Category
+     */
+    Route::resource('categories', CategoryController::class)->except('show')->names(['index' => 'categories']);
     /**
      * Color
      */

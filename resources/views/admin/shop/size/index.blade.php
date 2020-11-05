@@ -3,7 +3,6 @@
 Size
 @endsection
 @section('content')
-<script src="{{asset('api/admin/size.js')}}"></script>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
@@ -51,7 +50,7 @@ Size
                                     <td>{{ $size->name }}</td>
                                     <td>
                                         <a href="{{ url('api/admin/sizes/'.$size->id) }}" class="btn btn-primary edit-modal" data-name="{{ $size->name }}" title="Sửa" data-toggle="modal"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="{{ url('api/admin/sizes/'.$size->id) }}" class="btn btn-danger delete-size" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                        <a href="{{ url('api/admin/sizes/'.$size->id) }}" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -88,7 +87,7 @@ Size
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary store-size" href="{{ url('api/admin/sizes') }}">Lưu</button>
+                    <button type="submit" class="btn btn-primary store-item" href="{{ url('api/admin/sizes') }}">Lưu</button>
                 </div>
             </form>
         </div>
@@ -117,7 +116,7 @@ Size
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary update-size">Lưu</button>
+                    <button type="submit" class="btn btn-primary update-item">Lưu</button>
                 </div>
             </form>
         </div>
@@ -127,4 +126,8 @@ Size
 </div>
 @endsection
 <!-- Jquery -->
+@section('footer-content')
+<script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+<script defer src="{{asset('api/admin/size.js')}}"></script>
+@endsection
 @include('admin.partials.index-jquery');
