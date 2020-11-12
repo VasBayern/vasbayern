@@ -84,10 +84,11 @@
                 $(element).removeClass('is-invalid');
             },
             submitHandler: function(form) {
-
+                ajaxCallFunction();
             }
         });
 
+        
     });
 </script>
 <!-- getSlug -->
@@ -105,7 +106,7 @@
                     name: name
                 }
             }).done(function(response) {
-                $this.closest('form').find('#slug').val(response.slug);  
+                $this.closest('form').find('#slug').val(response.slug);
             })
         });
     });
