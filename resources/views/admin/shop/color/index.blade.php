@@ -117,7 +117,7 @@ Màu sắc
 <div class="modal fade" id="modal-default-edit">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="" method="post" enctype="multipart/form-data" id="quickForm">
+            <form action="" method="post" enctype="multipart/form-data" id="quickFormEdit">
                 @csrf
                 <div class="modal-header">
                     <h4 class="modal-title"></h4>

@@ -123,6 +123,119 @@
             },
             unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
+            },
+            submitHandler: function(form) {
+                ajaxCallAddFunction();
+            }
+        });
+        $('#quickFormEdit').validate({
+            rules: {
+                name: {
+                    required: true,
+                },
+                slug: {
+                    required: true,
+                },
+                link: {
+                    required: true,
+                },
+                priceCore: {
+                    required: true,
+                },
+                category_id: {
+                    required: true,
+                },
+                cat_id: {
+                    required: true,
+                },
+                brand_id: {
+                    required: true,
+                },
+                location_id: {
+                    required: true,
+                },
+                image: {
+                    required: true,
+                },
+                'images[]': {
+                    required: true,
+                },
+                size_id: {
+                    required: true,
+                },
+                color_id: {
+                    required: true,
+                },
+                quantity: {
+                    required: true,
+                },
+                'tag[]': {
+                    required: true,
+                },
+                sort_no: {
+                    required: true,
+                },
+            },
+            messages: {
+                name: {
+                    required: "Vui lòng nhập tên",
+                },
+                slug: {
+                    required: "Vui lòng nhập slug",
+                },
+                link: {
+                    required: "Vui lòng nhập đường dẫn",
+                },
+                priceCore: {
+                    required: "Vui lòng nhập giá bán",
+                },
+                category_id: {
+                    required: "Vui lòng chọn danh mục",
+                },
+                cat_id: {
+                    required: "Vui lòng chọn danh mục",
+                },
+                brand_id: {
+                    required: "Vui lòng chọn thương hiệu",
+                },
+                location_id: {
+                    required: "Vui lòng chọn vị trí",
+                },
+                image: {
+                    required: "Vui lòng nhập ảnh",
+                },
+                'images[]': {
+                    required: "Vui lòng nhập ảnh",
+                },
+                size_id: {
+                    required: "Vui lòng chọn size",
+                },
+                color_id: {
+                    required: "Vui lòng chọn màu sắc",
+                },
+                quantity: {
+                    required: "Vui lòng chọn số lượng",
+                },
+                'tag[]': {
+                    required: "Vui lòng chọn thẻ",
+                },
+                sort_no: {
+                    required: "Vui lòng nhập thứ tự",
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            },
+            submitHandler: function(form) {
+                ajaxCallEditFunction();
             }
         });
     });

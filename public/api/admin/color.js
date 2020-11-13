@@ -15,9 +15,10 @@ $(document).on('click', '.edit-modal', function (e) {
     $('#modal-default-edit .update-item').attr('href', link);
     $('#modal-default-edit #bg-color').css({ "background-color": color });
 })
-
-function ajaxCallFunction() {
-    // add
+/**
+ * add
+ */
+function ajaxCallAddFunction() {
     $(document).on('click', '.store-item', function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
@@ -60,7 +61,11 @@ function ajaxCallFunction() {
             })
         })
     })
-    // update
+}
+/**
+ * update
+ */
+function ajaxCallEditFunction() {
     $(document).on('click', '.update-item', function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
@@ -96,6 +101,8 @@ function ajaxCallFunction() {
             })
         })
     })
-    //delete
-    functionRemoveItem();
 }
+/**
+ * delete
+ */
+functionRemoveItem();

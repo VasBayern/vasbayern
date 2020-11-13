@@ -123,7 +123,7 @@ Tag
 <div class="modal fade" id="modal-default-edit">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="" id="quickForm">
+            <form action="" id="quickFormEdit">
                 @csrf
                 <div class="modal-header">
                     <h4 class="modal-title"></h4>

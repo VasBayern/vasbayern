@@ -5,7 +5,9 @@ const Toast = Swal.mixin({
     showConfirmButton: false,
     timer: 3000
 })
-// delete item
+/**
+ * delete item
+ */
 function functionRemoveItem() {
     $(document).on('click', '.delete-item', function (e) {
         e.preventDefault();

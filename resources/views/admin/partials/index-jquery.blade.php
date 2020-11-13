@@ -36,7 +36,7 @@
                 value: {
                     required: true,
                 },
-                pecent_off: {
+                percent_off: {
                     required: true,
                 },
                 code: {
@@ -62,7 +62,7 @@
                 code: {
                     required: "Vui lòng nhập mã",
                 },
-                pecent_off: {
+                percent_off: {
                     required: "Vui lòng nhập % giảm giá",
                 },
                 color: {
@@ -84,10 +84,71 @@
                 $(element).removeClass('is-invalid');
             },
             submitHandler: function(form) {
-                ajaxCallFunction();
+                ajaxCallAddFunction();
             }
         });
-
+        $('#quickFormEdit').validate({
+            rules: {
+                name: {
+                    required: true,
+                },
+                slug: {
+                    required: true,
+                },
+                value: {
+                    required: true,
+                },
+                percent_off: {
+                    required: true,
+                },
+                code: {
+                    required: true,
+                },
+                color: {
+                    required: true,
+                },
+                shipment: {
+                    required: true,
+                }
+            },
+            messages: {
+                name: {
+                    required: "Vui lòng nhập tên",
+                },
+                slug: {
+                    required: "Vui lòng nhập slug",
+                },
+                value: {
+                    required: "Vui lòng nhập giá tiền",
+                },
+                code: {
+                    required: "Vui lòng nhập mã",
+                },
+                percent_off: {
+                    required: "Vui lòng nhập % giảm giá",
+                },
+                color: {
+                    required: "Vui lòng nhập màu",
+                },
+                shipment: {
+                    required: "Vui lòng chọn đơn vị vận chuyển",
+                },
+            },
+            errorElement: 'span',
+            errorPlacement: function(error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function(element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+            },
+            submitHandler: function(form) {
+                ajaxCallEditFunction();
+            }
+        });
         
     });
 </script>
