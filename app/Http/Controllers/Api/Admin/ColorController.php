@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ShopColorModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ColorController extends Controller
@@ -74,6 +75,15 @@ class ColorController extends Controller
     {
         $input          = $request->all();
         $item           = ShopColorModel::findOrFail($id);
+        $checkNameExist = DB::select('SELECT name FROM colors WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
+        $checkColorExist = DB::select('SELECT color FROM colors WHERE color != "' . $item->color . '" AND color = "' . $input['color'] . '"');
+        if (!empty($checkNameExist) && !empty($checkColorExist)) {
+            $response = [
+                'success'   => false,
+                'msg'   => 'Màu đã tồn tại',
+            ];
+            return response()->json($response, 422);
+        }
         $item->name     = $input['name'];
         $item->color    = $input['color'];
         $item->save();

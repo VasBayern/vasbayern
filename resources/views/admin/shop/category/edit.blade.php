@@ -22,8 +22,7 @@ Sửa danh mục
 
 <!-- Main content -->
 <section class="content">
-    <form action="{{ url('admin/category/'.$category->slug) }}" method="post" enctype="multipart/form-data" id="quickForm">
-        @method('PUT')
+    <form action="" id="quickFormEdit">
         @csrf
         <div class="row">
             <div class="col-md-6">
@@ -109,7 +108,7 @@ Sửa danh mục
         <div class="row">
             <div class="col-12">
                 <a href="{{ route('admin.categories') }}" class="btn btn-secondary">Hủy</a>
-                <input type="submit" value="Sửa" class="btn btn-success">
+                <input type="submit" value="Sửa" class="btn btn-success update-item" href="{{ url('api/admin/categories/'.$category->slug) }}">
             </div>
         </div>
     </form>
@@ -118,4 +117,8 @@ Sửa danh mục
 <!-- /.content -->
 @endsection
 <!-- Jquery -->
+@section('footer-content')
+<script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+<script defer src="{{asset('api/admin/category.js')}}"></script>
+@endsection
 @include('admin.partials.admin-jquery');

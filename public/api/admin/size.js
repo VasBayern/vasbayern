@@ -6,6 +6,7 @@ $(document).on('click', '.edit-modal', function (e) {
     $('#modal-default-edit .modal-title').html('Sửa size ' + name);
     $('#modal-default-edit #name').val(name);
     $('#modal-default-edit .update-item').attr('href', link);
+    $('input').removeClass('is-invalid');
 })
 /**
  * add

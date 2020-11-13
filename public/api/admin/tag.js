@@ -10,6 +10,7 @@ $(document).on('click', '.edit-modal', function (e) {
     $('#modal-default-edit #slug').val(slug);
     $('#modal-default-edit #type').val(type);
     $('#modal-default-edit .update-item').attr('href', link);
+    $('input').removeClass('is-invalid');
 })
 /**
  * add

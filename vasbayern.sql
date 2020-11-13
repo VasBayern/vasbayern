@@ -11,7 +11,7 @@
  Target Server Version : 100414
  File Encoding         : 65001
 
- Date: 29/10/2020 17:27:28
+ Date: 13/11/2020 17:31:15
 */
 
 SET NAMES utf8mb4;
@@ -28,15 +28,19 @@ CREATE TABLE `colors`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of colors
 -- ----------------------------
-INSERT INTO `colors` VALUES (1, 'Đỏ', '#ff0a0a', '2020-10-19 09:24:32', '2020-10-19 09:32:12');
+INSERT INTO `colors` VALUES (1, 'Anh', '#ff0a0a', '2020-10-19 09:24:32', '2020-11-13 08:55:51');
 INSERT INTO `colors` VALUES (2, 'Vàng', '#ffe20a', '2020-10-19 09:51:23', '2020-10-19 10:14:44');
-INSERT INTO `colors` VALUES (3, 'Trắng', '#ffffff', '2020-10-19 10:10:45', '2020-10-19 10:15:54');
-INSERT INTO `colors` VALUES (4, 'Hồng', '#f972f0', '2020-10-19 10:16:11', '2020-10-19 10:16:11');
+INSERT INTO `colors` VALUES (3, 'Trắng', '#ffffff', '2020-10-19 10:10:45', '2020-11-04 10:40:56');
+INSERT INTO `colors` VALUES (4, 'Hồng', '#f972f0', '2020-10-19 10:16:11', '2020-11-05 11:06:08');
+INSERT INTO `colors` VALUES (5, 'Anh', '#f972f1', '2020-11-12 17:18:13', '2020-11-12 17:18:13');
+INSERT INTO `colors` VALUES (6, 'Anh4', '#fffff3', '2020-11-12 17:21:31', '2020-11-12 17:21:31');
+INSERT INTO `colors` VALUES (7, 'Viêt Anh 123', '#fffff8', '2020-11-12 17:24:19', '2020-11-12 17:24:19');
+INSERT INTO `colors` VALUES (8, 'Nguyễn Văn Ngọc', '#fffff7', '2020-11-12 17:24:31', '2020-11-12 17:24:31');
 
 -- ----------------------------
 -- Table structure for comment_contact
@@ -241,7 +245,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of migrations
@@ -300,6 +304,7 @@ INSERT INTO `migrations` VALUES (51, '2020_10_28_162543_create_taggables_table',
 INSERT INTO `migrations` VALUES (52, '2020_10_28_163240_create_taggables_table', 19);
 INSERT INTO `migrations` VALUES (53, '2020_10_28_170327_add_slug_to_tags_table', 20);
 INSERT INTO `migrations` VALUES (54, '2020_10_29_143750_add_post_id_to_taggables', 21);
+INSERT INTO `migrations` VALUES (55, '2020_11_04_164223_change_type_in_shop_coupons', 22);
 
 -- ----------------------------
 -- Table structure for model_has_permissions
@@ -376,7 +381,11 @@ CREATE TABLE `oauth_access_tokens`  (
 INSERT INTO `oauth_access_tokens` VALUES ('043caeaefebb2ead6632cdfeb6c525f9dec003d604006963ee1771efccbc9e86629d346eb6ec0ab1', 1, 1, 'Token', '[]', 0, '2020-10-06 17:12:34', '2020-10-06 17:12:34', '2021-10-06 17:12:34');
 INSERT INTO `oauth_access_tokens` VALUES ('0bd399a6a039c54e436b88899335e6e8c1a0201c86fc37dbe4c034ad86bd30d1e9aa4dac83d14b2b', 1, 1, 'Token', '[]', 0, '2020-10-06 17:31:05', '2020-10-06 17:31:05', '2021-10-06 17:31:05');
 INSERT INTO `oauth_access_tokens` VALUES ('2c4fcef0a0c43d023a5a21f8ddd34016f3bc4cbaa401f081948bd93bc47e2288a392ec8007cb8b58', NULL, 1, 'Token', '[]', 0, '2020-10-06 17:33:44', '2020-10-06 17:33:44', '2021-10-06 17:33:44');
+INSERT INTO `oauth_access_tokens` VALUES ('333fba75c43fc0d7f870f846c1cb282a5466c57fe282f63b06982c568bf577ae42e399370d9cd08f', 2, 1, 'Token', '[\"*\"]', 0, '2020-10-30 16:22:37', '2020-10-30 16:22:37', '2021-10-30 16:22:37');
 INSERT INTO `oauth_access_tokens` VALUES ('45f0723106a3209242c2b41b8a631dc86fa81450f159370f5c24ae2947d1d12ccb8c0d8a95683841', 2, 1, 'Token', '[]', 0, '2020-10-09 00:36:19', '2020-10-09 00:36:19', '2021-10-09 00:36:19');
+INSERT INTO `oauth_access_tokens` VALUES ('565b900e13325281febe17c2e00167132e098bf38cf0071bc24ee3a7dd1337ee4d147453fd9867a4', 2, 1, 'Token', '[\"*\"]', 0, '2020-10-30 16:05:37', '2020-10-30 16:05:37', '2021-10-30 16:05:37');
+INSERT INTO `oauth_access_tokens` VALUES ('7c63889ad71b60794559baf3ed904415bba660f64df9fa7267bcf29f0de35945e3847a27fc85c382', 2, 1, 'Token', '[\"*\"]', 0, '2020-10-30 15:45:01', '2020-10-30 15:45:01', '2021-10-30 15:45:01');
+INSERT INTO `oauth_access_tokens` VALUES ('dfe10830d98fcf1134c3c45a3dc982e358a75187815ecdf16c1b2a30ff21c963e7cb76baad9a49b6', 2, 1, 'Token', '[]', 0, '2020-10-30 13:47:20', '2020-10-30 13:47:20', '2021-10-30 13:47:20');
 INSERT INTO `oauth_access_tokens` VALUES ('e52c74ff0e91509f5280759924cc9ae053a0586eecb2645fd1de866d3351503cf817e20388b1a0d8', 1, 1, 'Token', '[]', 0, '2020-10-06 17:20:24', '2020-10-06 17:20:24', '2021-10-06 17:20:24');
 
 -- ----------------------------
@@ -708,15 +717,14 @@ CREATE TABLE `shop_brands`  (
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `shop_brands_name_unique`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of shop_brands
 -- ----------------------------
-INSERT INTO `shop_brands` VALUES (1, 'Adidas', 'adidas', 'http://localhost/fashion/fashion/public/storage/photos/2/blog/maxresdefault.jpg', '#2', '', '', '2020-10-08 21:34:35', '2020-10-10 18:23:47');
-INSERT INTO `shop_brands` VALUES (2, 'Uniqlo', 'uniqlo', 'http://localhost/fashion/fashion/public/storage/photos/2/blog/maxresdefault.jpg', '#2', '', '', '2020-10-08 21:34:50', '2020-10-10 18:23:35');
-INSERT INTO `shop_brands` VALUES (3, 'Aristino', 'aristino', 'http://localhost/fashion/fashion/public/storage/photos/2/blog/maxresdefault.jpg', '#1', '', '', '2020-10-08 21:36:12', '2020-10-10 18:23:26');
-INSERT INTO `shop_brands` VALUES (4, 'Việt Anh', 'viet-anh', 'http://localhost/fashion/fashion/public/storage/photos/2/blog/maxresdefault.jpg', '#12', '', '', '2020-10-10 19:18:39', '2020-10-10 19:18:39');
+INSERT INTO `shop_brands` VALUES (1, 'Adidas', 'adidas', '/photos/1/blog/article_1469515167_925.png', 'http://127.0.0.1:8000/brands/adidas', '', '', '2020-10-08 21:34:35', '2020-11-13 16:49:53');
+INSERT INTO `shop_brands` VALUES (2, 'Uniqlo', 'uniqlo', '/photos/1/blog/maxresdefault3.jpg', 'http://127.0.0.1:8000/brands/uniqlo', '', '', '2020-10-08 21:34:50', '2020-11-13 16:50:36');
+INSERT INTO `shop_brands` VALUES (3, 'Aristino', 'aristino', '/photos/1/blog/maxresdefault.jpg', 'http://127.0.0.1:8000/api/admin/brands/aristino', '', '', '2020-10-08 21:36:12', '2020-11-13 17:03:43');
 
 -- ----------------------------
 -- Table structure for shop_categories
@@ -736,18 +744,18 @@ CREATE TABLE `shop_categories`  (
   `sort_no` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `shop_categories_name_unique`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of shop_categories
 -- ----------------------------
-INSERT INTO `shop_categories` VALUES (1, 'Áo', 'ao', 0, '#ao', '', '', 0, '2020-10-26 21:53:20', '2020-10-26 21:53:20', 0);
+INSERT INTO `shop_categories` VALUES (1, 'Áo', 'ao', 0, '#ao', '', '', 0, '2020-10-26 21:53:20', '2020-11-13 14:54:38', 0);
 INSERT INTO `shop_categories` VALUES (2, 'Quần', 'quan', 0, '#quan', '', '', 0, '2020-10-26 21:53:35', '2020-10-26 21:53:35', 0);
 INSERT INTO `shop_categories` VALUES (3, 'Giày', 'giay', 0, '#giay', NULL, NULL, 0, '2020-10-26 21:57:11', '2020-10-26 21:57:11', 0);
 INSERT INTO `shop_categories` VALUES (4, 'Phụ kiện', 'phu-kien', 0, '#phu-kien', NULL, NULL, 0, '2020-10-26 21:57:11', '2020-10-26 21:57:11', 0);
 INSERT INTO `shop_categories` VALUES (5, 'Polo', 'polo', 1, '#polo', '<p>a</p>', '', 1, '2020-10-06 15:22:02', '2020-10-15 23:12:56', 1);
-INSERT INTO `shop_categories` VALUES (6, 'T-Shirt', 't-shirt', 1, '#t-shirt', '', '', 1, '2020-10-06 15:47:43', '2020-10-12 22:20:47', 2);
-INSERT INTO `shop_categories` VALUES (7, 'Sơ Mi', 'so-mi', 1, '#so-mi', '', '', 1, '2020-10-06 15:47:59', '2020-10-27 10:38:58', 3);
+INSERT INTO `shop_categories` VALUES (6, 'T-Shirt', 't-shirt', 1, '#t-shirt', '', '', 1, '2020-10-06 15:47:43', '2020-10-12 22:20:47', 3);
+INSERT INTO `shop_categories` VALUES (7, 'Sơ Mi', 'so-mi', 1, '#so-mi', '', '', 1, '2020-10-06 15:47:59', '2020-10-27 10:38:58', 2);
 INSERT INTO `shop_categories` VALUES (8, 'Quần Âu', 'quan-au', 2, '#quan-au', '', '', 1, '2020-10-10 19:15:08', '2020-10-16 14:18:22', 1);
 INSERT INTO `shop_categories` VALUES (9, 'Quần Kaki', 'quan-kaki', 2, '#quan-kaki', '', '', 1, '2020-10-16 14:18:46', '2020-10-16 14:18:46', 2);
 INSERT INTO `shop_categories` VALUES (10, 'Quần Jeans', 'quan-jeans', 2, '#quan-jeans', '', '', 1, '2020-10-16 14:19:04', '2020-10-16 14:19:04', 3);
@@ -760,22 +768,19 @@ DROP TABLE IF EXISTS `shop_coupons`;
 CREATE TABLE `shop_coupons`  (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` int NOT NULL,
   `value` int NULL DEFAULT NULL,
   `percent_off` int NULL DEFAULT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `shop_coupons_code_unique`(`code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of shop_coupons
 -- ----------------------------
-INSERT INTO `shop_coupons` VALUES (1, 'vietanhdeptrai', 'percent', 0, 90, '2020-10-08 22:40:43', '2020-10-08 22:40:43');
-INSERT INTO `shop_coupons` VALUES (2, 'VAS', 'price', 200000, 0, '2020-10-08 22:41:30', '2020-10-08 22:41:30');
-INSERT INTO `shop_coupons` VALUES (3, 'coupon', 'price', 43333, 0, '2020-10-08 22:42:44', '2020-10-08 22:54:20');
-INSERT INTO `shop_coupons` VALUES (4, 'vietanh', 'price', 500000, 0, '2020-10-08 22:44:52', '2020-10-08 22:45:56');
+INSERT INTO `shop_coupons` VALUES (1, 'VietAnhDepTrai', 1, 0, 90, '2020-11-05 09:28:00', '2020-11-05 09:28:00');
 
 -- ----------------------------
 -- Table structure for shop_products
@@ -840,7 +845,7 @@ CREATE TABLE `sizes`  (
 -- Records of sizes
 -- ----------------------------
 INSERT INTO `sizes` VALUES (1, 'S', '2020-10-08 21:55:59', '2020-10-08 21:55:59');
-INSERT INTO `sizes` VALUES (2, 'M', '2020-10-08 21:56:05', '2020-10-08 21:56:05');
+INSERT INTO `sizes` VALUES (2, 'M', '2020-10-08 21:56:05', '2020-11-04 14:05:11');
 INSERT INTO `sizes` VALUES (3, 'L', '2020-10-08 21:56:11', '2020-10-08 21:56:11');
 INSERT INTO `sizes` VALUES (4, 'XL', '2020-10-08 21:56:17', '2020-10-08 21:56:40');
 
@@ -859,10 +864,10 @@ CREATE TABLE `taggables`  (
   INDEX `taggables_product_id_foreign`(`product_id`) USING BTREE,
   INDEX `taggables_tag_id_foreign`(`tag_id`) USING BTREE,
   INDEX `taggables_post_id_foreign`(`post_id`) USING BTREE,
+  CONSTRAINT `taggables_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `content_post` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `taggables_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `shop_products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `taggables_tag_id_foreign` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `taggables_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `content_post` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+  CONSTRAINT `taggables_tag_id_foreign` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of taggables
@@ -897,12 +902,12 @@ CREATE TABLE `tags`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tags
 -- ----------------------------
-INSERT INTO `tags` VALUES (1, 'polo', 'polo', 1, '2020-10-28 16:56:20', '2020-10-28 16:56:20');
+INSERT INTO `tags` VALUES (1, 'polo', 'polo', 1, '2020-10-28 16:56:20', '2020-11-13 16:48:44');
 INSERT INTO `tags` VALUES (2, 'T-Shirt', 't-shirt', 1, '2020-10-28 17:33:19', '2020-10-28 17:33:19');
 INSERT INTO `tags` VALUES (3, 'vasbayern', 'vasbayern', 1, '2020-10-29 09:45:35', '2020-10-29 09:45:35');
 INSERT INTO `tags` VALUES (4, 'Sơ mi', 'so-mi', 1, '2020-10-29 09:45:51', '2020-10-29 09:45:51');
@@ -934,12 +939,12 @@ CREATE TABLE `users`  (
   `role` int NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `users_email_unique`(`email`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'Nguyễn Việt Anh', 'vasbayernshop@gmail.com', '2020-10-18 14:10:45', '$2y$10$SHjkMByPYlb1phtuAzuh5Ot9jfqCMtfD119mlh5OVDHbkc2bm0Mga', NULL, NULL, 'iLY8wLABuqroexkqcZTPjbKb52rUQMkM8CYa1aXJCSvFjOZBNfW2U7tzE2GE', NULL, NULL, NULL, NULL, NULL, '2020-10-04 14:10:43', '2020-10-04 14:10:43', 1);
+INSERT INTO `users` VALUES (1, 'Nguyễn Việt Anh', 'vasbayernshop@gmail.com', '2020-10-18 14:10:45', '$2y$10$SHjkMByPYlb1phtuAzuh5Ot9jfqCMtfD119mlh5OVDHbkc2bm0Mga', NULL, NULL, 'Fu0GDTQSj3sxPOWu6DA3YMVkqJi6smV6iDH8It9vMJ5ZCAuezzh5kvsPq03z', NULL, NULL, NULL, NULL, NULL, '2020-10-04 14:10:43', '2020-10-04 14:10:43', 1);
 INSERT INTO `users` VALUES (2, 'Việt Anh', 'vastb98@gmail.com', '2020-10-04 14:15:50', '$2y$10$W0l4Dq31bIanCbt/cYMVo.X1t.6FU7xqvPg86l2mPr1WQEjtv2Kd6', NULL, NULL, NULL, NULL, NULL, '1603859800.jpeg', NULL, NULL, '2020-10-04 14:11:31', '2020-10-28 11:36:40', 2);
 
 -- ----------------------------

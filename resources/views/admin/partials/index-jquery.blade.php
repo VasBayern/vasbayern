@@ -47,6 +47,12 @@
                 },
                 shipment: {
                     required: true,
+                },
+                link: {
+                    required: true,
+                },
+                image: {
+                    required: true,
                 }
             },
             messages: {
@@ -70,6 +76,12 @@
                 },
                 shipment: {
                     required: "Vui lòng chọn đơn vị vận chuyển",
+                },
+                link: {
+                    required: "Vui lòng nhập đường dẫn",
+                },
+                image: {
+                    required: "Vui lòng nhập ảnh",
                 },
             },
             errorElement: 'span',
@@ -109,6 +121,12 @@
                 },
                 shipment: {
                     required: true,
+                },
+                link: {
+                    required: true,
+                },
+                image: {
+                    required: true,
                 }
             },
             messages: {
@@ -133,6 +151,12 @@
                 shipment: {
                     required: "Vui lòng chọn đơn vị vận chuyển",
                 },
+                link: {
+                    required: "Vui lòng nhập đường dẫn",
+                },
+                image: {
+                    required: "Vui lòng nhập ảnh",
+                },
             },
             errorElement: 'span',
             errorPlacement: function(error, element) {
@@ -149,7 +173,35 @@
                 ajaxCallEditFunction();
             }
         });
-        
+
+    });
+</script>
+<!-- Summernote -->
+<script src="{{asset('admin_assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
+<script>
+    $(function() {
+        // Summernote
+        $('.textarea').summernote({
+            height: 100
+        });
+        $('.textareaDesc').summernote({
+            height: 170
+        });
+        $('.textareaDescProduct').summernote({
+            height: 523
+        });
+        $('.textareaPost').summernote({
+            height: 613
+        });
+    })
+</script>
+<!-- File Manager -->
+<script src="{{ asset('/vendor/laravel-filemanager/js/lfm.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        $('.lfm-btn, .lfm-edit-btn').filemanager('image', {
+            'prefix': '/laravel-filemanager'
+        });
     });
 </script>
 <!-- getSlug -->

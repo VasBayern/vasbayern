@@ -1,19 +1,21 @@
 @extends('admin.layouts.app')
 @section('title')
-Danh mục sản phẩm
+Thương hiệu
 @endsection
+
 @section('content')
+
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Danh mục</h1>
+                <h1>Thương hiệu</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">Danh mục</li>
+                    <li class="breadcrumb-item active">Thương hiệu</li>
                 </ol>
             </div>
         </div>
@@ -258,10 +260,11 @@ Danh mục sản phẩm
     </form>
     <!-- /.modal-dialog -->
 </div>
+<!-- /.modal -->
 @endsection
 <!-- Jquery -->
 @section('footer-content')
 <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
-<script defer src="{{asset('api/admin/category.js')}}"></script>
+<script defer src="{{asset('api/admin/brand.js')}}"></script>
 @endsection
 @include('admin.partials.index-jquery');

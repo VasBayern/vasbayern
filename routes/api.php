@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\BrandController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\ColorController;
 use App\Http\Controllers\Api\Admin\CouponController;
@@ -39,6 +40,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
      * Category
      */
     Route::resource('categories', CategoryController::class)->except('show')->names(['index' => 'categories']);
+    /**
+     * Brand
+     */
+    Route::apiResource('brands', BrandController::class)->except('show')->names(['index' => 'brands']);
     /**
      * Color
      */

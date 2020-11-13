@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ShopCategoryModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
@@ -108,6 +109,16 @@ class CategoryController extends Controller
     {
         $input              = $request->all();
         $item               = ShopCategoryModel::where('slug', $slug)->first();
+        $checkNameExist     = DB::select('SELECT name FROM shop_categories WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
+        $checkSlugExist     = DB::select('SELECT slug FROM shop_categories WHERE slug != "' . $item->slug . '" AND slug = "' . $input['slug'] . '"');
+
+        if (!empty($checkNameExist) && !empty($checkSlugExist)) {
+            $response = [
+                'success'   => false,
+                'msg'   => 'Danh mục hoặc slug đã tồn tại',
+            ];
+            return response()->json($response, 422);
+        }
         $item->name         = $input['name'];
         $item->parent_id    = $input['parent_id'];
         $item->slug         = $input['slug'];
@@ -118,6 +129,7 @@ class CategoryController extends Controller
         $item->save();
         $response = [
             'success'   => true,
+            'link'      => url('api/admin/categories'),
         ];
         return response()->json($response, 200);
     }

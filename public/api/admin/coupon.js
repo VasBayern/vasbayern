@@ -6,6 +6,7 @@ $(document).on('change', '#type', function () {
     var type = $(this).val();
     changeCouponType(type);
 })
+// show modal edit
 $(document).on('click', '.edit-modal', function (e) {
     var name = $(this).attr('data-name');
     var type = $(this).attr('data-type');
@@ -20,6 +21,7 @@ $(document).on('click', '.edit-modal', function (e) {
     $('#modal-default-edit #value').val(value);
     $('#modal-default-edit #percent_off').val(percent_off);
     $('#modal-default-edit .update-item').attr('href', link);
+    $('input').removeClass('is-invalid');
 })
 /**
  * add

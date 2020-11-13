@@ -50,7 +50,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('admin.brand') }}" class="nav-link">
+              <a href="{{ route('admin.brands') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Thương hiệu</p>
               </a>

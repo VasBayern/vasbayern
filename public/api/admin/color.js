@@ -14,6 +14,7 @@ $(document).on('click', '.edit-modal', function (e) {
     $('#modal-default-edit #color').val(color);
     $('#modal-default-edit .update-item').attr('href', link);
     $('#modal-default-edit #bg-color').css({ "background-color": color });
+    $('input').removeClass('is-invalid');
 })
 /**
  * add

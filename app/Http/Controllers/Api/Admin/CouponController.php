@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ShopCouponModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class CouponController extends Controller
@@ -78,6 +79,14 @@ class CouponController extends Controller
     {
         $input = $request->all();
         $item               = ShopCouponModel::find($id);
+        $checkNameExist     = DB::select('SELECT name FROM shop_coupons WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
+        if (!empty($checkNameExist)) {
+            $response = [
+                'success'   => false,
+                'msg'   => 'Mã đã tồn tại',
+            ];
+            return response()->json($response, 422);
+        }
         $item->code         = $input['code'];
         $item->type         = $input['type'];
         if ($input['type'] == 1) {

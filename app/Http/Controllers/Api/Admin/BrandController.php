@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\TagModel;
+use App\Models\ShopBrandModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class TagController extends Controller
+class BrandController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,10 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = TagModel::all();
+        $brands = ShopBrandModel::all();
         $data = array();
-        $data['tags'] = $tags;
-        return view('admin.shop.tag.index', $data);
+        $data['brands'] = $brands;
+        return view('admin.shop.brand.index', $data);
     }
 
     /**
@@ -33,25 +33,32 @@ class TagController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($request->all(), [
-            'name' => 'unique:tags',
-            'slug' => 'unique:tags',
+            'name'          => 'unique:shop_brands',
+            'slug'          => 'unique:shop_brands',
+            'link'          => 'unique:shop_brands',
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->all()], 422);
         }
         $input          = $request->all();
-        $item           = new TagModel();
+        $item           = new ShopBrandModel();
         $item->name     = $input['name'];
         $item->slug     = $input['slug'];
-        $item->tag_type = $input['type'];
+        $item->image    = $input['image'];
+        $item->link     = $input['link'];
+        $item->intro    = isset($input['intro']) ? $input['intro'] : '';
+        $item->desc     = isset($input['desc']) ? $input['desc'] : '';
         $item->save();
         $response = [
             'success'   => true,
             'id'        => $item->id,
             'name'      => $item->name,
             'slug'      => $item->slug,
-            'type'      => $item->tag_type,
-            'link'      => url('api/admin/tags/' . $item->id)
+            'image'     => $item->image,
+            'linkBrand' => $item->link,
+            'intro'     => $item->intro,
+            'desc'      => $item->desc,
+            'link'      => url('api/admin/brands/' . $item->slug)
         ];
         return response()->json($response, 200);
     }
@@ -71,33 +78,41 @@ class TagController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        $input          = $request->all();
-        $item           = TagModel::findOrFail($id);
-        $checkNameExist = DB::select('SELECT name FROM tags WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
-        $checkSlugExist = DB::select('SELECT slug FROM tags WHERE slug != "' . $item->slug . '" AND slug = "' . $input['slug'] . '"');
-        if (!empty($checkNameExist) && !empty($checkSlugExist)) {
+        $input              = $request->all();
+        $item               = ShopBrandModel::where('slug', $slug)->first();
+        $checkNameExist     = DB::select('SELECT name FROM shop_brands WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
+        $checkSlugExist     = DB::select('SELECT slug FROM shop_brands WHERE slug != "' . $item->slug . '" AND slug = "' . $input['slug'] . '"');
+        $checkLinkExist     = DB::select('SELECT link FROM shop_brands WHERE link != "' . $item->link . '" AND link = "' . $input['link'] . '"');
+
+        if (!empty($checkNameExist) && !empty($checkSlugExist) && !empty($checkLinkExist)) {
             $response = [
                 'success'   => false,
-                'msg'   => 'Thẻ đã tồn tại',
+                'msg'   => 'Tên hoặc slug hoặc link đã tồn tại',
             ];
             return response()->json($response, 422);
         }
         $item->name     = $input['name'];
         $item->slug     = $input['slug'];
-        $item->tag_type = $input['type'];
+        $item->image    = $input['image'];
+        $item->link     = $input['link'];
+        $item->intro    = isset($input['intro']) ? $input['intro'] : '';
+        $item->desc     = isset($input['desc']) ? $input['desc'] : '';
         $item->save();
         $response = [
             'success'   => true,
             'id'        => $item->id,
             'name'      => $item->name,
             'slug'      => $item->slug,
-            'type'      => $item->tag_type,
-            'link'      => url('api/admin/tags/' . $item->id)
+            'image'     => $item->image,
+            'linkBrand' => $item->link,
+            'intro'     => $item->intro,
+            'desc'      => $item->desc,
+            'link'      => url('api/admin/brands/' . $item->slug)
         ];
         return response()->json($response, 200);
     }
@@ -105,16 +120,16 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $item = TagModel::findOrFail($id);
+        $item = ShopBrandModel::where('slug', $slug)->first();
         $item->delete();
         $response = [
             'success'   => true,
-            'id'        => $id,
+            'id'        => $item->id,
         ];
         return response()->json($response, 200);
     }

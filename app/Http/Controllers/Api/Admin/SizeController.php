@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ShopSizeModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class SizeController extends Controller
@@ -71,6 +72,14 @@ class SizeController extends Controller
     {
         $input          = $request->all();
         $item           = ShopSizeModel::findOrFail($id);
+        $checkNameExist = DB::select('SELECT name FROM sizes WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
+        if (!empty($checkNameExist)) {
+            $response = [
+                'success'   => false,
+                'msg'   => 'Size đã tồn tại',
+            ];
+            return response()->json($response, 422);
+        }
         $item->name     = $input['name'];
         $item->save();
         $response = [
