@@ -15,8 +15,8 @@ $(document).on('click', '.edit-modal', function (e) {
     $('#modal-xl-edit #link').val(linkBrand);
     $('#modal-xl-edit .image').val(image);
     $('#modal-xl-edit #holder1').attr('src', image);
-    $('#modal-xl-edit #intro').val(intro);
-    $('#modal-xl-edit #desc').val(desc);
+    $('#modal-xl-edit #intro').html(intro);
+    $('#modal-xl-edit #desc').html(desc);
     $('#modal-xl-edit .update-item').attr('href', link);
     $('input').removeClass('is-invalid');
 })

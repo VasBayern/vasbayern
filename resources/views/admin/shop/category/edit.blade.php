@@ -54,6 +54,10 @@ Sửa danh mục
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="sort_no">Thứ tự</label>
+                            <input type="text" name="sort_no" value="{{ $category->sort_no }}" class="form-control" id="sort_no" placeholder="Vui lòng nhập thứ tự danh mục" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                        </div>
+                        <div class="form-group">
                             <label for="homepage">Homepage</label>
                             <select name="homepage" class="form-control custom-select">
                                 <option value="0" <?php echo ($category->homepage == 0) ? 'selected' : '' ?>>Không </option>

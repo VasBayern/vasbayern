@@ -53,6 +53,9 @@
                 },
                 image: {
                     required: true,
+                },
+                sort_no: {
+                    required: true,
                 }
             },
             messages: {
@@ -82,6 +85,9 @@
                 },
                 image: {
                     required: "Vui lòng nhập ảnh",
+                },
+                sort_no: {
+                    required: "Vui lòng nhập thứ tự",
                 },
             },
             errorElement: 'span',
@@ -127,6 +133,9 @@
                 },
                 image: {
                     required: true,
+                },
+                sort_no: {
+                    required: true,
                 }
             },
             messages: {
@@ -156,6 +165,9 @@
                 },
                 image: {
                     required: "Vui lòng nhập ảnh",
+                },
+                sort_no: {
+                    required: "Vui lòng nhập thứ tự",
                 },
             },
             errorElement: 'span',

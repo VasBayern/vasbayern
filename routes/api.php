@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\Admin\BrandController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\ColorController;
 use App\Http\Controllers\Api\Admin\CouponController;
+use App\Http\Controllers\Api\Admin\ProductController;
+use App\Http\Controllers\Api\Admin\PropertyController;
 use App\Http\Controllers\Api\Admin\SizeController;
 use App\Http\Controllers\Api\Admin\TagController as AdminTagController;
 use App\Http\Controllers\Api\AuthController;
@@ -45,6 +47,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
      */
     Route::apiResource('brands', BrandController::class)->except('show')->names(['index' => 'brands']);
     /**
+     * Product
+     */
+    Route::resource('products', ProductController::class)->except('show')->names(['index' => 'products']);
+    /**
+     * Product property
+     */
+    Route::apiResource('properties', PropertyController::class)->except(['index','show']);
+    /**
      * Color
      */
     Route::apiResource('colors', ColorController::class)->except('show')->names(['index' => 'colors']);
@@ -56,7 +66,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
      * Tag
      */
     Route::apiResource('tags', AdminTagController::class)->except('show')->names(['index' => 'tags']);
-     /**
+    /**
      * Coupon
      */
     Route::apiResource('coupons', CouponController::class)->except('show')->names(['index' => 'coupons']);

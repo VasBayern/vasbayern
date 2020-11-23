@@ -49,10 +49,9 @@ Thương hiệu
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $stt = 1; ?>
                                 @foreach($brands as $brand)
                                 <tr class="tr-{{ $brand['id'] }}">
-                                    <th scope="row">{{ $stt }}</th>
+                                    <th scope="row">{{ $brand['id'] }}</th>
                                     <td>{{ $brand->name }}</td>
                                     <td>{{ $brand->slug }}</td>
                                     <td><a href="{{ $brand->link }}" target="_blank">{{ $brand->link }}</a></td>
@@ -64,7 +63,6 @@ Thương hiệu
                                         <a href="{{ url('api/admin/brands/'.$brand['slug']) }}" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
-                                <?php $stt++; ?>
                                 @endforeach
                             </tbody>
                         </table>
@@ -234,13 +232,13 @@ Thương hiệu
                                     <div class="form-group">
                                         <label for="intro">Mô tả</label>
                                         <div class="mb-3">
-                                            <textarea class="textarea" name="intro" id="intro" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ $brand->intro}}</textarea>
+                                            <textarea class="textarea" name="intro" id="intro" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="desc">Chi tiết</label>
                                         <div class="mb-3">
-                                            <textarea class="textareaDesc" name="desc" id="desc" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">{{ $brand->desc}}</textarea>
+                                            <textarea class="textareaDesc" name="desc" id="desc" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                                         </div>
                                     </div>
                                 </div>
