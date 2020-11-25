@@ -184,27 +184,25 @@ Sửa sản phẩm
                                     <th>Size</th>
                                     <th>Màu sắc</th>
                                     <th>Số Lượng</th>
-                                    <th> <a href="#myModal" class="btn btn-success" title="Thêm" data-toggle="modal" data-target="#modal-default"><i class="fas fa-plus"></i></a>
+                                    <th> <a href="#myModal" class="btn btn-success" title="Thêm" data-toggle="modal" data-target="#modal-default-add"><i class="fas fa-plus"></i></a>
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $stt = 1; ?>
                                 @if(isset($product->product_properties))
                                 @foreach($product->product_properties as $productProperty)
-                                <tr>
-                                    <th scope="row">{{ $stt }}</th>
+                                <tr class="tr-{{ $productProperty->id }}">
+                                    <th scope="row">{{ $productProperty->id }}</th>
                                     <td>{{ $productProperty->size->name }}</td>
                                     <td>
                                         <p style="width: 30px; height: 30px; margin: 0 auto; background-color:{{ $productProperty->color->color }}; border:1px solid #ebebeb; "></p>
                                     </td>
                                     <td>{{ $productProperty->quantity }}</td>
                                     <td>
-                                        <a href="#myModal" class="btn btn-primary" title="Sửa" data-toggle="modal" data-target="#modal-default-{{ $productProperty->id }}"><i class="fas fa-pencil-alt"></i></a>
-                                        <a href="#myModal{{$productProperty->id}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                        <a href="{{ url('api/admin/properties/'.$productProperty->id) }}" class="btn btn-primary edit-modal" data-quantity="{{ $productProperty->quantity }}" data-size="{{ $productProperty->size->name }}" data-color="{{ $productProperty->color->name }}" title="Sửa" data-toggle="modal"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="{{ url('api/admin/properties/'.$productProperty->id) }}" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
-                                <?php $stt++; ?>
                                 @endforeach
                                 @endif
                             </tbody>
@@ -225,7 +223,7 @@ Sửa sản phẩm
 </section>
 <!-- /.content -->
 <!-- Modal Add -->
-<div class="modal fade" id="modal-default">
+<div class="modal fade" id="modal-default-add">
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="quickForm">
@@ -239,7 +237,7 @@ Sửa sản phẩm
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label for="name">Size</label>
-                            <select name="size_id" class="form-control custom-select">
+                            <select name="size_id" class="form-control custom-select" id="size_id">
                                 <option value="">-- Chọn size --</option>
                                 @foreach($sizes as $size)
                                 <option value="{{ $size->id }}">{{ $size->name }}</option>
@@ -248,7 +246,7 @@ Sửa sản phẩm
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="color_id">Màu</label>
-                            <select name="color_id" class="form-control custom-select">
+                            <select name="color_id" class="form-control custom-select" id="color_id">
                                 <option value="">-- Chọn màu --</option>
                                 @foreach($colors as $color)
                                 <option value="{{ $color->id }}">{{ $color->name }}</option>
@@ -273,17 +271,13 @@ Sửa sản phẩm
     </div>
     <!-- /.modal-dialog -->
 </div>
-@if(isset($product->product_properties))
-@foreach($product->product_properties as $productProperty)
 <!-- Modal Edit -->
-<div class="modal fade" id="modal-default-{{ $productProperty->id }}">
+<div class="modal fade" id="modal-default-edit">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="{{ url('admin/products/'.$product->slug.'/properties/'.$productProperty->id) }}" method="post" enctype="multipart/form-data" id="quickForm">
-                @method('PUT')
-                @csrf
+            <form id="quickFormEdit">
                 <div class="modal-header">
-                    <h4 class="modal-title">Sửa size {{ $productProperty->size->name }} màu {{ $productProperty->color->name }}</h4>
+                    <h4 class="modal-title">Sửa</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -292,22 +286,22 @@ Sửa sản phẩm
                     <div class="row">
                         <div class="form-group col-lg-6">
                             <label for="name">Size</label>
-                            <input type="text" name="size_id" value="{{ $productProperty->size->name }}" class="form-control" disabled>
+                            <input type="text" name="size_id" value="" class="form-control" id="size" disabled>
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="color">Màu</label>
-                            <input type="text" name="color_id" value="{{ $productProperty->color->name }}" class="form-control" disabled>
+                            <input type="text" name="color_id" value="" class="form-control" id="color" disabled>
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="quantity">Số Lượng</label>
-                            <input type="text" name="quantity" value="{{ $productProperty->quantity }}" class="form-control" id="quantity" placeholder="Vui lòng nhập số lượng" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                            <input type="text" name="quantity" value="" class="form-control" id="quantity" placeholder="Vui lòng nhập số lượng" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                         </div>
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <button type="submit" class="btn btn-primary">Lưu</button>
+                    <button type="submit" class="btn btn-primary update-item-property">Lưu</button>
                 </div>
             </form>
         </div>
@@ -316,37 +310,11 @@ Sửa sản phẩm
     </div>
     <!-- /.modal-dialog -->
 </div>
-<!-- Modal Delete -->
-<div id="myModal{{$productProperty->id}}" class="modal fade">
-    <div class="modal-dialog modal-confirm">
-        <div class="modal-content">
-            <div class="modal-header flex-column">
-                <div class="icon-box">
-                    <i class="fas fa-exclamation"></i>
-                </div>
-                <h4 class="modal-title w-100">Bạn có muốn xóa?</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Lưu ý : Hành động này không thể hoàn tác</p>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <form name="brand" action="{{ url('admin/products/'.$product->id.'/properties/'.$productProperty->id) }}" method="post" class="form-horizontal">
-                    @method('DELETE')
-                    @csrf
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-danger">Xóa</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-@endforeach
-@endif
 @endsection
 <!-- Jquery -->
 @section('footer-content')
 <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
 <script defer src="{{asset('api/admin/product.js')}}"></script>
+<script defer src="{{asset('api/admin/property.js')}}"></script>
 @endsection
 @include('admin.partials.admin-jquery');
