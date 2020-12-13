@@ -71,6 +71,7 @@ function ajaxCallEditFunction() {
         e.preventDefault();
         var url = $(this).attr('href');
         var data = $(this).closest('form').serializeArray();
+        console.log(data);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -82,6 +83,7 @@ function ajaxCallEditFunction() {
             dataType: 'JSON',
             data: data,
         }).done(function (response) {
+            console.log(response);
             html = '<th scope="row">' + response.id + '</th>' +
                 '<td>' + response.name + '</td>' +
                 '<td>' + response.color + '</td>' +

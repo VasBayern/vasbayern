@@ -89,7 +89,7 @@ class BrandController extends Controller
         $checkSlugExist     = DB::select('SELECT slug FROM shop_brands WHERE slug != "' . $item->slug . '" AND slug = "' . $input['slug'] . '"');
         $checkLinkExist     = DB::select('SELECT link FROM shop_brands WHERE link != "' . $item->link . '" AND link = "' . $input['link'] . '"');
 
-        if (!empty($checkNameExist) && !empty($checkSlugExist) && !empty($checkLinkExist)) {
+        if (!empty($checkNameExist) || !empty($checkSlugExist) || !empty($checkLinkExist)) {
             $response = [
                 'success'   => false,
                 'msg'   => 'Tên hoặc slug hoặc link đã tồn tại',

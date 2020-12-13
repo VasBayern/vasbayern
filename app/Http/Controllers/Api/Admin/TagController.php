@@ -80,7 +80,7 @@ class TagController extends Controller
         $item           = TagModel::findOrFail($id);
         $checkNameExist = DB::select('SELECT name FROM tags WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
         $checkSlugExist = DB::select('SELECT slug FROM tags WHERE slug != "' . $item->slug . '" AND slug = "' . $input['slug'] . '"');
-        if (!empty($checkNameExist) && !empty($checkSlugExist)) {
+        if (!empty($checkNameExist) || !empty($checkSlugExist)) {
             $response = [
                 'success'   => false,
                 'msg'   => 'Thẻ đã tồn tại',

@@ -112,7 +112,7 @@ class CategoryController extends Controller
         $checkNameExist     = DB::select('SELECT name FROM shop_categories WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
         $checkSlugExist     = DB::select('SELECT slug FROM shop_categories WHERE slug != "' . $item->slug . '" AND slug = "' . $input['slug'] . '"');
 
-        if (!empty($checkNameExist) && !empty($checkSlugExist)) {
+        if (!empty($checkNameExist) || !empty($checkSlugExist)) {
             $response = [
                 'success'   => false,
                 'msg'   => 'Danh mục hoặc slug đã tồn tại',

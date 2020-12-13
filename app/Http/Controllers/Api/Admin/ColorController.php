@@ -77,7 +77,7 @@ class ColorController extends Controller
         $item           = ShopColorModel::findOrFail($id);
         $checkNameExist = DB::select('SELECT name FROM colors WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
         $checkColorExist = DB::select('SELECT color FROM colors WHERE color != "' . $item->color . '" AND color = "' . $input['color'] . '"');
-        if (!empty($checkNameExist) && !empty($checkColorExist)) {
+        if (!empty($checkNameExist) || !empty($checkColorExist)) {
             $response = [
                 'success'   => false,
                 'msg'   => 'Màu đã tồn tại',

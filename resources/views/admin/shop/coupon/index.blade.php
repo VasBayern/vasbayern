@@ -52,9 +52,7 @@ Mã giảm giá
                                     <th scope="row">{{ $coupon->id }}</th>
                                     <td>{{ $coupon->code }}</td>
                                     <td>
-                                        @if($coupon->type == 1) Giảm %
-                                        @elseif($coupon->type == 2) Giảm giá
-                                        @endif
+                                        <?php echo $coupon->type == 1 ?  "Giảm %" : "Giảm giá" ?>
                                     </td>
                                     <td>{{ number_format($coupon->value) }} VNĐ</td>
                                     <td>{{ $coupon->percent_off }}%</td>

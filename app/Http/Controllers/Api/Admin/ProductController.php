@@ -153,7 +153,7 @@ class ProductController extends Controller
         $checkNameExist     = DB::select('SELECT name FROM shop_products WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
         $checkSlugExist     = DB::select('SELECT slug FROM shop_products WHERE slug != "' . $item->slug . '" AND slug = "' . $input['slug'] . '"');
 
-        if (!empty($checkNameExist) && !empty($checkSlugExist)) {
+        if (!empty($checkNameExist) || !empty($checkSlugExist)) {
             $response = [
                 'success'   => false,
                 'msg'   => 'Sản phẩm hoặc slug đã tồn tại',
