@@ -259,14 +259,6 @@
         });
     })
 </script>
-<!-- Page script -->
-<script>
-    $(function() {
-        $("input[data-bootstrap-switch]").each(function() {
-            $(this).bootstrapSwitch('state', $(this).prop('checked'));
-        });
-    })
-</script>
 <!-- File Manager -->
 <script src="{{ asset('/vendor/laravel-filemanager/js/lfm.js') }}"></script>
 <script>
@@ -321,8 +313,8 @@
             var url = '<?php echo route('admin.getSlugs') ?>';
             $.ajax({
                 url: url,
-                type: 'get',
-                dataType: 'json',
+                type: 'GET',
+                dataType: 'JSON',
                 data: {
                     name: name
                 }

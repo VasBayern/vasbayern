@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\AdminController;
 use App\Http\Controllers\Api\Admin\BrandController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\ColorController;
@@ -70,4 +71,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
      * Coupon
      */
     Route::apiResource('coupons', CouponController::class)->except('show')->names(['index' => 'coupons']);
+    /**
+     * Admin Feature
+     */
+    Route::get('getSlugs', [AdminController::class, 'getSlug'])->name('getSlugs');
 });

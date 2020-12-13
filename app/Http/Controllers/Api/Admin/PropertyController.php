@@ -34,15 +34,8 @@ class PropertyController extends Controller
         $size_id    = $input['size_id'];
         $color_id   = $input['color_id'];
         $quantity   = $input['quantity'];
-        $sizes  = DB::table('sizes')->select('name')->where('id', $size_id)->get();
-        foreach($sizes as $row) {
-            $size = $row->name;
-        }
-        $colors = DB::table('colors')->select('name', 'color')->where('id', $color_id)->get();
-        foreach($colors as $row) {
-            $color_name = $row->name;
-            $color      = $row->color;
-        }
+        $size  = DB::table('sizes')->select('name')->where('id', $size_id)->value('name');
+        $colors = DB::table('colors')->select('name', 'color')->where('id', $color_id)->first();
         $propertyProduct = ShopProductPropertiesModel::where('product_id', $product_id)->where('color_id', $color_id)->where('size_id', $size_id)->get()->toArray();
         if (count($propertyProduct) > 0) {
             $response = [
@@ -61,8 +54,8 @@ class PropertyController extends Controller
                 'success'   => true,
                 'id'        => $item->id,
                 'size'      => $size,
-                'color_name'=> $color_name,
-                'color'     => $color,
+                'color_name'=> $colors->name,
+                'color'     => $colors->color,
                 'quantity'  => $item->quantity,
                 'link'      => url('api/admin/properties/'. $item->id),
             ];
@@ -93,27 +86,19 @@ class PropertyController extends Controller
         $input = $request->all();
         $quantity = (int)$input['quantity'];
         DB::table('product_properties')->where('id', $id)->update(['quantity' => $quantity]);
-        
-        $property = DB::table('product_properties')->where('id', $id)->get();
-        // $sizes  = DB::table('sizes')->select('name')->where('id', $size_id)->get();
-        // foreach($sizes as $row) {
-        //     $size = $row->name;
-        // }
-        // $colors = DB::table('colors')->select('name', 'color')->where('id', $color_id)->get();
-        // foreach($colors as $row) {
-        //     $color_name = $row->name;
-        //     $color      = $row->color;
-        // }
-        // $response = [
-        //     'success'   => true,
-        //     'id'        => $item->id,
-        //     'size'      => $size,
-        //     'color_name'=> $color_name,
-        //     'color'     => $color,
-        //     'quantity'  => $quantity,
-        //     'link'      => url('api/admin/properties/'. $id),
-        // ];
-        return response()->json($property, 200);
+        $property = DB::table('product_properties')->where('id', $id)->first();
+        $size  = DB::table('sizes')->select('name')->where('id', $property->size_id)->value('name');
+        $colors = DB::table('colors')->select('name', 'color')->where('id', $property->color_id)->first();
+        $response = [
+            'success'   => true,
+            'id'        => $property->id,
+            'size'      => $size,
+            'color_name'=> $colors->name,
+            'color'     => $colors->color,
+            'quantity'  => $property->quantity,
+            'link'      => url('api/admin/properties/'. $property->id),
+        ];
+        return response()->json($response, 200);
     }
 
     /**

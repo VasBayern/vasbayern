@@ -20,12 +20,12 @@ function ajaxCallAddFunction() {
             window.location.replace(response.link);
             Toast.fire({
                 icon: 'success',
-                title: 'Thêm thành công'
+                title: success[0]
             })
         }).fail(function (response) {
             Toast.fire({
                 icon: 'error',
-                title: 'Danh mục đã tồn tại'
+                title: error
             })
         })
     })
@@ -53,12 +53,12 @@ function ajaxCallEditFunction() {
             window.location.replace(response.link);
             Toast.fire({
                 icon: 'success',
-                title: 'Sửa thành công'
+                title: success[1]
             })
         }).fail(function (response) {
             Toast.fire({
                 icon: 'error',
-                title: 'Danh mục, slug đã tồn tại'
+                title: error
             })
         })
     })

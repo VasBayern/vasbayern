@@ -294,7 +294,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         /**
          * Admin Other Function
          */
-        Route::get('getSlugs', [AdminController::class, 'getSlug'])->name('getSlugs');
+        // Route::get('getSlugs', [AdminController::class, 'getSlug'])->name('getSlugs');
         Route::get('newsletters', [AdminController::class, 'getNewsletter'])->name('newsletters');
         Route::delete('newsletters', [AdminController::class, 'deleteNewsletter']);
         Route::get('contacts', [AdminController::class, 'getContact'])->name('contacts');

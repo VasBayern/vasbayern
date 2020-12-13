@@ -39,12 +39,12 @@ function ajaxCallAddFunction() {
             $('tbody').append(html);
             Toast.fire({
                 icon: 'success',
-                title: 'Thêm thành công'
+                title: success[0]
             })
         }).fail(function (response) {
             Toast.fire({
                 icon: 'error',
-                title: 'Size đã tồn tại'
+                title: error
             })
         })
     })
@@ -76,13 +76,13 @@ function ajaxCallEditFunction() {
             $('.tr-' + response.id).html(html);
             Toast.fire({
                 icon: 'success',
-                title: 'Sửa thành công'
+                title: success[1]
             })
             $('.modal').modal('hide');
         }).fail(function (response) {
             Toast.fire({
                 icon: 'error',
-                title: 'Size đã tồn tại'
+                title: error
             })
         })
     })

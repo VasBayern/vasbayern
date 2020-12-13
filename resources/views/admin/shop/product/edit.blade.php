@@ -226,7 +226,7 @@ Sửa sản phẩm
 <div class="modal fade" id="modal-default-add">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="quickForm">
+            <form method="POST">
                 <div class="modal-header">
                     <h4 class="modal-title">Thêm</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -275,7 +275,7 @@ Sửa sản phẩm
 <div class="modal fade" id="modal-default-edit">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="quickFormEdit">
+            <form method="POST">
                 <div class="modal-header">
                     <h4 class="modal-title">Sửa</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -297,7 +297,6 @@ Sửa sản phẩm
                             <input type="text" name="quantity" value="" class="form-control" id="quantity" placeholder="Vui lòng nhập số lượng" onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -314,7 +313,7 @@ Sửa sản phẩm
 <!-- Jquery -->
 @section('footer-content')
 <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
-<script defer src="{{asset('api/admin/product.js')}}"></script>
 <script defer src="{{asset('api/admin/property.js')}}"></script>
+<script defer src="{{asset('api/admin/product.js')}}"></script>
 @endsection
 @include('admin.partials.admin-jquery');

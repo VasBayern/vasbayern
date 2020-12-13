@@ -4,7 +4,9 @@ const Toast = Swal.mixin({
     position: 'top-end',
     showConfirmButton: false,
     timer: 3000
-})
+});
+const success = ["Thêm thành công", "Sửa thành công", "Xóa thành công"];
+const error = "Đã tồn tại";
 /**
  * delete item
  */
@@ -35,7 +37,7 @@ function functionRemoveItem() {
                     $('.tr-' + response.id).remove();
                     Toast.fire({
                         icon: 'success',
-                        title: 'Xóa thành công'
+                        title: success[2]
                     })
                 }).fail(function (response) {
                     Toast.fire({

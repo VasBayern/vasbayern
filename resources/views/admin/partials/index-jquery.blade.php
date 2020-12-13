@@ -225,8 +225,8 @@
             var $this = $(this);
             $.ajax({
                 url: url,
-                type: 'get',
-                dataType: 'json',
+                type: 'GET',
+                dataType: 'JSON',
                 data: {
                     name: name
                 }

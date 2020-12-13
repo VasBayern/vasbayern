@@ -28,7 +28,6 @@ function ajaxCallAddFunction() {
         e.preventDefault();
         var url = $(this).attr('href');
         var data = $(this).closest('form').serializeArray();
-        console.log(data);
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -61,12 +60,12 @@ function ajaxCallAddFunction() {
             $('tbody').append(html);
             Toast.fire({
                 icon: 'success',
-                title: 'Thêm thành công'
+                title: success[0]
             })
         }).fail(function (response) {
             Toast.fire({
                 icon: 'error',
-                title: 'Hãng đã tồn tại'
+                title: error
             })
         })
     })
@@ -103,12 +102,12 @@ function ajaxCallEditFunction() {
             $('.modal').modal('hide');
             Toast.fire({
                 icon: 'success',
-                title: 'Sửa thành công'
+                title: success[1]
             })
         }).fail(function (response) {
             Toast.fire({
                 icon: 'error',
-                title: 'Tên, slug, link đã tồn tại'
+                title: error
             })
         })
     })
