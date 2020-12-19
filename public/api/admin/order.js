@@ -70,11 +70,11 @@ function ajaxShowItem_callback(response) {
  * @param {*} url 
  * @param {*} data 
  */
-function ajaxCallEditFunction(url, data) {
-    return shop.common.api.ajaxRequest(url, "PUT", data, ajaxCallEditFunction_callback);
+function ajaxEditItem(url, data) {
+    return shop.common.api.ajaxRequest(url, "PUT", data, ajaxEditItem_callback);
 }
 
-function ajaxCallEditFunction_callback(response) {
+function ajaxEditItem_callback(response) {
     let html = '';
     switch (response.status) {
         case 1:

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Api\Admin\AdminController;
 use App\Http\Controllers\Api\Admin\BannerController;
 use App\Http\Controllers\Api\Admin\BrandController;
@@ -45,9 +44,12 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('login', [LoginController::class, 'showLoginForm']);
-    Route::post('login', [LoginController::class, 'login'])->name('login');
+    Route::get('login', [AuthController::class, 'showLoginForm']);
+    Route::post('login', [AuthController::class, 'login'])->name('login');
     //Route::middleware(['auth:admin'])->group(function () {
+        Route::get('register', [AuthController::class, 'showRegisterForm']);
+        Route::post('register', [AuthController::class, 'register'])->name('register');
+        Route::post('logout', [AuthController::class, 'logout'])->name('logout');
         Route::get('/', [AdminController::class, 'index'])->name('dashboard');
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
         /**
@@ -110,5 +112,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('newsletters', [AdminController::class, 'deleteNewsletter']);
         Route::get('contacts', [AdminController::class, 'getContact'])->name('contacts');
         Route::get('feedbacks', [AdminController::class, 'getFeedback'])->name('feedbacks');
+        /**
+         *  Media
+         */
+        Route::get('media', function () {
+            return view('admin.content.media.index');
+        });
     //});
 });

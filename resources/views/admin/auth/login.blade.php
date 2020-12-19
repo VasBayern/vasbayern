@@ -16,18 +16,20 @@
   <link rel="stylesheet" href="{{asset('admin_assets/dist/css/adminlte.min.css')}}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- Sweetalert -->
+  <script src="{{asset('js/sweetalert2.all.min.js')}}"></script>
 </head>
 
 <body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
-      <b>Admin</b>LTE
+      <b>Admin</b>
     </div>
     <!-- /.login-logo -->
     <div class="card">
       <div class="card-body login-card-body">
         <p class="login-box-msg">Đăng nhập để truy cập Admin</p>
-        <form action="{{ route('admin.login') }}" method="post" id="quickForm">
+        <form action="{{ route('admin.login') }}" method="post" id="quickFormAuth">
           @csrf
           @if(session('msg'))
           <div class="alert alert-danger">
@@ -42,11 +44,6 @@
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
-            @error('email')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-            @enderror
           </div>
           <div class="input-group mb-3 form-group">
             <input type="password" class="form-control" placeholder="Password" name="password" required>
@@ -55,11 +52,6 @@
                 <span class="fas fa-lock"></span>
               </div>
             </div>
-            @error('password')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-            @enderror
           </div>
           <div class="row">
             <div class="col-7">
@@ -105,7 +97,7 @@
   <!-- /.login-box -->
 
   @include('admin.partials.auth-jquery');
-  <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+  <script defer src="{{asset('api/admin/common/admin-function.js')}}"></script>
   <script defer src="{{asset('api/admin/common/api.js')}}"></script>
   <script defer src="{{asset('api/admin/banner.js')}}"></script>
 </body>

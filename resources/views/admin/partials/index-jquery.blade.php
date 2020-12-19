@@ -11,6 +11,15 @@
 <script src="{{asset('admin_assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('admin_assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{asset('admin_assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script>
+    $(function() {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+            "pageLength": 25
+        });
+    })
+</script>
 <!-- jquery-validation -->
 <script src="{{asset('admin_assets/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
 <!-- Summernote -->

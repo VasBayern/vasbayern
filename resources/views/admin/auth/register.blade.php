@@ -7,7 +7,6 @@
   <title>Admin | Đăng ký</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{asset('admin_assets/plugins/fontawesome-free/css/all.min.css')}}">
   <!-- overlayScrollbars -->
@@ -16,19 +15,19 @@
   <link rel="stylesheet" href="{{asset('admin_assets/dist/css/adminlte.min.css')}}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- Sweetalert -->
+  <script src="{{asset('js/sweetalert2.all.min.js')}}"></script>
 </head>
 
 <body class="hold-transition register-page">
   <div class="register-box">
     <div class="register-logo">
-      <b>Admin</b>LTE
+      <b>Admin</b>
     </div>
-
     <div class="card">
       <div class="card-body register-card-body">
         <p class="login-box-msg">Đăng kí tài khoản Admin</p>
-
-        <form method="POST" action="{{ route('admin.register') }}" id="quickForm">
+        <form method="POST" action="{{ route('admin.register') }}" id="quickFormAuth">
           @csrf
           <div class="input-group mb-3 form-group">
             <input type="text" class="form-control" placeholder="Tên" name="name" value="{{ old('name') }}">
@@ -37,11 +36,6 @@
                 <span class="fas fa-user"></span>
               </div>
             </div>
-            @error('name')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-            @enderror
           </div>
           <div class="input-group mb-3 form-group">
             <input type="email" class="form-control" placeholder="Email" name="email" value="{{ old('email') }}">
@@ -50,11 +44,6 @@
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
-            @error('email')
-            <span class="invalid-feedback" role="alert">
-              <strong>{{ $message }}</strong>
-            </span>
-            @enderror
           </div>
           <div class="input-group mb-3 form-group">
             <input type="password" class="form-control" placeholder="Password" name="password" id="password">
@@ -107,7 +96,7 @@
   <!-- /.register-box -->
 
   @include('admin.partials.auth-jquery');
-  <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+  <script defer src="{{asset('api/admin/common/admin-function.js')}}"></script>
   <script defer src="{{asset('api/admin/common/api.js')}}"></script>
   <script defer src="{{asset('api/admin/banner.js')}}"></script>
 </body>

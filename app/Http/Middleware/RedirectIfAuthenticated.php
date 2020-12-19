@@ -30,7 +30,6 @@ class RedirectIfAuthenticated
                 }
                 break;
             default:
-
                 if (Auth::guard($guard)->check()) {
                     \Toastr::success('Xin chào');
                     return Redirect::to(Session::get('url.intended'));

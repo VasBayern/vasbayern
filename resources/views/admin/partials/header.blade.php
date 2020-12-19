@@ -11,14 +11,13 @@
       <a href="#" class="nav-link">Contact</a>
     </li>
     <li class="nav-item d-none d-sm-inline-block">
-      <a href="" onclick="event.preventDefault();
+      <a href="{{ route('admin.logout') }}" onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();" class="nav-link">
         Đăng xuất
       </a>
-      <form id="logout-form" action="" method="POST" style="display: none;">
+      <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
         @csrf
       </form>
-
     </li>
   </ul>
 

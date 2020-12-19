@@ -51,11 +51,6 @@ return [
             'driver' => 'passport',
             'provider' => 'admins',
         ],
-
-        'admin-api' => [
-            'driver' => 'passport',
-            'provider' => 'admins-api',
-        ],
     ],
 
     /*
@@ -86,10 +81,6 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'admins-api' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

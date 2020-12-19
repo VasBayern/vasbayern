@@ -154,7 +154,7 @@ Sản phẩm
 
 <!-- Jquery -->
 @section('footer-content')
-<script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+<script defer src="{{asset('api/admin/common/admin-function.js')}}"></script>
 <script defer src="{{asset('api/admin/common/api.js')}}"></script>
 <script defer src="{{asset('api/admin/product.js')}}"></script>
 @endsection

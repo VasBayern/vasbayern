@@ -255,7 +255,7 @@ $('#quickFormEdit').validate({
     submitHandler: function (form) {
         var url = $('.update-item').attr('href');
         var data = $('.update-item').closest('form').serializeArray();
-        ajaxCallEditFunction(url, data);
+        ajaxEditItem(url, data);
     }
 });
 $('#quickFormAuth').validate({
@@ -317,7 +317,7 @@ $(document).on('click', '.remove-image', function (e) {
     $(this).closest('.form-group').remove();
 })
 /**
- * Summernote, database table
+ * Summernote
  */
 $(function () {
     $('.textarea').summernote({
@@ -337,10 +337,5 @@ $(function () {
     });
     $('.textareaPost').summernote({
         height: 615
-    });
-    $("#example1").DataTable({
-        "responsive": true,
-        "autoWidth": false,
-        "pageLength": 25
     });
 })

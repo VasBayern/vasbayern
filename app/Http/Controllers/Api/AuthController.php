@@ -12,6 +12,14 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest:admin')->except('logout');
+    }
+    public function showRegisterForm()
+    {
+        return view('admin.auth.register');
+    }
     /**
      * @OA\Post(
      ** path="/auth/register",
@@ -62,32 +70,42 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $admin = $request->user();
-        if ($admin['type'] == 1) {
-            $response = ['error' => 'Không có quyền'];
-            return response($response, 403);
+        if ($admin['role'] != 1) {
+            $response = [
+                'success' => false,
+                'error'   => 'Không có quyền'
+            ];
+            return response()->json($response, 403);
         } else {
             $validator = Validator::make($request->all(), [
-                'name' => 'required',
-                'email' => 'required|email|unique:users',
-                'password' => 'required|min:6|confirmed',
+                'name'      => 'required',
+                'email'     => 'required|email|unique:users',
+                'password'  => 'required|min:8|confirmed',
             ]);
             if ($validator->fails()) {
                 return response(['error' => $validator->errors()->all()], 422);
             }
             $request['password'] = Hash::make($request['password']);
             $request['remember_token'] = Str::random(10);
-            $user = new User();
-            $user->email = $request['email'];
+            $user           = new User();
+            $user->email    = $request['email'];
             $user->password = $request['password'];
-            $user->name = $request['name'];
+            $user->name     = $request['name'];
             $user->remember_token = $request['remember_token'];
-            $user->type = 1;
-            $user->status = 0;
-            $token = $user->createToken('Token')->accessToken;
+            $user->role     = $request['role'];
+            $token          = $user->createToken('Token')->accessToken;
             $user->save();
-            $response = ['token' => $token];
-            return response($response, 201);
+            $response = [
+                'success' => true,
+                'token' => $token
+            ];
+            return response()->json($response, 201);
         }
+    }
+
+    public function showLoginForm()
+    {
+        return view('admin.auth.login');
     }
 
     /**
@@ -124,10 +142,9 @@ class AuthController extends Controller
      **/
     public function login(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8',
         ]);
         if ($validator->fails()) {
             return response(['error' => $validator->errors()->all()], 422);
@@ -136,20 +153,29 @@ class AuthController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Token')->accessToken;
-                $response = ['token' => $token];
-                return response($response, 201);
+                $response = [
+                    'success' => true,
+                    'token' => $token
+                ];
+                return response()->json($response, 201);
             } else {
-                $response = ['message' => 'Error Password'];
-                return response($response, 422);
+                $response = [
+                    'success' => false,
+                    'message' => 'Sai mật khẩu'
+                ];
+                return response()->json($response, 422);
             }
         } else {
-            $response = ['message' => 'Email not exist'];
-            return response($response, 422);
+            $response = [
+                'success' => false,
+                'message' => 'Email không tồn tại'
+            ];
+            return response()->json($response, 422);
         }
     }
 
     /**
-     * @OA\Get(
+     * @OA\Post(
      ** path="/auth/logout",
      *   tags={"Auth"},
      *   summary="Logout",
@@ -167,29 +193,10 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        $response = ['message' => 'Logout success'];
-        return response($response, 201);
-    }
-
-    /**
-     * @OA\Get(
-     ** path="/auth/getUser",
-     *   tags={"Auth"},
-     *   summary="User Information",
-     *   operationId="getUser",
-     *  security={
-     *         {"bearerAuth": {}}
-     *     },
-     *   @OA\Response(response=201,description="Success",@OA\MediaType( mediaType="application/json",)),
-     *   @OA\Response(response=401,description="Unauthenticated"),
-     *   @OA\Response(response=400,description="Bad Request"),
-     *   @OA\Response(response=404,description="not found"),
-     *   @OA\Response(response=403,description="Forbidden")
-     *)
-     **/
-    public function getUser(Request $request)
-    {
-        $response = $request->user();
-        return response()->json($response);
+        $response = [
+            'success' => true,
+            'message' => 'Đăng xuất thành công'
+        ];
+        return response()->json($response, 201);
     }
 }

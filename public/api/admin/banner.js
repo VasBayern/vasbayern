@@ -76,11 +76,11 @@ function ajaxAddItem_callback(response) {
  * @param {*} url 
  * @param {*} data 
  */
-function ajaxCallEditFunction(url, data) {
-    return shop.common.api.ajaxRequest(url, "PUT", data, ajaxCallEditFunction_callback);
+function ajaxEditItem(url, data) {
+    return shop.common.api.ajaxRequest(url, "PUT", data, ajaxEditItem_callback);
 }
 
-function ajaxCallEditFunction_callback(response) {
+function ajaxEditItem_callback(response) {
     html = '<th scope="row">' + response.id + '</th>' +
         '<td>' + response.name + '</td>' +
         '<td><a href="' + response.link + '" target="_blank">' + response.link + '</a></td>' +
@@ -112,7 +112,7 @@ function ajaxCallEditFunction_callback(response) {
 //     $('tbody').append(html);
 // }
 
-// function ajaxCallEditFunction_callback(response) {
+// function ajaxEditItem_callback(response) {
 //     html = '<th scope="row">' + response.id + '</th>' +
 //         '<td>' + response.name + '</td>' +
 //         '<td><a href="' + response.linkBanner + '" target="_blank">' + response.linkBanner + '</a></td>' +

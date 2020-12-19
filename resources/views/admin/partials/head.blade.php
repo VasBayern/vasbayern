@@ -21,10 +21,6 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('admin_assets/plugins/summernote/summernote-bs4.css')}}">
   <link rel="stylesheet" href="{{asset('css/modalDelete.css')}}">
-  <!-- Bootstrap Switch -->
-  <script src="{{asset('admin_assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}"></script>
-  <!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="{{asset('admin_assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <!-- Toastr-->
   <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
   <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
