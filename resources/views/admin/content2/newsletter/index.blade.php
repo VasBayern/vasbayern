@@ -41,14 +41,15 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $stt = 1; ?>
                                 @foreach($users as $user)
-                                <tr class="tr-{{ $user->id }}">
-                                    <th scope="row">{{ $user->id }}</th>
-                                    <td>{{ $user->email }}</td>
-                                    <td>
-                                        <a href="{{ url('api/admin/newsletters/'.$user->id) }}" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>
-                                    </td>
+                                <th scope="row">{{ $stt }}</th>
+                                <td>{{ $user->email }}</td>
+                                <td>
+                                    <a href="#myModal{{$user->id}}" class="btn btn-danger" data-toggle="modal" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                </td>
                                 </tr>
+                                <?php $stt++; ?>
                                 @endforeach
                             </tbody>
                         </table>
@@ -64,10 +65,34 @@
     <!-- /.container-fluid -->
 </section>
 <!-- /.modal -->
+@foreach($users as $user)
+<!-- Modal Delete -->
+<div id="myModal{{$user->id}}" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header flex-column">
+                <div class="icon-box">
+                    <i class="fas fa-exclamation"></i>
+                </div>
+                <h4 class="modal-title w-100">Bạn có muốn xóa? </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Lưu ý : Hành động này không thể hoàn tác</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <form name="user" action="{{ url('admin/newsletters/'.$user->id) }}" method="post" class="form-horizontal">
+                    @method('DELETE')
+                    @csrf
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xóa</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection
 
 <!-- Jquery -->
-@section('footer-content')
-<script defer src="{{asset('api/admin/admin-function.js')}}"></script>
-@endsection
 @include('admin.partials.index-jquery');

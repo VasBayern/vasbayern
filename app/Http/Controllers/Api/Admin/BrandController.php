@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ShopBrandModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class BrandController extends Controller
@@ -83,12 +82,11 @@ class BrandController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        $input              = $request->all();
-        $item               = ShopBrandModel::where('slug', $slug)->first();
-        $checkNameExist     = DB::select('SELECT name FROM shop_brands WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
-        $checkSlugExist     = DB::select('SELECT slug FROM shop_brands WHERE slug != "' . $item->slug . '" AND slug = "' . $input['slug'] . '"');
-        $checkLinkExist     = DB::select('SELECT link FROM shop_brands WHERE link != "' . $item->link . '" AND link = "' . $input['link'] . '"');
-
+        $input          = $request->all();
+        $item           = ShopBrandModel::where('slug', $slug)->first();
+        $checkNameExist = app(AdminController::class)->checkRecordExist($item->name, $input['name'], 'shop_brands', 'name');
+        $checkSlugExist = app(AdminController::class)->checkRecordExist($item->slug, $input['slug'], 'shop_brands', 'slug');
+        $checkLinkExist = app(AdminController::class)->checkRecordExist($item->link, $input['link'], 'shop_brands', 'link');
         if (!empty($checkNameExist) || !empty($checkSlugExist) || !empty($checkLinkExist)) {
             $response = [
                 'success'   => false,

@@ -75,8 +75,8 @@ class ColorController extends Controller
     {
         $input          = $request->all();
         $item           = ShopColorModel::findOrFail($id);
-        $checkNameExist = DB::select('SELECT name FROM colors WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
-        $checkColorExist = DB::select('SELECT color FROM colors WHERE color != "' . $item->color . '" AND color = "' . $input['color'] . '"');
+        $checkNameExist = app(AdminController::class)->checkRecordExist($item->name, $input['name'], 'colors', 'name');
+        $checkColorExist = app(AdminController::class)->checkRecordExist($item->color, $input['color'], 'colors', 'color');
         if (!empty($checkNameExist) || !empty($checkColorExist)) {
             $response = [
                 'success'   => false,

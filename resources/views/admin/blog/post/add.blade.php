@@ -1,7 +1,10 @@
 @extends('admin.layouts.app')
 @section('title')
-Thêm banner
+Thêm bài viết
 @endsection
+<!-- Select2 -->
+<link rel="stylesheet" href="{{asset('admin_assets/plugins/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('admin_assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 @section('content')
 
 <!-- Content Header (Page header) -->
@@ -9,11 +12,11 @@ Thêm banner
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Thêm banner</h1>
+                <h1>Thêm bài viết</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.banners') }}">Banner</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.content.posts') }}">Bài viết</a></li>
                     <li class="breadcrumb-item active">Thêm</li>
                 </ol>
             </div>
@@ -23,13 +26,12 @@ Thêm banner
 
 <!-- Main content -->
 <section class="content">
-    <form action="{{ url('admin/banners') }}" method="post" enctype="multipart/form-data" id="quickForm">
-        @csrf
+    <form id="quickForm">
         <div class="row">
             <div class="col-md-6">
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Banner</h3>
+                        <h3 class="card-title">Bài viết</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                                 <i class="fas fa-minus"></i></button>
@@ -45,15 +47,11 @@ Thêm banner
                             <input type="text" name="slug" value="{{ old('slug') }}" class="form-control" id="slug" placeholder="Vui lòng nhập slug">
                         </div>
                         <div class="form-group">
-                            <label for="link">Link</label>
-                            <input type="text" name="link" value="{{ old('link') }}" class="form-control" id="link" placeholder="Vui lòng nhập đường dẫn">
-                        </div>
-                        <div class="form-group">
-                            <label for="location">Vị trí</label>
-                            <select name="location_id" class="form-control custom-select">
-                                <option value="">-- Chọn vị trí --</option>
-                                @foreach($locations as $key_location => $location)
-                                <option value="{{ $key_location }}">{{ $location }}</option>
+                            <label>Danh mục</label>
+                            <select class="form-control custom-select" name="category_id">
+                                <option value="">-- Chọn danh mục --</option>
+                                @foreach($categories as $category)
+                                <option value="{{ $category['id'] }}">{{ $category['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -67,6 +65,20 @@ Thêm banner
                             <input id="thumbnail1" type="text" name="image" value="{{ old('image') }}" class="form-control" id="focusedinput">
                             <img id="holder1" style="max-height:100px;">
                         </div>
+                        <div class="form-group">
+                            <label>Thẻ</label>
+                            <select class="select2" multiple="multiple" data-placeholder="Chọn thẻ" style="width: 100%;" name="tag[]">
+                                @foreach($tags as $tag)
+                                <option value="{{ $tag->id }}">{{ $tag->slug }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="intro">Giới thiệu</label>
+                            <div class="mb-3">
+                                <textarea class="textarea" name="intro_post" id="intro" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -75,23 +87,18 @@ Thêm banner
             <div class="col-md-6">
                 <div class="card card-secondary">
                     <div class="card-header">
-                        <h3 class="card-title">Mô tả</h3>
+                        <h3 class="card-title">Chi tiết</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                                 <i class="fas fa-minus"></i></button>
                         </div>
                     </div>
                     <div class="card-body">
+
                         <div class="form-group">
-                            <label for="intro">Mô tả</label>
+                            <label for="desc">Bài viết</label>
                             <div class="mb-3">
-                                <textarea class="textarea" name="intro" id="intro" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="desc">Chi tiết</label>
-                            <div class="mb-3">
-                                <textarea class="textareaDesc" name="desc" id="desc" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                                <textarea class="textareaPost" name="desc_post" id="desc" placeholder="Place some text here" style="width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                             </div>
                         </div>
                     </div>
@@ -103,14 +110,17 @@ Thêm banner
 
         <div class="row">
             <div class="col-12">
-                <a href="{{ route('admin.banners') }}" class="btn btn-secondary">Hủy</a>
-                <input type="submit" value="Thêm" class="btn btn-success">
+                <a href="{{ route('admin.content.posts') }}" class="btn btn-secondary">Hủy</a>
+                <input type="submit" value="Thêm" class="btn btn-success store-item" href="{{ url('api/admin/content/posts') }}">
             </div>
         </div>
     </form>
 </section>
-
 <!-- /.content -->
 @endsection
 <!-- Jquery -->
+@section('footer-content')
+<script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+<script defer src="{{asset('api/admin/content-post.js')}}"></script>
+@endsection
 @include('admin.partials.admin-jquery');

@@ -121,11 +121,6 @@ function ajaxCallEditFunction() {
 }
 
 /**
- * delete
- */
-functionRemoveItem();
-
-/**
  * change type coupon
  * @param {*} type 
  */

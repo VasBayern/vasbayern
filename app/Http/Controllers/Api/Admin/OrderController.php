@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Api\Admin;
 
 use App\Events\SuccessShipped;
 use App\Http\Controllers\Controller;
@@ -13,19 +13,40 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
-class ShopOrderController extends Controller
+class OrderController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $orders = ShopOrderModel::all();
         $data = array();
         $data['orders'] = $orders;
-        return view('admin.content.order.index', $data);
+        return view('admin.shop.order.index', $data);
     }
 
-    public function viewDetail(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        $id = $request->id;
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
         $sql = DB::select('SELECT A.id AS order_id, A.name AS user_name, A.phone, A.address, A.note, A.status, A.total,
             A.promotion, A.payment_method, A.sub_total, A.ship_price, A.shipment,
             B.id AS orderDetail_id, B.quantity, B.unit_price, B.total_price, 
@@ -124,16 +145,23 @@ class ShopOrderController extends Controller
         $response = [
             'order' => array_values($order),
         ];
-        return response($response);
+        return response()->json($response, 200);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         $input          = $request->all();
         $status         = $input['status'];
         $products       = $input['product_id'];
         $sizes          = $input['size_id'];
-        $colors          = $input['color_id'];
+        $colors         = $input['color_id'];
         $quantities     = $input['quantity'];
         $order          = ShopOrderModel::findOrFail($id);
         $statusOrigin   = $order->status;
@@ -181,14 +209,28 @@ class ShopOrderController extends Controller
             $email = $input['email'];
             event(new SuccessShipped($email));
         }
-        \Toastr::success('Cập nhật thành công');
-        return redirect()->route('admin.orders');
+        $response = [
+            'success'   => true,
+            'id'        => $id,
+            'status'    => (int) $order->status,
+        ];
+        return response()->json($response, 200);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         $item = ShopOrderModel::find($id);
         $item->delete();
-        \Toastr::success('Xóa thành công');
-        return redirect()->route('admin.orders');
+        $response = [
+            'success'   => true,
+            'id'        => $item->id,
+        ];
+        return response()->json($response, 200);
     }
 }

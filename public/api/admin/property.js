@@ -94,7 +94,3 @@ $(document).on('click', '.update-item-property', function (e) {
         })
     })
 })
-/**
- * delete
- */
-functionRemoveItem();

@@ -63,8 +63,3 @@ function ajaxCallEditFunction() {
         })
     })
 }
-
-/**
- * delete
- */
-functionRemoveItem();

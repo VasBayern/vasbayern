@@ -36,6 +36,18 @@ Thêm banner
                         </div>
                     </div>
                     <div class="card-body">
+                        @if ($errors->any())
+                        <div class="form-group">
+                            <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <ul style="margin-bottom:0px">
+                                    @foreach ($errors->all() as $error)
+                                    <li style="list-style: none">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                        @endif
                         <div class="form-group">
                             <label for="name">Tên</label>
                             <input type="text" name="name" value="{{ old('name') }}" class="form-control" id="name" placeholder="Vui lòng nhập tên">

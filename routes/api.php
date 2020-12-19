@@ -1,10 +1,15 @@
 <?php
 
 use App\Http\Controllers\Api\Admin\AdminController;
+use App\Http\Controllers\Api\Admin\BannerController;
 use App\Http\Controllers\Api\Admin\BrandController;
 use App\Http\Controllers\Api\Admin\CategoryController;
 use App\Http\Controllers\Api\Admin\ColorController;
+use App\Http\Controllers\Api\Admin\ContentCategoryController;
+use App\Http\Controllers\Api\Admin\ContentCommentController;
+use App\Http\Controllers\Api\Admin\ContentController;
 use App\Http\Controllers\Api\Admin\CouponController;
+use App\Http\Controllers\Api\Admin\OrderController;
 use App\Http\Controllers\Api\Admin\ProductController;
 use App\Http\Controllers\Api\Admin\PropertyController;
 use App\Http\Controllers\Api\Admin\SizeController;
@@ -39,40 +44,66 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
     /**
      * Category
      */
-    Route::resource('categories', CategoryController::class)->except('show')->names(['index' => 'categories']);
+    Route::resource('categories', CategoryController::class)->names(['index' => 'categories']);
     /**
      * Brand
      */
-    Route::apiResource('brands', BrandController::class)->except('show')->names(['index' => 'brands']);
+    Route::apiResource('brands', BrandController::class)->names(['index' => 'brands']);
     /**
      * Product
      */
-    Route::resource('products', ProductController::class)->except('show')->names(['index' => 'products']);
+    Route::resource('products', ProductController::class)->names(['index' => 'products']);
     /**
      * Product property
      */
-    Route::apiResource('properties', PropertyController::class)->except(['index','show']);
+    Route::apiResource('properties', PropertyController::class)->except(['index', 'show']);
     /**
      * Color
      */
-    Route::apiResource('colors', ColorController::class)->except('show')->names(['index' => 'colors']);
+    Route::apiResource('colors', ColorController::class)->names(['index' => 'colors']);
     /**
      * Size
      */
-    Route::apiResource('sizes', SizeController::class)->except('show')->names(['index' => 'sizes']);
+    Route::apiResource('sizes', SizeController::class)->names(['index' => 'sizes']);
     /**
      * Tag
      */
-    Route::apiResource('tags', AdminTagController::class)->except('show')->names(['index' => 'tags']);
+    Route::apiResource('tags', AdminTagController::class)->names(['index' => 'tags']);
     /**
      * Coupon
      */
-    Route::apiResource('coupons', CouponController::class)->except('show')->names(['index' => 'coupons']);
+    Route::apiResource('coupons', CouponController::class)->names(['index' => 'coupons']);
+    /**
+     * Content Category
+     */
+    Route::apiResource('content/categories', ContentCategoryController::class)->names(['index' => 'content.categories']);
+    /**
+     * Content Post
+     */
+    Route::resource('content/posts', ContentController::class)->names(['index' => 'content.posts']);
+    /**
+     * Content Comment
+     */
+    Route::apiResource('content/comments', ContentCommentController::class)->names(['index' => 'content.comments']);
+    /**
+     * Banner
+     */
+    Route::apiResource('banners', BannerController::class)->names(['index' => 'banners']);
+    /**
+     * Order
+     */
+    Route::apiResource('orders', OrderController::class)->except('store')->names(['index' => 'orders']);
     /**
      * Admin Feature
      */
     Route::get('getSlugs', [AdminController::class, 'getSlug'])->name('getSlugs');
+    Route::get('newsletters', [AdminController::class, 'getNewsletter'])->name('newsletters');
+    Route::delete('newsletters', [AdminController::class, 'deleteNewsletter']);
+    Route::get('contacts', [AdminController::class, 'getContact'])->name('contacts');
+    Route::get('feedbacks', [AdminController::class, 'getFeedback'])->name('feedbacks');
 });

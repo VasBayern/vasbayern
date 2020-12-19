@@ -72,7 +72,7 @@ class SizeController extends Controller
     {
         $input          = $request->all();
         $item           = ShopSizeModel::findOrFail($id);
-        $checkNameExist = DB::select('SELECT name FROM sizes WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
+        $checkNameExist = app(AdminController::class)->checkRecordExist($item->name, $input['name'], 'sizes', 'name');
         if (!empty($checkNameExist)) {
             $response = [
                 'success'   => false,

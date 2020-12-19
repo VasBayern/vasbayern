@@ -126,11 +126,19 @@ class ProductController extends Controller
         $tags = TagModel::where('tag_type', 1)->get();
         $data['tags'] = $tags;
 
-        $sql = DB::select('SELECT A.id
-        FROM tags AS A
-        JOIN taggables AS B ON A.id = B.tag_id
-        JOIN shop_products AS C ON B.product_id = C.id
-        WHERE A.tag_type = 1 AND C.id = ' . $product->id);
+        $sql = DB::select('SELECT 
+            A.id
+        FROM 
+            tags AS A
+        JOIN 
+            taggables AS B ON A.id = B.tag_id
+        JOIN 
+            shop_products AS C ON B.product_id = C.id
+        WHERE 
+            A.tag_type = 1 
+        AND 
+            C.id = ' . $product->id
+        );
         $tagProductIDs = [];
         foreach ($sql as $row) {
             array_push($tagProductIDs, $row->id);
@@ -150,9 +158,8 @@ class ProductController extends Controller
     {
         $input              = $request->all();
         $item               = ShopProductModel::where('slug', $slug)->first();
-        $checkNameExist     = DB::select('SELECT name FROM shop_products WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
-        $checkSlugExist     = DB::select('SELECT slug FROM shop_products WHERE slug != "' . $item->slug . '" AND slug = "' . $input['slug'] . '"');
-
+        $checkNameExist = app(AdminController::class)->checkRecordExist($item->name, $input['name'], 'shop_products', 'name');
+        $checkSlugExist = app(AdminController::class)->checkRecordExist($item->slug, $input['slug'], 'shop_products', 'slug');
         if (!empty($checkNameExist) || !empty($checkSlugExist)) {
             $response = [
                 'success'   => false,

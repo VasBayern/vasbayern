@@ -79,7 +79,7 @@ class CouponController extends Controller
     {
         $input = $request->all();
         $item               = ShopCouponModel::find($id);
-        $checkNameExist     = DB::select('SELECT code FROM shop_coupons WHERE code != "' . $item->code . '" AND code = "' . $input['code'] . '"');
+        $checkNameExist = app(AdminController::class)->checkRecordExist($item->name, $input['name'], 'shop_coupons', 'name');
         if (!empty($checkNameExist)) {
             $response = [
                 'success'   => false,

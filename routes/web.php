@@ -1,21 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\Auth\LoginController as AuthLoginController;
-use App\Http\Controllers\Admin\Auth\RegisterController as AuthRegisterController;
-use App\Http\Controllers\Admin\BlogCategoryController;
-use App\Http\Controllers\Admin\BlogPostController;
-use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\ShopBannerController;
-use App\Http\Controllers\Admin\ShopBrandController;
-use App\Http\Controllers\Admin\ShopCategoryController;
-use App\Http\Controllers\Admin\ShopColorController;
-use App\Http\Controllers\Admin\ShopCouponController;
-use App\Http\Controllers\Admin\ShopOrderController;
-use App\Http\Controllers\Admin\ShopProductController;
-use App\Http\Controllers\Admin\ShopSizeController;
-use App\Http\Controllers\Admin\TagController;
-use App\Http\Controllers\Admin\TagProductController;
 use App\Http\Controllers\Auth\LoginAssociationController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\CustomerController;
@@ -68,9 +53,9 @@ Route::post('/email/verification-notification', function (HttpRequest $request) 
 /**
  * Category
  */
-Route::get('categories/{slug}', [FrontendShopCategoryController::class, 'index'] );
-Route::get('categories?tag={slug}', [FrontendShopCategoryController::class, 'index'] );
-Route::post('categories', [FrontendShopCategoryController::class, 'filter'] );
+Route::get('categories/{slug}', [FrontendShopCategoryController::class, 'index']);
+Route::get('categories?tag={slug}', [FrontendShopCategoryController::class, 'index']);
+Route::post('categories', [FrontendShopCategoryController::class, 'filter']);
 
 /**
  *  Product
@@ -147,160 +132,144 @@ Route::get('/callback', [LoginAssociationController::class, 'handleProviderCallb
 /**
  * -----------------------------------ADMIN-----------------------------------
  */
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('login', [AuthLoginController::class, 'showLoginForm']);
-    Route::post('login', [AuthLoginController::class, 'login'])->name('login');
+// Route::prefix('admin')->name('admin.')->group(function () {
+//     Route::get('login', [AuthLoginController::class, 'showLoginForm']);
+//     Route::post('login', [AuthLoginController::class, 'login'])->name('login');
 
-    Route::middleware(['auth:admin', ])->group(function () {
-        Route::get('register', [AuthRegisterController::class, 'showRegisterForm']);
-        Route::post('register', [AuthRegisterController::class, 'register'])->name('register');
-        Route::get('/', [HomeController::class, 'index'])->name('dashboard');
-        Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
-        Route::post('logout', [AuthLoginController::class, 'logout'])->name('logout');
+    //Route::middleware(['auth:admin',])->group(function () {
+        // Route::get('register', [AuthRegisterController::class, 'showRegisterForm']);
+        // Route::post('register', [AuthRegisterController::class, 'register'])->name('register');
+        // Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+        // Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+        // Route::post('logout', [AuthLoginController::class, 'logout'])->name('logout');
 
-        // Route::get('/email/verify', function () {
-        //     return view('admin.auth.verify-email');
-        // })->middleware(['auth:admin'])->name('verification.notice');
+        // /**
+        //  * Shop category
+        //  */
+        // Route::get('category/list', [ShopCategoryController::class, 'index'])->name('category');
+        // Route::get('category', [ShopCategoryController::class, 'create']);
+        // Route::get('category/{slug}', [ShopCategoryController::class, 'edit']);
+        // Route::post('category', [ShopCategoryController::class, 'store']);
+        // Route::put('category/{slug}', [ShopCategoryController::class, 'update']);
+        // Route::delete('category/{slug}', [ShopCategoryController::class, 'destroy']);
 
-        // Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-        //     $request->fulfill();
+        // /**
+        //  * Shop Brand
+        //  */
+        // Route::get('brand/list', [ShopBrandController::class, 'index'])->name('brand');
+        // Route::get('brand', [ShopBrandController::class, 'create']);
+        // Route::get('brand/{slug}', [ShopBrandController::class, 'edit']);
+        // Route::post('brand', [ShopBrandController::class, 'store']);
+        // Route::put('brand/{slug}', [ShopBrandController::class, 'update']);
+        // Route::delete('brand/{slug}', [ShopBrandController::class, 'destroy']);
 
-        //     return redirect('/');
-        // })->middleware(['auth:admin', 'signed'])->name('verification.verify');
+        // /**
+        //  * Size
+        //  */
+        // Route::get('size', [ShopSizeController::class, 'index'])->name('size');
+        // Route::post('size', [ShopSizeController::class, 'store']);
+        // Route::put('size/{id}', [ShopSizeController::class, 'update']);
+        // Route::delete('size/{id}', [ShopSizeController::class, 'destroy']);
 
-        // Route::post('/email/verification-notification', function (HttpRequest $request) {
-        //     $request->user()->sendEmailVerificationNotification();
+        // /**
+        //  * Color
+        //  */
+        // Route::get('colors', [ShopColorController::class, 'index'])->name('color');
+        // Route::post('colors', [ShopColorController::class, 'store']);
+        // Route::put('colors/{id}', [ShopColorController::class, 'update']);
+        // Route::delete('colors/{id}', [ShopColorController::class, 'destroy']);
 
-        //     return back()->with('status', 'verification-link-sent');
-        // })->middleware(['auth:admin', 'throttle:6,1'])->name('verification.send');
+        // /**
+        //  * Shop Product
+        //  */
+        // Route::get('products/list', [ShopProductController::class, 'index'])->name('product');
+        // Route::get('products', [ShopProductController::class, 'create']);
+        // Route::get('products/{slug}', [ShopProductController::class, 'edit']);
+        // Route::post('products', [ShopProductController::class, 'store']);
+        // Route::put('products/{slug}', [ShopProductController::class, 'update']);
+        // Route::delete('products/{slug}', [ShopProductController::class, 'destroy']);
 
-        /**
-         * Shop category
-         */
-        Route::get('category/list', [ShopCategoryController::class, 'index'])->name('category');
-        Route::get('category', [ShopCategoryController::class, 'create']);
-        Route::get('category/{slug}', [ShopCategoryController::class, 'edit']);
-        Route::post('category', [ShopCategoryController::class, 'store']);
-        Route::put('category/{slug}', [ShopCategoryController::class, 'update']);
-        Route::delete('category/{slug}', [ShopCategoryController::class, 'destroy']);
+        // Route::post('products/{slug}/properties',  [ShopProductController::class, 'storeProperties']);
+        // Route::put('products/{slug}/properties/{id}', [ShopProductController::class, 'updateProperties']);
+        // Route::delete('products/{slug}/properties/{id}',  [ShopProductController::class, 'destroyProperties']);
 
-        /**
-         * Shop Brand
-         */
-        Route::get('brand/list', [ShopBrandController::class, 'index'])->name('brand');
-        Route::get('brand', [ShopBrandController::class, 'create']);
-        Route::get('brand/{slug}', [ShopBrandController::class, 'edit']);
-        Route::post('brand', [ShopBrandController::class, 'store']);
-        Route::put('brand/{slug}', [ShopBrandController::class, 'update']);
-        Route::delete('brand/{slug}', [ShopBrandController::class, 'destroy']);
+        // //Route::view('/product/{id}/properties', 'admin.content.shop.product.edit');
+        // /**
+        //  * Shop Coupon
+        //  */
+        // Route::get('coupon',  [ShopCouponController::class, 'index'])->name('coupon');
+        // Route::post('coupon',  [ShopCouponController::class, 'store']);
+        // Route::put('coupon/{id}',  [ShopCouponController::class, 'update']);
+        // Route::delete('coupon/{id}',  [ShopCouponController::class, 'destroy']);
 
-        /**
-         * Size
-         */
-        Route::get('size', [ShopSizeController::class, 'index'])->name('size');
-        Route::post('size', [ShopSizeController::class, 'store']);
-        Route::put('size/{id}', [ShopSizeController::class, 'update']);
-        Route::delete('size/{id}', [ShopSizeController::class, 'destroy']);
+        // /**
+        //  * Shop Order
+        //  */
+        // Route::get('orders',  [ShopOrderController::class, 'index'])->name('orders');
+        // Route::post('orders/view',  [ShopOrderController::class, 'viewDetail']);
+        // Route::put('orders/{id}',  [ShopOrderController::class, 'update']);
+        // Route::delete('orders/{id}',  [ShopOrderController::class, 'destroy']);
 
-        /**
-         * Color
-         */
-        Route::get('colors', [ShopColorController::class, 'index'])->name('color');
-        Route::post('colors', [ShopColorController::class, 'store']);
-        Route::put('colors/{id}', [ShopColorController::class, 'update']);
-        Route::delete('colors/{id}', [ShopColorController::class, 'destroy']);
-        
-        /**
-         * Shop Product
-         */
-        Route::get('products/list', [ShopProductController::class, 'index'])->name('product');
-        Route::get('products', [ShopProductController::class, 'create']);
-        Route::get('products/{slug}', [ShopProductController::class, 'edit']);
-        Route::post('products', [ShopProductController::class, 'store']);
-        Route::put('products/{slug}', [ShopProductController::class, 'update']);
-        Route::delete('products/{slug}', [ShopProductController::class, 'destroy']);
+        // /**
+        //  * Tags
+        //  */
+        // Route::get('tags', [TagController::class, 'index'])->name('tag');
+        // Route::post('tags', [TagController::class, 'store']);
+        // Route::put('tags/{id}', [TagController::class, 'update']);
+        // Route::delete('tags/{id}', [TagController::class, 'destroy']);
 
-        Route::post('products/{slug}/properties',  [ShopProductController::class, 'storeProperties']);
-        Route::put('products/{slug}/properties/{id}', [ShopProductController::class, 'updateProperties']);
-        Route::delete('products/{slug}/properties/{id}',  [ShopProductController::class, 'destroyProperties']);
+        // Route::prefix('blog')->name('blog.')->group(function () {
+        //     /**
+        //      * Blog Category
+        //      */
+        //     Route::get('categories', [BlogCategoryController::class, 'index'])->name('category');
+        //     Route::post('categories', [BlogCategoryController::class, 'store']);
+        //     Route::put('categories/{slug}', [BlogCategoryController::class, 'update']);
+        //     Route::delete('categories/{slug}', [BlogCategoryController::class, 'destroy']);
 
-        //Route::view('/product/{id}/properties', 'admin.content.shop.product.edit');
-        /**
-         * Shop Coupon
-         */
-        Route::get('coupon',  [ShopCouponController::class, 'index'])->name('coupon');
-        Route::post('coupon',  [ShopCouponController::class, 'store']);
-        Route::put('coupon/{id}',  [ShopCouponController::class, 'update']);
-        Route::delete('coupon/{id}',  [ShopCouponController::class, 'destroy']);
+        //     /**
+        //      * Blog Post
+        //      */
+        //     Route::get('posts/list', [BlogPostController::class, 'index'])->name('post');
+        //     Route::get('posts', [BlogPostController::class, 'create']);
+        //     Route::get('posts/{slug}', [BlogPostController::class, 'edit']);
+        //     Route::post('posts', [BlogPostController::class, 'store']);
+        //     Route::put('posts/{slug}', [BlogPostController::class, 'update']);
+        //     Route::delete('posts/{slug}', [BlogPostController::class, 'destroy']);
 
-        /**
-         * Shop Order
-         */
-        Route::get('orders',  [ShopOrderController::class, 'index'])->name('orders');
-        Route::post('orders/view',  [ShopOrderController::class, 'viewDetail']);
-        Route::put('orders/{id}',  [ShopOrderController::class, 'update']);
-        Route::delete('orders/{id}',  [ShopOrderController::class, 'destroy']);
+        //     /**
+        //      * Blog Comment
+        //      */
+        //     Route::get('comments', [BlogCategoryController::class, 'index'])->name('comment');
+        // });
 
-        /**
-         * Tags
-         */
-        Route::get('tags', [TagController::class, 'index'])->name('tag');
-        Route::post('tags', [TagController::class, 'store']);
-        Route::put('tags/{id}', [TagController::class, 'update']);
-        Route::delete('tags/{id}', [TagController::class, 'destroy']);
+        // /**
+        //  *  Media
+        //  */
+        // Route::get('media', function () {
+        //     return view('admin.content.media.index');
+        // });
 
-        Route::prefix('blog')->name('blog.')->group(function () {
-            /**
-             * Blog Category
-             */
-            Route::get('categories', [BlogCategoryController::class, 'index'])->name('category');
-            Route::post('categories', [BlogCategoryController::class, 'store']);
-            Route::put('categories/{slug}', [BlogCategoryController::class, 'update']);
-            Route::delete('categories/{slug}', [BlogCategoryController::class, 'destroy']);
+        // /**
+        //  *  Banner
+        //  */
+        // Route::get('banners/list', [ShopBannerController::class, 'index'])->name('banners');
+        // Route::get('banners', [ShopBannerController::class, 'create']);
+        // Route::get('banners/{slug}', [ShopBannerController::class, 'edit']);
+        // Route::post('banners', [ShopBannerController::class, 'store']);
+        // Route::put('banners/{slug}', [ShopBannerController::class, 'update']);
+        // Route::delete('banners/{slug}', [ShopBannerController::class, 'destroy']);
 
-            /**
-             * Blog Post
-             */
-            Route::get('posts/list', [BlogPostController::class, 'index'])->name('post');
-            Route::get('posts', [BlogPostController::class, 'create']);
-            Route::get('posts/{slug}', [BlogPostController::class, 'edit']);
-            Route::post('posts', [BlogPostController::class, 'store']);
-            Route::put('posts/{slug}', [BlogPostController::class, 'update']);
-            Route::delete('posts/{slug}', [BlogPostController::class, 'destroy']);
-
-            /**
-             * Blog Comment
-             */
-            Route::get('comments', [BlogCategoryController::class, 'index'])->name('comment');
-        });
-
-        /**
-         *  Media
-         */
-        Route::get('media', function () {
-            return view('admin.content.media.index');
-        });
-
-        /**
-         *  Banner
-         */
-        Route::get('banners/list', [ShopBannerController::class, 'index'])->name('banners');
-        Route::get('banners', [ShopBannerController::class, 'create']);
-        Route::get('banners/{slug}', [ShopBannerController::class, 'edit']);
-        Route::post('banners', [ShopBannerController::class, 'store']);
-        Route::put('banners/{slug}', [ShopBannerController::class, 'update']);
-        Route::delete('banners/{slug}', [ShopBannerController::class, 'destroy']);
-
-        /**
-         * Admin Other Function
-         */
+        // /**
+        //  * Admin Other Function
+        //  */
         // Route::get('getSlugs', [AdminController::class, 'getSlug'])->name('getSlugs');
-        Route::get('newsletters', [AdminController::class, 'getNewsletter'])->name('newsletters');
-        Route::delete('newsletters', [AdminController::class, 'deleteNewsletter']);
-        Route::get('contacts', [AdminController::class, 'getContact'])->name('contacts');
-        Route::get('feedbacks', [AdminController::class, 'getFeedback'])->name('feedbacks');
-    });
-});
+        // Route::get('newsletters', [AdminController::class, 'getNewsletter'])->name('newsletters');
+        // Route::delete('newsletters', [AdminController::class, 'deleteNewsletter']);
+        // Route::get('contacts', [AdminController::class, 'getContact'])->name('contacts');
+        // Route::get('feedbacks', [AdminController::class, 'getFeedback'])->name('feedbacks');
+    //});
+//});
 // Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
 //     \UniSharp\LaravelFilemanager\Lfm::routes();
 // });

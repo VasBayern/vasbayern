@@ -1,21 +1,20 @@
 @extends('admin.layouts.app')
 @section('title')
-Đăng ký nhận bản tin
+Bài viết
 @endsection
 
 @section('content')
-
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Đăng ký nhận bản tin</h1>
+                <h1> Bài viết</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard')}}">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">Đăng ký</li>
+                    <li class="breadcrumb-item active"> Bài viết</li>
                 </ol>
             </div>
         </div>
@@ -29,6 +28,9 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
+                        <div class="col-lg-1">
+                            <a href="{{ url('api/admin/content/posts/create') }}"><button type="button" class="btn btn-primary">Thêm</button></a>
+                        </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -36,17 +38,26 @@
                             <thead>
                                 <tr>
                                     <th style="width: 30px">Id</th>
-                                    <th>Email</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Danh mục</th>
+                                    <th>Ảnh</th>
+                                    <th>Giới thiệu</th>
+                                    <th>Tác giả</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($users as $user)
-                                <tr class="tr-{{ $user->id }}">
-                                    <th scope="row">{{ $user->id }}</th>
-                                    <td>{{ $user->email }}</td>
+                                @foreach($posts as $post)
+                                <tr class="tr-{{ $post->id }}">
+                                    <th scope="row">{{ $post->id }}</th>
+                                    <td>{{ $post->name }}</td>
+                                    <td>{{ $post->category->name }}</td>
+                                    <td><img src="{{ asset($post['image']) }}" style="margin-top:10px;max-width:240px;"></td>
+                                    <td><?php echo $post->intro ?></td>
+                                    <td>{{ $post->user->name }}</td>
                                     <td>
-                                        <a href="{{ url('api/admin/newsletters/'.$user->id) }}" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>
+                                        <a href="{{ url('api/admin/content/posts/'.$post->slug .'/edit') }}" class="btn btn-action btn-primary edit-modal" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="{{ url('api/admin/content/posts/'.$post->slug) }}" class="btn btn-action btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -63,11 +74,12 @@
     </div>
     <!-- /.container-fluid -->
 </section>
-<!-- /.modal -->
+<!-- Modal HTML -->
 @endsection
 
 <!-- Jquery -->
 @section('footer-content')
 <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+<script defer src="{{asset('api/admin/content-post.js')}}"></script>
 @endsection
 @include('admin.partials.index-jquery');

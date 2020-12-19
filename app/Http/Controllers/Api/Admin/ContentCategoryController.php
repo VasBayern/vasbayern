@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\TagModel;
+use App\Http\Controllers\Api\Admin\AdminController;
+use App\Models\BlogCategoryModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class TagController extends Controller
+class ContentCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +18,10 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = TagModel::all();
+        $categories = BlogCategoryModel::all();
         $data = array();
-        $data['tags'] = $tags;
-        return view('admin.shop.tag.index', $data);
+        $data['categories'] = $categories;
+        return view('admin.blog.category.index', $data);
     }
 
     /**
@@ -33,25 +34,23 @@ class TagController extends Controller
     {
         $input = $request->all();
         $validator = Validator::make($request->all(), [
-            'name' => 'unique:tags',
-            'slug' => 'unique:tags',
+            'name' => 'unique:content_category',
+            'slug' => 'unique:content_category',
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->all()], 422);
         }
-        $input          = $request->all();
-        $item           = new TagModel();
-        $item->name     = $input['name'];
-        $item->slug     = $input['slug'];
-        $item->tag_type = $input['type'];
+        $input      = $request->all();
+        $item       = new BlogCategoryModel();
+        $item->name = $input['name'];
+        $item->slug = $input['slug'];
         $item->save();
         $response = [
             'success'   => true,
             'id'        => $item->id,
             'name'      => $item->name,
             'slug'      => $item->slug,
-            'type'      => $item->tag_type,
-            'link'      => url('api/admin/tags/' . $item->id)
+            'link'      => url('api/admin/content/categories/' . $item->slug)
         ];
         return response()->json($response, 200);
     }
@@ -71,33 +70,31 @@ class TagController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        $input          = $request->all();
-        $item           = TagModel::findOrFail($id);
-        $checkNameExist = app(AdminController::class)->checkRecordExist($item->name, $input['name'], 'tags', 'name');
-        $checkSlugExist = app(AdminController::class)->checkRecordExist($item->slug, $input['slug'], 'tags', 'slug');
+        $input      = $request->all();
+        $item       = BlogCategoryModel::where('slug', $slug)->first();
+        $checkNameExist = app(AdminController::class)->checkRecordExist($item->name, $input['name'], 'content_category', 'name');
+        $checkSlugExist = app(AdminController::class)->checkRecordExist($item->slug, $input['slug'], 'content_category', 'slug');
         if (!empty($checkNameExist) || !empty($checkSlugExist)) {
             $response = [
                 'success'   => false,
-                'msg'   => 'Thẻ đã tồn tại',
+                'msg'   => 'Danh mục hoặc slug đã tồn tại',
             ];
             return response()->json($response, 422);
         }
-        $item->name     = $input['name'];
-        $item->slug     = $input['slug'];
-        $item->tag_type = $input['type'];
+        $item->name = $input['name'];
+        $item->slug = $input['slug'];
         $item->save();
         $response = [
             'success'   => true,
             'id'        => $item->id,
             'name'      => $item->name,
             'slug'      => $item->slug,
-            'type'      => $item->tag_type,
-            'link'      => url('api/admin/tags/' . $item->id)
+            'link'      => url('api/admin/content/categories/' . $item->slug)
         ];
         return response()->json($response, 200);
     }
@@ -105,16 +102,16 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $item = TagModel::findOrFail($id);
+        $item = BlogCategoryModel::where('slug', $slug)->first();
         $item->delete();
         $response = [
             'success'   => true,
-            'id'        => $id,
+            'id'        => $item->id,
         ];
         return response()->json($response, 200);
     }

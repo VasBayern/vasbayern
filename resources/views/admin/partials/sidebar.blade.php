@@ -92,19 +92,19 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{ route('admin.blog.category') }}" class="nav-link">
+              <a href="{{ route('admin.content.categories') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Danh mục</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('admin.blog.post') }}" class="nav-link">
+              <a href="{{ route('admin.content.posts') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Bài viết</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('admin.blog.comment') }}" class="nav-link">
+              <a href="{{ route('admin.content.comments') }}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Bình luận</p>
               </a>
@@ -135,7 +135,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('admin.feedbacks') }}" class="nav-link">
+              <a href="" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Đánh giá</p>
               </a>
@@ -147,7 +147,7 @@
           <a href="{{ url('admin/media') }}" class="nav-link">
             <i class="nav-icon far fa-image"></i>
             <p>
-              Ảnh
+              Thư viện ảnh
             </p>
           </a>
         </li>

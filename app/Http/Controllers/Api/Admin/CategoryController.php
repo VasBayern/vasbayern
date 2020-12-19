@@ -109,9 +109,8 @@ class CategoryController extends Controller
     {
         $input              = $request->all();
         $item               = ShopCategoryModel::where('slug', $slug)->first();
-        $checkNameExist     = DB::select('SELECT name FROM shop_categories WHERE name != "' . $item->name . '" AND name = "' . $input['name'] . '"');
-        $checkSlugExist     = DB::select('SELECT slug FROM shop_categories WHERE slug != "' . $item->slug . '" AND slug = "' . $input['slug'] . '"');
-
+        $checkNameExist = app(AdminController::class)->checkRecordExist($item->name, $input['name'], 'shop_categories', 'name');
+        $checkSlugExist = app(AdminController::class)->checkRecordExist($item->slug, $input['slug'], 'shop_categories', 'slug');
         if (!empty($checkNameExist) || !empty($checkSlugExist)) {
             $response = [
                 'success'   => false,

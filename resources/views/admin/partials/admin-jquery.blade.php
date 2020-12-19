@@ -65,6 +65,12 @@
                 sort_no: {
                     required: true,
                 },
+                intro_post: {
+                    required: true,
+                },
+                desc_post: {
+                    required: true,
+                },
             },
             messages: {
                 name: {
