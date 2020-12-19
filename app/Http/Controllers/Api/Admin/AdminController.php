@@ -24,7 +24,7 @@ class AdminController extends Controller
 
     public function checkRecordExist($name, $inputName, $table, $field)
     {
-        return DB::select('SELECT ' . $field . ' FROM ' . $table . ' WHERE ' . $field . ' != "' . $name . '" AND name = "' . $inputName . '"');
+        return DB::select('SELECT ' . $field . ' FROM ' . $table . ' WHERE ' . $field . ' != "' . $name . '" AND ' . $field . ' = "' . $inputName . '"');
     }
 
     public function getNewsletter() {

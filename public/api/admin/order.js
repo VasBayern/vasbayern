@@ -47,9 +47,7 @@ $(document).on('click', '.edit-modal', function (e) {
             if (order[i].status != 1) {
                 $('#shipment').attr('disabled', 'disabled');
             }
-
             for (j = 0; j < order[i].orderDetails.length; j++) {
-
                 html += '<tr>' +
                     '<th scope="row">' + order[i].orderDetails[j].product.id + '</th>' +
                     '<input type="hidden" name="product_id[]" value="' + order[i].orderDetails[j].product.id + '">' +
@@ -70,48 +68,30 @@ $(document).on('click', '.edit-modal', function (e) {
         $('#orderProduct').html(html);
     });
 })
-$(document).on('click', '.update-item', function (e) {
-    e.preventDefault();
-    var url = $(this).attr('href');
-    var data = $(this).closest('form').serializeArray();
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $.ajax({
-        url: url,
-        type: 'PUT',
-        dataType: 'JSON',
-        data: data,
-    }).done(function (response) {
-        let html = '';
-        switch (response.status) {
-            case 1:
-                html = '<p>Chờ xác nhận</p>';
-                break;
-            case 2:
-                html = '<p style="color: #337AB7">Đã giao hàng</p>';
-                break;
-            case 3:
-                html = '<p style="color: #4CAF50">Thành công</p>';
-                break;
-            case 0:
-                html = '<p style="color: #D9534F">Đã hủy</p>';
-                break;
-            default:
-                break;
-        }
-        $('.status-' + response.id).html(html)
-        Toast.fire({
-            icon: 'success',
-            title: success[1]
-        })
-        $('.modal').modal('hide');
-    }).fail(function (response) {
-        Toast.fire({
-            icon: 'error',
-            title: error
-        })
-    })
-})
+/**
+ * update
+ */
+function ajaxCallEditFunction(url, data) {
+    return shop.common.api.ajaxRequest(url, "PUT", data, ajaxCallEditFunction_callback);
+}
+
+function ajaxCallEditFunction_callback(response) {
+    let html = '';
+    switch (response.status) {
+        case 1:
+            html = '<p>Chờ xác nhận</p>';
+            break;
+        case 2:
+            html = '<p style="color: #337AB7">Đã giao hàng</p>';
+            break;
+        case 3:
+            html = '<p style="color: #4CAF50">Thành công</p>';
+            break;
+        case 0:
+            html = '<p style="color: #D9534F">Đã hủy</p>';
+            break;
+        default:
+            break;
+    }
+    $('.status-' + response.id).html(html)
+}

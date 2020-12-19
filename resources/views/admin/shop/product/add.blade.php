@@ -16,7 +16,7 @@ Thêm sản phẩm
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.category') }}">Sản phẩm</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.products') }}">Sản phẩm</a></li>
                     <li class="breadcrumb-item active">Thêm</li>
                 </ol>
             </div>
@@ -170,6 +170,7 @@ Thêm sản phẩm
 <!-- Jquery -->
 @section('footer-content')
 <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+<script defer src="{{asset('api/admin/common/api.js')}}"></script></script>
 <script defer src="{{asset('api/admin/product.js')}}"></script>
 @endsection
 @include('admin.partials.admin-jquery');

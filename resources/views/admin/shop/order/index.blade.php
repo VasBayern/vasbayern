@@ -111,7 +111,7 @@
 <!-- Modal View -->
 <div class="modal fade" id="modal-lg">
     <div class="modal-dialog modal-lg">
-        <form action="" id="quickForm">
+        <form action="" id="quickFormEdit">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Chi tiết đơn hàng <b class="order_id"></b></h4>
@@ -275,6 +275,7 @@
 <!-- Jquery -->
 @section('footer-content')
 <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+<script defer src="{{asset('api/admin/common/api.js')}}"></script></script>
 <script defer src="{{asset('api/admin/order.js')}}"></script>
 @endsection
 @include('admin.partials.index-jquery');

@@ -226,7 +226,7 @@ Sửa sản phẩm
 <div class="modal fade" id="modal-default-add">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST">
+            <form method="POST" id="quickFormAddProperty">
                 <div class="modal-header">
                     <h4 class="modal-title">Thêm</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -262,7 +262,7 @@ Sửa sản phẩm
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                    <input type="submit" value="Lưu" class="btn btn-primary store-item" href="{{ url('api/admin/properties') }}">
+                    <input type="submit" value="Lưu" class="btn btn-primary store-item-property" href="{{ url('api/admin/properties') }}">
                 </div>
             </form>
         </div>
@@ -275,7 +275,7 @@ Sửa sản phẩm
 <div class="modal fade" id="modal-default-edit">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST">
+            <form id="quickFormEditProperty">
                 <div class="modal-header">
                     <h4 class="modal-title">Sửa</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -313,6 +313,7 @@ Sửa sản phẩm
 <!-- Jquery -->
 @section('footer-content')
 <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+<script defer src="{{asset('api/admin/common/api.js')}}"></script></script>
 <script defer src="{{asset('api/admin/property.js')}}"></script>
 <script defer src="{{asset('api/admin/product.js')}}"></script>
 @endsection

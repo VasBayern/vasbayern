@@ -16,7 +16,7 @@
 </script>
 <!-- jquery-validation -->
 <script src="{{asset('admin_assets/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(document).ready(function() {
         $('#quickForm').validate({
             rules: {
@@ -245,7 +245,7 @@
             }
         });
     });
-</script>
+</script> -->
 <!-- Summernote -->
 <script src="{{asset('admin_assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <script>

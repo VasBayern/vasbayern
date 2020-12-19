@@ -79,8 +79,8 @@ class CouponController extends Controller
     {
         $input = $request->all();
         $item               = ShopCouponModel::find($id);
-        $checkNameExist = app(AdminController::class)->checkRecordExist($item->name, $input['name'], 'shop_coupons', 'name');
-        if (!empty($checkNameExist)) {
+        $checkCodeExist = app(AdminController::class)->checkRecordExist($item->code, $input['code'], 'shop_coupons', 'code');
+        if (!empty($checkCodeExist)) {
             $response = [
                 'success'   => false,
                 'msg'   => 'Mã đã tồn tại',
