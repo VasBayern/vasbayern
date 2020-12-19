@@ -54,10 +54,8 @@ class BrandController extends Controller
             'name'      => $item->name,
             'slug'      => $item->slug,
             'image'     => $item->image,
-            'linkBrand' => $item->link,
-            'intro'     => $item->intro,
-            'desc'      => $item->desc,
-            'link'      => url('api/admin/brands/' . $item->slug)
+            'link'      => $item->link,
+            'url'       => url('api/admin/brands/' . $item->slug)
         ];
         return response()->json($response, 200);
     }
@@ -65,12 +63,23 @@ class BrandController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $item = ShopBrandModel::where('slug', $slug)->first();
+        $response = [
+            'success'   => true,
+            'id'        => $item->id,
+            'name'      => $item->name,
+            'slug'      => $item->slug,
+            'image'     => $item->image,
+            'link'      => $item->link,
+            'intro'     => $item->intro,
+            'desc'      => $item->desc
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -107,10 +116,8 @@ class BrandController extends Controller
             'name'      => $item->name,
             'slug'      => $item->slug,
             'image'     => $item->image,
-            'linkBrand' => $item->link,
-            'intro'     => $item->intro,
-            'desc'      => $item->desc,
-            'link'      => url('api/admin/brands/' . $item->slug)
+            'link'      => $item->link,
+            'url'       => url('api/admin/brands/' . $item->slug)
         ];
         return response()->json($response, 200);
     }

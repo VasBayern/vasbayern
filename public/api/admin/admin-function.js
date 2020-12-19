@@ -75,6 +75,22 @@ const rules = {
     'tag[]': {
         required: true,
     },
+    email: {
+        required: true,
+        email: true,
+    },
+    password: {
+        required: true,
+        minlength: 8
+    },
+    password_confirmation: {
+        required: true,
+        minlength: 8,
+        equalTo: '#password'
+    },
+    terms: {
+        required: true
+    },
 };
 const messages = {
     name: {
@@ -137,7 +153,32 @@ const messages = {
     location_id: {
         required: "Vui lòng chọn vị trí",
     },
+    email: {
+        required: "Vui lòng nhập địa chỉ email",
+        email: "Định dạng email không đúng"
+    },
+    password: {
+        required: "Vui lòng nhập mật khẩu",
+        minlength: "Mật khẩu chứa ít nhất 8 kí tự"
+    },
+    password_confirmation: {
+        required: "Vui lòng nhập mật khẩu",
+        minlength: "Mật khẩu chứa ít nhất 8 kí tự",
+        equalTo: "Mật khẩu xác thực không trùng khớp",
+    },
+    terms: "Vui lòng chấp nhận điều khoản"
 }
+
+/**
+ * show modal
+ */
+$(document).on('click', '.edit-modal', function (e) {
+    e.preventDefault();
+    let url = $(this).attr('href');
+    let data = {};
+    ajaxShowItem(url, data);
+})
+
 /**
  * delete item
  */
@@ -156,16 +197,21 @@ $(document).on('click', '.delete-item', function (e) {
         if (result.isConfirmed) {
             var url = $(this).attr('href');
             var data = {}
-            ajaxCallDeleteFunction(url, data)
+            ajaxDeleteItem(url, data)
         }
     })
 })
 
-function ajaxCallDeleteFunction(url, data) {
-    return shop.common.api.ajaxRequest(url, "DELETE", data, ajaxCallDeleteFunction_callback);
+/**
+ * delete
+ * @param {*} url 
+ * @param {*} data 
+ */
+function ajaxDeleteItem(url, data) {
+    return shop.common.api.ajaxRequest(url, "DELETE", data, ajaxDeleteItem_callback);
 }
 
-function ajaxCallDeleteFunction_callback(response) {
+function ajaxDeleteItem_callback(response) {
     $('.tr-' + response.id).remove();
 }
 /**
@@ -188,7 +234,7 @@ $('#quickForm').validate({
     submitHandler: function (form) {
         var url = $('.store-item').attr('href');
         var data = $('.store-item').closest('form').serializeArray();
-        ajaxCallAddFunction(url, data)
+        ajaxAddItem(url, data)
     }
 });
 
@@ -212,3 +258,89 @@ $('#quickFormEdit').validate({
         ajaxCallEditFunction(url, data);
     }
 });
+$('#quickFormAuth').validate({
+    rules: rules,
+    messages: messages,
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+        error.addClass('invalid-feedback');
+        element.closest('.form-group').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+        $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+        $(element).removeClass('is-invalid');
+    }
+});
+/**
+ * File manager
+ */
+$('.lfm-btn').filemanager('image', {
+    'prefix': '/laravel-filemanager'
+});
+
+$(document).on('click', '.plus-image', function (e) {
+    e.preventDefault();
+    var countLfm = parseInt($('.lfm-btn').length);
+    var nextLfm = countLfm + 1;
+    var html = '';
+    var i;
+    for (i = 0; i < 100; i++) {
+        if ($('#lfm'.nextLfm).length < 1) {
+            html += '<div class="form-group">' +
+                '<label for="image">Ảnh</label>' +
+                '<span class="input-group-btn">' +
+                '<a id="lfm' + nextLfm + '" data-input="thumbnail' + nextLfm + '" data-preview="holder' + nextLfm + '" class="lfm-btn btn">' +
+                '<button type="button" class="btn btn-primary"><i class="fas fa-image" style="margin-right:10px"></i>Chọn</button>' +
+                '</a>' +
+                '<a class="remove-image">' +
+                '<button type="button" class="btn btn-danger"><i class="fas fa-trash-alt" style="margin-right:10px"></i>Xóa</button>' +
+                '</a>' +
+                '</span>' +
+                '<input id="thumbnail' + nextLfm + '" type="text" name="images[]" value="" class="form-control" id="focusedinput">' +
+                '<img id="holder' + nextLfm + '" style="max-height:100px;">' +
+                '</div>';
+            break;
+        } else {
+            next++;
+        }
+    }
+    var box = $(this).closest('.form-group');
+    $(html).insertBefore(box);
+    $('.lfm-btn').filemanager('image', {
+        'prefix': '/laravel-filemanager'
+    });
+})
+$(document).on('click', '.remove-image', function (e) {
+    e.preventDefault();
+    $(this).closest('.form-group').remove();
+})
+/**
+ * Summernote, database table
+ */
+$(function () {
+    $('.textarea').summernote({
+        height: 150
+    });
+    $('.textareaDesc').summernote({
+        height: 250
+    });
+    $('.textarea1').summernote({
+        height: 100
+    });
+    $('.textareaDesc1').summernote({
+        height: 170
+    });
+    $('.textareaDescProduct').summernote({
+        height: 523
+    });
+    $('.textareaPost').summernote({
+        height: 615
+    });
+    $("#example1").DataTable({
+        "responsive": true,
+        "autoWidth": false,
+        "pageLength": 25
+    });
+})

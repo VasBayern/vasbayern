@@ -48,7 +48,7 @@ class ColorController extends Controller
             'id'        => $item->id,
             'name'      => $item->name,
             'color'     => $item->color,
-            'link'      => url('api/admin/colors/' . $item->id)
+            'url'       => url('api/admin/colors/' . $item->id)
         ];
         return response()->json($response, 200);
     }
@@ -61,7 +61,14 @@ class ColorController extends Controller
      */
     public function show($id)
     {
-        //
+        $item           = ShopColorModel::findOrFail($id);
+        $response = [
+            'success'   => true,
+            'id'        => $id,
+            'name'      => $item->name,
+            'color'     => $item->color,
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -92,7 +99,7 @@ class ColorController extends Controller
             'id'        => $id,
             'name'      => $item->name,
             'color'     => $item->color,
-            'link'      => url('api/admin/colors/' . $item->id)
+            'url'       => url('api/admin/colors/' . $item->id)
         ];
         return response()->json($response, 200);
     }

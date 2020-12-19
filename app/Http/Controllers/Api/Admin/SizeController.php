@@ -45,7 +45,7 @@ class SizeController extends Controller
             'success'   => true,
             'id'        => $item->id,
             'name'      => $item->name,
-            'link'      => url('api/admin/sizes/' . $item->id)
+            'url'       => url('api/admin/sizes/' . $item->id)
         ];
         return response()->json($response, 200);
     }
@@ -58,7 +58,13 @@ class SizeController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = ShopSizeModel::findOrFail($id);
+        $response = [
+            'success'   => true,
+            'id'        => $id,
+            'name'      => $item->name
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -86,7 +92,7 @@ class SizeController extends Controller
             'success'   => true,
             'id'        => $id,
             'name'      => $item->name,
-            'link'      => url('api/admin/sizes/' . $item->id)
+            'url'       => url('api/admin/sizes/' . $item->id)
         ];
         return response()->json($response, 200);
     }

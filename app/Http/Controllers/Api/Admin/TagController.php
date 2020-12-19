@@ -51,7 +51,7 @@ class TagController extends Controller
             'name'      => $item->name,
             'slug'      => $item->slug,
             'type'      => $item->tag_type,
-            'link'      => url('api/admin/tags/' . $item->id)
+            'url'       => url('api/admin/tags/' . $item->id)
         ];
         return response()->json($response, 200);
     }
@@ -64,7 +64,15 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = TagModel::findOrFail($id);
+        $response = [
+            'success'   => true,
+            'id'        => $item->id,
+            'name'      => $item->name,
+            'slug'      => $item->slug,
+            'type'      => $item->tag_type
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -97,7 +105,7 @@ class TagController extends Controller
             'name'      => $item->name,
             'slug'      => $item->slug,
             'type'      => $item->tag_type,
-            'link'      => url('api/admin/tags/' . $item->id)
+            'url'       => url('api/admin/tags/' . $item->id)
         ];
         return response()->json($response, 200);
     }

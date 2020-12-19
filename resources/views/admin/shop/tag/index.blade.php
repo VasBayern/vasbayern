@@ -4,7 +4,7 @@ Tag
 @endsection
 @section('content')
 <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
-<script defer src="{{asset('api/admin/common/api.js')}}"></script></script>
+<script defer src="{{asset('api/admin/common/api.js')}}"></script>
 <script defer src="{{asset('api/admin/tag.js')}}"></script>
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -165,7 +165,7 @@ Tag
 <!-- Jquery -->
 @section('footer-content')
 <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
-<script defer src="{{asset('api/admin/common/api.js')}}"></script></script>
+<script defer src="{{asset('api/admin/common/api.js')}}"></script>
 <script defer src="{{asset('api/admin/tag.js')}}"></script>
 @endsection
 @include('admin.partials.index-jquery');

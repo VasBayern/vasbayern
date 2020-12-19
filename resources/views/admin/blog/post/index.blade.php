@@ -56,7 +56,7 @@ Bài viết
                                     <td><?php echo $post->intro ?></td>
                                     <td>{{ $post->user->name }}</td>
                                     <td>
-                                        <a href="{{ url('api/admin/content/posts/'.$post->slug .'/edit') }}" class="btn btn-action btn-primary edit-modal" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="{{ url('api/admin/content/posts/'.$post->slug .'/edit') }}" class="btn btn-action btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="{{ url('api/admin/content/posts/'.$post->slug) }}" class="btn btn-action btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
@@ -80,7 +80,7 @@ Bài viết
 <!-- Jquery -->
 @section('footer-content')
 <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
-<script defer src="{{asset('api/admin/common/api.js')}}"></script></script>
+<script defer src="{{asset('api/admin/common/api.js')}}"></script>
 <script defer src="{{asset('api/admin/content-post.js')}}"></script>
 @endsection
 @include('admin.partials.index-jquery');

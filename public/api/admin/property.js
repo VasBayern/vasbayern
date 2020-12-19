@@ -1,18 +1,23 @@
-// show modal edit
-$(document).on('click', '.edit-modal', function (e) {
-    var quantity = $(this).attr('data-quantity');
-    var size = $(this).attr('data-size');
-    var color = $(this).attr('data-color');
-    var link = $(this).attr('href');
+/**
+ * show
+ * @param {*} url 
+ * @param {*} data 
+ */
+function ajaxShowItem(url, data) {
+    return shop.common.api.ajaxRequest(url, "GET", data, ajaxShowItem_callback);
+}
+
+function ajaxShowItem_callback(response) {
     $('#modal-default-edit').modal('show');
-    $('#modal-default-edit #size').val(size);
-    $('#modal-default-edit #color').val(color);
-    $('#modal-default-edit #quantity').val(quantity);
-    $('#modal-default-edit .update-item-property').attr('href', link);
-    $('input').removeClass('is-invalid');
-})
+    $('#modal-default-edit #size').val(response.size);
+    $('#modal-default-edit #color').val(response.color_name);
+    $('#modal-default-edit #quantity').val(response.quantity);
+    $('#modal-default-edit .update-item-property').attr('href', response.url);
+}
 /**
  * add
+ * @param {*} url 
+ * @param {*} data 
  */
 $('#quickFormAddProperty').validate({
     rules: {
@@ -71,8 +76,8 @@ $('#quickFormAddProperty').validate({
                 '<td>' + response.size + '</td>' +
                 '<td><p style="width: 30px; height: 30px; margin: 0 auto; border:1px solid #ebebeb; background-color:' + response.color + '"></p></td>' +
                 '<td>' + response.quantity + '</td>' +
-                '<td><a href="' + response.link + '"  class="btn btn-primary edit-modal" data-quantity="' + response.quantity + '" data-size="' + response.size + '" data-color="' + response.color_name + '" title="Sửa" data-toggle="modal"><i class="fas fa-pencil-alt"></i></a>' +
-                '<a href="' + response.link + '" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>' +
+                '<td><a href="' + response.url + '"  class="btn btn-primary edit-modal" title="Sửa" data-toggle="modal"><i class="fas fa-pencil-alt"></i></a>' +
+                '<a href="' + response.url + '" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>' +
                 '</td>' +
                 '</tr>';
             $('tbody').append(html);
@@ -91,6 +96,8 @@ $('#quickFormAddProperty').validate({
 
 /**
  * update
+ * @param {*} url 
+ * @param {*} data 
  */
 $('#quickFormEditProperty').validate({
     rules: {
@@ -132,8 +139,8 @@ $('#quickFormEditProperty').validate({
                 '<td>' + response.size + '</td>' +
                 '<td><p style="width: 30px; height: 30px; margin: 0 auto; border:1px solid #ebebeb; background-color:' + response.color + '"></p></td>' +
                 '<td>' + response.quantity + '</td>' +
-                '<td><a href="' + response.link + '"  class="btn btn-primary edit-modal" data-quantity="' + response.quantity + '" data-size="' + response.size + '" data-color="' + response.color_name + '" title="Sửa" data-toggle="modal"><i class="fas fa-pencil-alt"></i></a>' +
-                '<a href="' + response.link + '" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>' +
+                '<td><a href="' + response.url + '"  class="btn btn-primary edit-modal" title="Sửa" data-toggle="modal"><i class="fas fa-pencil-alt"></i></a>' +
+                '<a href="' + response.url + '" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>' +
                 '</td>' +
                 '</tr>';
             $('.tr-' + response.id).html(html);

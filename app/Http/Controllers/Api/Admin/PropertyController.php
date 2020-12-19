@@ -57,7 +57,7 @@ class PropertyController extends Controller
                 'color_name'=> $colors->name,
                 'color'     => $colors->color,
                 'quantity'  => $item->quantity,
-                'link'      => url('api/admin/properties/'. $item->id),
+                'url'       => url('api/admin/properties/'. $item->id),
             ];
             return response()->json($response, 200);
         }
@@ -71,7 +71,16 @@ class PropertyController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = ShopProductPropertiesModel::find($id);
+        $response = [
+            'success'   => true,
+            'id'        => $item->id,
+            'size'      => $item->size->name,
+            'color_name'=> $item->color->name,
+            'quantity'  => $item->quantity,
+            'url'       => url('api/admin/properties/'. $item->id),
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -96,7 +105,7 @@ class PropertyController extends Controller
             'color_name'=> $colors->name,
             'color'     => $colors->color,
             'quantity'  => $property->quantity,
-            'link'      => url('api/admin/properties/'. $property->id),
+            'url'       => url('api/admin/properties/'. $property->id),
         ];
         return response()->json($response, 200);
     }

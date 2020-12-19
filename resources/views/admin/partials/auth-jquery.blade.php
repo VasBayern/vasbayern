@@ -9,7 +9,7 @@
   <script src="{{asset('admin_assets/dist/js/demo.js')}}"></script>
   <!-- jquery-validation -->
   <script src="{{asset('admin_assets/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
     $(document).ready(function() {
       $('#quickForm').validate({
         rules: {
@@ -65,4 +65,4 @@
         }
       });
     });
-  </script>
+  </script> -->

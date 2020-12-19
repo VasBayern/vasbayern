@@ -1,16 +1,20 @@
 /**
  * add
+ * @param {*} url 
+ * @param {*} data 
  */
-function ajaxCallAddFunction(url, data) {
-    return shop.common.api.ajaxRequest(url, "POST", data, ajaxCallAddFunction_callback);
+function ajaxAddItem(url, data) {
+    return shop.common.api.ajaxRequest(url, "POST", data, ajaxAddItem_callback);
 }
 
-function ajaxCallAddFunction_callback(response) {
+function ajaxAddItem_callback(response) {
     window.location.replace(response.link);
 }
 
 /**
  * update
+ * @param {*} url 
+ * @param {*} data 
  */
 function ajaxCallEditFunction(url, data) {
     return shop.common.api.ajaxRequest(url, "PUT", data, ajaxCallEditFunction_callback);

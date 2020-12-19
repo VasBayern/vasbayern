@@ -82,7 +82,7 @@ Sản phẩm
                                     </td>
                                     <td>
                                         <a href="#myModal" class="btn btn-success btn-action view-properties" data-toggle="modal" data-target="#modal-default" data-view="{{$product->id}}" title="Xem chi tiết"> <i class="fas fa-eye"></i></a>
-                                        <a href="{{ url('api/admin/products/'.$product->slug .'/edit') }}" class="btn btn-action btn-primary edit-modal" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="{{ url('api/admin/products/'.$product->slug .'/edit') }}" class="btn btn-action btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="{{ url('api/admin/products/'.$product->slug) }}" class="btn btn-action btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
@@ -155,7 +155,7 @@ Sản phẩm
 <!-- Jquery -->
 @section('footer-content')
 <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
-<script defer src="{{asset('api/admin/common/api.js')}}"></script></script>
+<script defer src="{{asset('api/admin/common/api.js')}}"></script>
 <script defer src="{{asset('api/admin/product.js')}}"></script>
 @endsection
 @include('admin.partials.index-jquery');

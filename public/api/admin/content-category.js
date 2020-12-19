@@ -1,30 +1,35 @@
-// show modal edit
-$(document).on('click', '.edit-modal', function (e) {
-    var name = $(this).attr('data-name');
-    var slug = $(this).attr('data-slug');
-    var link = $(this).attr('href');
-    $('#modal-default-edit').modal('show');
-    $('#modal-default-edit .modal-title').html('Sửa danh mục : ' + name);
-    $('#modal-default-edit #name').val(name);
-    $('#modal-default-edit #slug').val(slug);
-    $('#modal-default-edit .update-item').attr('href', link);
-    $('input').removeClass('is-invalid');
-})
 /**
- * add
+ * show
+ * @param {*} url 
+ * @param {*} data 
  */
-function ajaxCallAddFunction(url, data) {
-    return shop.common.api.ajaxRequest(url, "POST", data, ajaxCallAddFunction_callback);
+function ajaxShowItem(url, data) {
+    return shop.common.api.ajaxRequest(url, "GET", data, ajaxShowItem_callback);
 }
 
-function ajaxCallAddFunction_callback(response) {
+function ajaxShowItem_callback(response) {
+    $('#modal-default-edit').modal('show');
+    $('#modal-default-edit .modal-title').html('Sửa danh mục : ' + response.name);
+    $('#modal-default-edit #name').val(response.name);
+    $('#modal-default-edit #slug').val(response.slug);
+}
+/**
+ * add
+ * @param {*} url 
+ * @param {*} data 
+ */
+function ajaxAddItem(url, data) {
+    return shop.common.api.ajaxRequest(url, "POST", data, ajaxAddItem_callback);
+}
+
+function ajaxAddItem_callback(response) {
     $('#modal-default-add #name').val('');
     html = '<tr class="tr-' + response.id + '">';
     html += '<th scope="row">' + response.id + '</th>' +
         '<td>' + response.name + '</td>' +
         '<td>' + response.slug + '</td>' +
-        '<td><a href="' + response.link + '"  class="btn btn-primary edit-modal" data-name="' + response.name + '" data-slug="' + response.slug + '" title="Sửa" data-toggle="modal"><i class="fas fa-pencil-alt"></i></a>' +
-        '<a href="' + response.link + '" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>' +
+        '<td><a href="' + response.url + '"  class="btn btn-primary edit-modal" title="Sửa" data-toggle="modal"><i class="fas fa-pencil-alt"></i></a>' +
+        '<a href="' + response.url + '" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>' +
         '</td>' +
         '</tr>';
     $('tbody').append(html);
@@ -32,6 +37,8 @@ function ajaxCallAddFunction_callback(response) {
 
 /**
  * update
+ * @param {*} url 
+ * @param {*} data 
  */
 function ajaxCallEditFunction(url, data) {
     return shop.common.api.ajaxRequest(url, "PUT", data, ajaxCallEditFunction_callback);
@@ -41,8 +48,8 @@ function ajaxCallEditFunction_callback(response) {
     html = '<th scope="row">' + response.id + '</th>' +
         '<td>' + response.name + '</td>' +
         '<td>' + response.slug + '</td>' +
-        '<td><a href="' + response.link + '"  class="btn btn-primary edit-modal" data-name="' + response.name + '" data-slug="' + response.slug + '" title="Sửa" data-toggle="modal"><i class="fas fa-pencil-alt"></i></a>' +
-        '<a href="' + response.link + '" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>' +
+        '<td><a href="' + response.url + '"  class="btn btn-primary edit-modal" title="Sửa" data-toggle="modal"><i class="fas fa-pencil-alt"></i></a>' +
+        '<a href="' + response.url + '" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>' +
         '</td>';
     $('.tr-' + response.id).html(html);
 }

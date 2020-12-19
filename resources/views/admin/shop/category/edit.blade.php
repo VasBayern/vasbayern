@@ -123,7 +123,7 @@ Sửa danh mục
 <!-- Jquery -->
 @section('footer-content')
 <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
-<script defer src="{{asset('api/admin/common/api.js')}}"></script></script>
+<script defer src="{{asset('api/admin/common/api.js')}}"></script>
 <script defer src="{{asset('api/admin/category.js')}}"></script>
 @endsection
 @include('admin.partials.admin-jquery');

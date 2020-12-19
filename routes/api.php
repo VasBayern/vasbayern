@@ -65,7 +65,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         /**
          * Product property
          */
-        Route::apiResource('properties', PropertyController::class)->except(['index', 'show']);
+        Route::apiResource('properties', PropertyController::class)->except(['index']);
         /**
          * Color
          */

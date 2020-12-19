@@ -26,13 +26,14 @@ shop.common.api.ajaxRequest = function (
             console.log("ajax callback " + url);
             if(successCallback){
                 if(type == "GET") {
-                    $('.modal').modal('show');
+                    $('input').removeClass('is-invalid');
+                    $('.update-item').attr('href', url);
                 } else if (type == "DELETE") {
                     Toast.fire({
                         icon: 'success',
                         title: success[2]
                     })
-                }else {
+                } else {
                     Toast.fire({
                         icon: 'success',
                         title: type == "POST" ? success[0] : success[1]

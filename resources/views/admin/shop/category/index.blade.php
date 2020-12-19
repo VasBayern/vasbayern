@@ -63,7 +63,7 @@ Danh mục sản phẩm
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ url('api/admin/categories/'.$category['slug'] .'/edit') }}" class="btn btn-primary edit-modal" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
+                                        <a href="{{ url('api/admin/categories/'.$category['slug'] .'/edit') }}" class="btn btn-primary" title="Sửa"><i class="fas fa-pencil-alt"></i></a>
                                         <a href="{{ url('api/admin/categories/'.$category['slug']) }}" class="btn btn-danger delete-item" title="Xóa"><i class="fas fa-trash-alt"></i></a>
                                     </td>
                                 </tr>
@@ -85,7 +85,7 @@ Danh mục sản phẩm
 <!-- Jquery -->
 @section('footer-content')
 <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
-<script defer src="{{asset('api/admin/common/api.js')}}"></script></script>
+<script defer src="{{asset('api/admin/common/api.js')}}"></script>
 <script defer src="{{asset('api/admin/category.js')}}"></script>
 @endsection
 @include('admin.partials.index-jquery');

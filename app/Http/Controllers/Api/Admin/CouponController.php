@@ -52,7 +52,7 @@ class CouponController extends Controller
             'type'          => $item->type,
             'value'         => $item->value,
             'percent_off'   => $item->percent_off,
-            'link'          => url('api/admin/coupons/'. $item->id)
+            'url'           => url('api/admin/coupons/'. $item->id)
         ];
         return response()->json($response, 200);
     }
@@ -65,7 +65,16 @@ class CouponController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = ShopCouponModel::find($id);
+        $response = [
+            'success'       => true,
+            'id'            => $item->id,
+            'name'          => $item->code,
+            'type'          => $item->type,
+            'value'         => $item->value,
+            'percent_off'   => $item->percent_off,
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -104,7 +113,7 @@ class CouponController extends Controller
             'type'          => $item->type,
             'value'         => $item->value,
             'percent_off'   => $item->percent_off,
-            'link'          => url('api/admin/coupons/'. $item->id)
+            'url'           => url('api/admin/coupons/'. $item->id)
         ];
         return response()->json($response, 200);
     }

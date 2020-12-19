@@ -74,10 +74,10 @@
           </div>
           <div class="row">
             <div class="col-8 form-group mb-0">
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
-                  <label class="custom-control-label" for="exampleCheck1">Tôi đồng ý với <a href="#">điều khoản dịch vụ</a>.</label>
-                </div>
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" name="terms" class="custom-control-input" id="exampleCheck1">
+                <label class="custom-control-label" for="exampleCheck1">Tôi đồng ý với <a href="#">điều khoản dịch vụ</a>.</label>
+              </div>
             </div>
             <!-- /.col -->
             <div class="col-4">
@@ -107,7 +107,9 @@
   <!-- /.register-box -->
 
   @include('admin.partials.auth-jquery');
-  
+  <script defer src="{{asset('api/admin/admin-function.js')}}"></script>
+  <script defer src="{{asset('api/admin/common/api.js')}}"></script>
+  <script defer src="{{asset('api/admin/banner.js')}}"></script>
 </body>
 
 </html>

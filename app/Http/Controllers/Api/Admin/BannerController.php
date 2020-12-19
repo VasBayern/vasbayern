@@ -57,11 +57,11 @@ class BannerController extends Controller
             'name'          => $item->name,
             'slug'          => $item->slug,
             'image'         => $item->image,
-            'linkBanner'    => $item->link,
+            'link'          => $item->link,
             'location_id'   => $item->location_id,
             'intro'         => $item->intro,
             'desc'          => $item->desc,
-            'link'          => url('api/admin/banners/' . $item->slug)
+            'url'           => url('api/admin/banners/' . $item->slug)
         ];
         return response()->json($response, 200);
     }
@@ -69,12 +69,24 @@ class BannerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $item = ShopBannerModel::where('slug', $slug)->first();
+        $response = [
+            'success'       => true,
+            'id'            => $item->id,
+            'name'          => $item->name,
+            'slug'          => $item->slug,
+            'image'         => $item->image,
+            'link'          => $item->link,
+            'location_id'   => $item->location_id,
+            'intro'         => $item->intro,
+            'desc'          => $item->desc
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -112,16 +124,16 @@ class BannerController extends Controller
             'name'          => $item->name,
             'slug'          => $item->slug,
             'image'         => $item->image,
-            'linkBanner'    => $item->link,
+            'link'          => $item->link,
             'location_id'   => $item->location_id,
             'intro'         => $item->intro,
             'desc'          => $item->desc,
-            'link'      => url('api/admin/banners/' . $item->slug)
+            'url'           => url('api/admin/banners/' . $item->slug)
         ];
         return response()->json($response, 200);
     }
 
-     /**
+    /**
      * Remove the specified resource from storage.
      *
      * @param  string  $slug

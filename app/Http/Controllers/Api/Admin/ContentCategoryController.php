@@ -50,7 +50,7 @@ class ContentCategoryController extends Controller
             'id'        => $item->id,
             'name'      => $item->name,
             'slug'      => $item->slug,
-            'link'      => url('api/admin/content/categories/' . $item->slug)
+            'url'       => url('api/admin/content/categories/' . $item->slug)
         ];
         return response()->json($response, 200);
     }
@@ -58,12 +58,19 @@ class ContentCategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $item = BlogCategoryModel::where('slug', $slug)->first();
+        $response = [
+            'success'   => true,
+            'id'        => $item->id,
+            'name'      => $item->name,
+            'slug'      => $item->slug,
+        ];
+        return response()->json($response, 200);
     }
 
     /**
@@ -94,7 +101,7 @@ class ContentCategoryController extends Controller
             'id'        => $item->id,
             'name'      => $item->name,
             'slug'      => $item->slug,
-            'link'      => url('api/admin/content/categories/' . $item->slug)
+            'url'       => url('api/admin/content/categories/' . $item->slug)
         ];
         return response()->json($response, 200);
     }
