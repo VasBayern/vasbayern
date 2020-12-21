@@ -24,7 +24,7 @@ class RegisterController extends Controller {
         $admin->name = $request->name;
         $admin->email = $request->email;
         $admin->password = bcrypt($request->password);
-        $admin->role = 0;
+        $admin->role = 2;
         $admin->save();
         return redirect()->route('admin.login');
     }

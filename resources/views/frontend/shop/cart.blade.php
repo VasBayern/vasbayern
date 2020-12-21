@@ -114,10 +114,10 @@ Giỏ hàng
                                 $subTotal = \Cart::getSubTotal();
                                 if (session()->has('coupon')) {
                                     $coupon = session()->get('coupon');
-                                    if ($coupon['type'] == 'percent') {
+                                    if ($coupon['type'] == 1) {
                                         $discount =  $coupon['discount_percent'];
                                         $total = $subTotal - ($subTotal * (float) $discount / 100);
-                                    } elseif ($coupon['type'] == 'price') {
+                                    } elseif ($coupon['type'] == 2) {
                                         $discount =   $coupon['discount_price'];
                                         $total = $subTotal - (float) $discount;
                                     }
@@ -136,9 +136,9 @@ Giỏ hàng
                                 </li>
                                 <li class="subtotal">Giảm
                                     @if(isset($coupon))
-                                    @if($coupon['type'] == 'percent')
+                                    @if($coupon['type'] == 1)
                                     <span id="couponValue">- {{ $discount }} % </span>
-                                    @elseif ($coupon['type'] == 'price')
+                                    @elseif ($coupon['type'] == 2)
                                     <span id="couponValue">- {{ number_format($discount) }} VNĐ</span>
                                     @endif
                                     @else

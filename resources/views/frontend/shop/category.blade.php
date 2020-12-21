@@ -95,7 +95,7 @@
                     </div>
                     <a href="#" class="filter-btn">Filter</a>
                 </div>
-                <div class="filter-widget">
+                <!-- <div class="filter-widget">
                     <h4 class="fw-title">Tags</h4>
                     <div class="fw-tags">
                         @foreach($tags as $tag)
@@ -105,7 +105,7 @@
                         </label>
                         @endforeach
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="col-lg-9 order-1 order-lg-2">
                 <div class="product-show-option">

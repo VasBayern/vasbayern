@@ -118,6 +118,7 @@ class OrderController extends Controller
                     'shipment'          => $row->shipment,
                     'payment_method'    => $row->payment_method,
                     'status'            => $row->status,
+                    'url'               => url('admin/orders/' . $row->order_id),
                     'orderDetails'      => [
                         [
                             'orderDetail_id'    => $row->orderDetail_id,

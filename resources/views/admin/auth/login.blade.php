@@ -30,6 +30,7 @@
       <div class="card-body login-card-body">
         <p class="login-box-msg">Đăng nhập để truy cập Admin</p>
         <form action="{{ route('admin.login') }}" method="post" id="quickFormAuth">
+        <!-- <form> -->
           @csrf
           @if(session('msg'))
           <div class="alert alert-danger">
@@ -64,7 +65,7 @@
             </div>
             <!-- /.col -->
             <div class="col-5">
-              <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+              <button type="submit" class="btn btn-primary btn-block authenticate">Đăng nhập</button>
             </div>
             <!-- /.col -->
           </div>
@@ -99,7 +100,7 @@
   @include('admin.partials.auth-jquery');
   <script defer src="{{asset('api/admin/common/admin-function.js')}}"></script>
   <script defer src="{{asset('api/admin/common/api.js')}}"></script>
-  <script defer src="{{asset('api/admin/banner.js')}}"></script>
+  <!-- <script defer src="{{asset('api/admin/auth.js')}}"></script> -->
 </body>
 
 </html>

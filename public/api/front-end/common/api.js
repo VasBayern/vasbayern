@@ -1,10 +1,10 @@
 'use strict';
 //namespace
-var admin = admin || {};
-admin.common = admin.common || {};
-admin.common.api = admin.common.api || {};
+var shop = shop || {};
+shop.common = shop.common || {};
+shop.common.api = shop.common.api || {};
 
-admin.common.api.ajaxRequest = function (
+shop.common.api.ajaxRequest = function (
     url, type, data, successCallback, errorCallback
 ) {
     console.log("ajax start " + url);
@@ -29,14 +29,14 @@ admin.common.api.ajaxRequest = function (
                     $('input').removeClass('is-invalid');
                     $('.update-item').attr('href', url);
                 } else if (type == "DELETE") {
-                    TOAST.fire({
+                    Toast.fire({
                         icon: 'success',
-                        title: SUCCESS[2]
+                        title: success[2]
                     })
                 } else {
-                    TOAST.fire({
+                    Toast.fire({
                         icon: 'success',
-                        title: type == "POST" ? SUCCESS[0] : SUCCESS[1]
+                        title: type == "POST" ? success[0] : success[1]
                     });
                     $('.modal').modal('hide');
                 }
@@ -52,9 +52,9 @@ admin.common.api.ajaxRequest = function (
         }
     })
     .fail(function(){
-        TOAST.fire({
+        Toast.fire({
             icon: 'error',
-            title: ERROR
+            title: error
         })
 	});
     return defer.promise();

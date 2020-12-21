@@ -78,8 +78,6 @@
             display: none;
         }
     }
-
-
 </style>
 <!-- Page Preloder -->
 <div id="preloder">
@@ -408,7 +406,13 @@
                     <span>Tất cả danh mục</span>
                     <!-- multi  level -->
                     <ul class="depart-hover">
-                        <li><a href="#">Polo</a></li>
+                        <?php
+                        $category = \App\Models\ShopCategoryModel::where('parent_id', '!=',  0)->get();
+                        ?>
+                        @foreach($category as $category)
+                        <li><a href="{{ url('/categories/').'/'.$category->slug }}">{{ $category->name }}</a></li>
+                        @endforeach
+                        <!-- <li><a href="#">Polo</a></li>
                         <li><a href="#">Sơ Mi</a></li>
                         <li class="parent"><a href="#">T-Shirt </a> <span class="expand">»</span>
                             <ul class="child">
@@ -429,7 +433,7 @@
                                 <li><a href="#">T-Shirt 2</a></li>
                                 <li><a href="#">T-Shirt 3</a></li>
                             </ul>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -439,7 +443,7 @@
                     <li><a href="" id="dLabel" data-toggle="dropdown">Danh mục</a>
                         <ul class="dropdown">
                             <?php
-                            $category = \App\Models\ShopCategoryModel::where('parent_id', 0)->get();
+                            $category = \App\Models\ShopCategoryModel::where('parent_id', '!=',  0)->get();
                             ?>
                             @foreach($category as $category)
                             <li><a href="{{ url('/categories/').'/'.$category->slug }}">{{ $category->name }}</a></li>

@@ -214,29 +214,14 @@
                         </div>
                         <div class="form-group col-lg-4">
                             <label for="">Đơn vị giao hàng</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-truck"></i></span>
-                                </div>
-                                <select class="form-control custom-select" id="shipment" name="shipment">
-                                    <option value="1" data-id="1" id="sm1">Grab</option>
-                                    <option value="2" data-id="2" id="sm2">GHTK</option>
-                                    <option value="3" data-id="3" id="sm3">VNPost</option>
-                                </select>
+                            <div class="input-group mb-3 shipmentHtml">
+                                
                             </div>
                         </div>
                         <div class="form-group col-lg-4">
                             <label for="">Trạng thái đơn hàng</label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-shopping-cart"></i></span>
-                                </div>
-                                <select class="form-control custom-select" id="status" name="status">
-                                    <option value="1" data-id="1" id="stt1">Chờ xác nhận</option>
-                                    <option value="2" data-id="2" id="stt2">Đã giao hàng</option>
-                                    <option value="3" data-id="3" id="stt3">Đã nhận hàng</option>
-                                    <option value="0" data-id="0" id="stt0">Hủy đơn hàng</option>
-                                </select>
+                            <div class="input-group mb-3 statusHtml">
+                                
                             </div>
                         </div>
                     </div>

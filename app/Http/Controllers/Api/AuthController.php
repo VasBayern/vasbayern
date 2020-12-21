@@ -155,9 +155,13 @@ class AuthController extends Controller
                 $token = $user->createToken('Token')->accessToken;
                 $response = [
                     'success' => true,
+                    'id'    => $user->id,
+                    'name'  => $user->name,
+                    'link'  => route('admin.dashboard'),
                     'token' => $token
                 ];
-                return response()->json($response, 201);
+                //return response()->json($response, 201);
+                return redirect()->route('admin.dashboard');
             } else {
                 $response = [
                     'success' => false,
@@ -172,6 +176,7 @@ class AuthController extends Controller
             ];
             return response()->json($response, 422);
         }
+        //return response()->json($user);
     }
 
     /**

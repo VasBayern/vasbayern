@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Api\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\BlogPostModel;
 use App\Models\ShopBannerModel;
 use App\Models\ShopCategoryModel;
-use App\Models\ShopProductModel;
 use App\Models\ShopSizeModel;
 use Illuminate\Http\Request;
 
@@ -14,7 +13,6 @@ class HomeController extends Controller
 {
     public function index() {
         $data = array();
-
         $parent_categories = ShopCategoryModel::where('parent_id', 1)->take(3)->get();
         $data['parent_categories'] = $parent_categories;
         $parent_1_categories = ShopCategoryModel::where('parent_id',1)->where('homepage',1)->limit(3)->get();

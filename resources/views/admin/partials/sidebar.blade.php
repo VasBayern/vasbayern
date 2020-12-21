@@ -144,7 +144,7 @@
         </li>
 
         <li class="nav-item has-treeview">
-          <a href="{{ url('api/admin/media') }}" class="nav-link">
+          <a href="{{ route('admin.medias') }}" class="nav-link">
             <i class="nav-icon far fa-image"></i>
             <p>
               Thư viện ảnh

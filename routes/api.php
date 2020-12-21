@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Admin\Auth\RegisterController;
 use App\Http\Controllers\Api\Admin\AdminController;
 use App\Http\Controllers\Api\Admin\BannerController;
 use App\Http\Controllers\Api\Admin\BrandController;
@@ -15,6 +17,7 @@ use App\Http\Controllers\Api\Admin\PropertyController;
 use App\Http\Controllers\Api\Admin\SizeController;
 use App\Http\Controllers\Api\Admin\TagController as AdminTagController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\Frontend\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,24 +35,18 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::group(['prefix' => 'auth'], function () {
-    Route::post('login', [AuthController::class, 'login']);
-
-    Route::group(['middleware' => 'auth:api'], function () {
-        Route::post('register', [AuthController::class, 'register']);
-        Route::get('getUser', [AuthController::class, 'getUser']);
-        Route::get('logout', [AuthController::class, 'logout']);
-    });
-});
+Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('login', [AuthController::class, 'showLoginForm']);
-    Route::post('login', [AuthController::class, 'login'])->name('login');
+    //Route::post('login', [AuthController::class, 'login'])->name('login');
+    Route::post('login', [LoginController::class, 'login'])->name('login');
     //Route::middleware(['auth:admin'])->group(function () {
         Route::get('register', [AuthController::class, 'showRegisterForm']);
-        Route::post('register', [AuthController::class, 'register'])->name('register');
-        Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+        //Route::post('register', [AuthController::class, 'register'])->name('register');
+        Route::post('register', [RegisterController::class, 'register'])->name('register');
+        //Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+        Route::post('logout', [LoginController::class, 'logout'])->name('logout');
         Route::get('/', [AdminController::class, 'index'])->name('dashboard');
         Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
         /**
@@ -117,6 +114,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
          */
         Route::get('media', function () {
             return view('admin.content.media.index');
-        });
+        })->name('medias');
     //});
 });

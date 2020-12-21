@@ -215,11 +215,11 @@ class ShopCartController extends Controller
             $sub_total = \Cart::getSubTotal();
             $total = 0;
             $coupon             = session()->get('coupon');
-            if ($coupon['type'] == 'percent') {
+            if ($coupon['type'] == 1) {
                 $discount       =  $coupon['discount_percent'];
                 $couponValue    =  '- ' . number_format($discount) . ' %';
                 $total          = $sub_total - ($sub_total * (float) $discount / 100);
-            } elseif ($coupon['type'] == 'price') {
+            } elseif ($coupon['type'] == 2) {
                 $discount       =   $coupon['discount_price'];
                 $couponValue    =  '- ' . number_format($discount) . ' VNĐ';
                 $total          = $sub_total - (float) $discount;
@@ -236,7 +236,7 @@ class ShopCartController extends Controller
                 'couponValue'   => $couponValue,
                 'totalPrice'    => $total
             ];
-            return response($response);
+            return response()->json($response);
         }
     }
 

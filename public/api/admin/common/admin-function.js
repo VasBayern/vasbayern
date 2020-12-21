@@ -1,5 +1,5 @@
 // toast sweetalert
-const Toast = Swal.mixin({
+const TOAST = Swal.mixin({
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
@@ -7,11 +7,11 @@ const Toast = Swal.mixin({
 });
 
 //toast messages
-const success = ["Thêm thành công", "Sửa thành công", "Xóa thành công"];
-const error = "Đã tồn tại";
+const SUCCESS = ["Thêm thành công", "Sửa thành công", "Xóa thành công"];
+const ERROR = "Đã tồn tại";
 
 // validate rules and messages
-const rules = {
+const RULES = {
     name: {
         required: true,
     },
@@ -92,7 +92,7 @@ const rules = {
         required: true
     },
 };
-const messages = {
+const MESSAGES = {
     name: {
         required: "Vui lòng nhập tên",
     },
@@ -208,7 +208,7 @@ $(document).on('click', '.delete-item', function (e) {
  * @param {*} data 
  */
 function ajaxDeleteItem(url, data) {
-    return shop.common.api.ajaxRequest(url, "DELETE", data, ajaxDeleteItem_callback);
+    return admin.common.api.ajaxRequest(url, "DELETE", data, ajaxDeleteItem_callback);
 }
 
 function ajaxDeleteItem_callback(response) {
@@ -218,8 +218,8 @@ function ajaxDeleteItem_callback(response) {
  * Validate
  */
 $('#quickForm').validate({
-    rules: rules,
-    messages: messages,
+    rules: RULES,
+    messages: MESSAGES,
     errorElement: 'span',
     errorPlacement: function (error, element) {
         error.addClass('invalid-feedback');
@@ -239,8 +239,8 @@ $('#quickForm').validate({
 });
 
 $('#quickFormEdit').validate({
-    rules: rules,
-    messages: messages,
+    rules: RULES,
+    messages: MESSAGES,
     errorElement: 'span',
     errorPlacement: function (error, element) {
         error.addClass('invalid-feedback');
@@ -259,8 +259,8 @@ $('#quickFormEdit').validate({
     }
 });
 $('#quickFormAuth').validate({
-    rules: rules,
-    messages: messages,
+    rules: RULES,
+    messages: MESSAGES,
     errorElement: 'span',
     errorPlacement: function (error, element) {
         error.addClass('invalid-feedback');
@@ -271,6 +271,9 @@ $('#quickFormAuth').validate({
     },
     unhighlight: function (element, errorClass, validClass) {
         $(element).removeClass('is-invalid');
+        var url = $('.authenticate').attr('href');
+        var data = $('.authenticate').closest('form').serializeArray();
+        //ajaxAuthenticate(url, data);
     }
 });
 /**

@@ -26,7 +26,7 @@ class ShopCategoryController extends Controller
         $products = ShopProductModel::where('cat_id', $category->id)->paginate(6);
         $data['products'] = $products;
 
-        $categories = ShopCategoryModel::all();
+        $categories = ShopCategoryModel::where('parent_id', '!=', '0')->get();
         $data['categories'] = $categories;
 
         $brands = ShopBrandModel::all();
@@ -54,8 +54,8 @@ class ShopCategoryController extends Controller
         MAX(B.id) AS cat_id, MAX(B.name) AS cat_name,
         MAX(C.id) AS brand_id,
         MAX(E.id) as size_id, MAX(E.name) AS size_name,
-        MAX(F.id) as color_id, MAX(F.name) AS color_name, MAX(F.color) AS color,
-        MAX(G.tag_id) AS tag_id
+        MAX(F.id) as color_id, MAX(F.name) AS color_name, MAX(F.color) AS color
+        -- MAX(G.tag_id) AS tag_id
         
         FROM shop_products AS A
         JOIN shop_categories AS B ON A.cat_id = B.id
@@ -63,8 +63,8 @@ class ShopCategoryController extends Controller
         JOIN product_properties AS D ON A.id = D.product_id
         JOIN sizes AS E ON D.size_id = E.id
         JOIN colors AS F ON D.color_id = F.id
-        JOIN taggables AS G ON A.id = G.product_id
-        JOIN tags AS H ON G.tag_id = H.id
+        -- JOIN taggables AS G ON A.id = G.product_id
+        -- JOIN tags AS H ON G.tag_id = H.id
         WHERE 1=1 ';
 
         if (isset($input)) {
