@@ -10,11 +10,9 @@
 
     <!-- Main Sidebar Container -->
     @include('admin.partials.sidebar')
-
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      @yield('content')
-    </div>
+    @yield('content')
+
     <!-- /.content-wrapper -->
 
     <!-- Control Sidebar -->

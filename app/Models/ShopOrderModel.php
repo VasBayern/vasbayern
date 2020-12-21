@@ -18,4 +18,19 @@ class ShopOrderModel extends Model
     public function order_detail() {
         return $this->hasMany('App\Models\ShopOrderDetailModel','order_id','id');
     }
+
+    public static function countOrderByTime($time, $now) {
+        $result = ShopOrderModel::whereBetween('created_at', [$time, $now])->count();
+        return $result;
+    } 
+
+    public static function getTotalRevenue($time, $now) {
+        $result = ShopOrderModel::where('status', 3)->whereBetween('created_at', [$time, $now])->sum('total');
+        return $result;
+    } 
+
+    public static function getRevenueByTime($time, $now) {
+        $result = ShopOrderModel::select('updated_at', 'total')->where('status', 3)->whereBetween('created_at', [$time, $now])->get();
+        return $result;
+    } 
 }

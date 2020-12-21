@@ -41,5 +41,11 @@
       display: table;
       margin-bottom: 10px;
     }
+
+    .small-box .increase-value {
+      font-size: 14px;
+      font-weight: 500;
+      margin-left: 10px;
+    }
   </style>
 </head>

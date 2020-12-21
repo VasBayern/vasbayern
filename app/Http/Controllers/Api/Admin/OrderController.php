@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Events\SuccessShipped;
 use App\Http\Controllers\Controller;
 use App\Mail\SuccessShippedMail;
+use App\Models\ShopOrderDetailModel;
 use App\Models\ShopOrderModel;
 use App\Models\ShopProductModel;
 use App\Models\ShopProductPropertiesModel;
@@ -22,7 +23,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = ShopOrderModel::all();
+        $orders = ShopOrderModel::orderBy('created_at', 'DESC')->get();
         $data = array();
         $data['orders'] = $orders;
         return view('admin.shop.order.index', $data);
@@ -183,10 +184,13 @@ class OrderController extends Controller
                         }
                     }
                 }
+                if ($status == 0) {
+                    ShopOrderDetailModel::where('order_id', $id)->update(['status', 0]);
+                }
             } elseif ($statusOrigin == 2) {
                 if ($status == 0) {
                     foreach ($products as $key => $product_id) {
-                        //delete then rollback
+                        //rollback quantity
                         $property = ShopProductPropertiesModel::where('product_id', $product_id)->where('size_id', $sizes[$key])->where('color_id', $colors[$key])->first();
                         if (isset($property)) {
                             ShopProductPropertiesModel::where('product_id', $product_id)->where('size_id', $sizes[$key])->where('color_id', $colors[$key])->increment('quantity', $quantities[$key]);
@@ -199,6 +203,7 @@ class OrderController extends Controller
                             $item->save();
                         }
                     }
+                    ShopOrderDetailModel::where('order_id', $id)->update(['status', 0]);
                 }
             }
             DB::commit();

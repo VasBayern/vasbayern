@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\Admin\ContentCategoryController;
 use App\Http\Controllers\Api\Admin\ContentCommentController;
 use App\Http\Controllers\Api\Admin\ContentController;
 use App\Http\Controllers\Api\Admin\CouponController;
+use App\Http\Controllers\Api\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Api\Admin\OrderController;
 use App\Http\Controllers\Api\Admin\ProductController;
 use App\Http\Controllers\Api\Admin\PropertyController;
@@ -47,8 +48,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('register', [RegisterController::class, 'register'])->name('register');
         //Route::post('logout', [AuthController::class, 'logout'])->name('logout');
         Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-        Route::get('/', [AdminController::class, 'index'])->name('dashboard');
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+        //Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+        //Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
         /**
          * Category
          */
@@ -101,6 +102,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
          * Order
          */
         Route::apiResource('orders', OrderController::class)->except('store')->names(['index' => 'orders']);
+        /**
+         * Home
+         */
+        Route::resource('/dashboard', AdminHomeController::class)->names(['index' => 'dashboard']);
         /**
          * Admin Feature
          */

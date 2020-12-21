@@ -206,9 +206,10 @@
                 <div class="center">
                     <div class="pagination">
                         <a href="{{$previousPageUrl}}" class="{{ $currentPage == 1 ? 'not-event' : '' }}">&laquo;</a>
-                        @for($i=1; $i<=$totalPaginate; $i++) <a href="?page={{$i}}" class="{{ $i == $currentPage ? 'active' : ''}}">{{$i}}</a>
-                            @endfor
-                            <a href="{{$nextPageUrl}}" class="{{ $totalPaginate == $currentPage ? 'not-event' : '' }}">&raquo;</a>
+                        @for($i=1; $i<=$totalPaginate; $i++) 
+                        <a href="?page={{$i}}" class="{{ $i == $currentPage ? 'active' : ''}}">{{$i}}</a>
+                        @endfor
+                        <a href="{{$nextPageUrl}}" class="{{ $totalPaginate == $currentPage ? 'not-event' : '' }}">&raquo;</a>
                     </div>
                 </div>
                 @endif
