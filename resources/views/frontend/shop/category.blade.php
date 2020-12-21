@@ -3,7 +3,40 @@
 {{ $category->name }}
 @endsection
 @section('content')
+<style>
+    .center {
+        text-align: center;
+    }
 
+    .pagination {
+        display: inline-block;
+    }
+
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+        border: 1px solid #ddd;
+        margin: 0 4px;
+    }
+
+    .pagination a.active {
+        background-color: #e7ab3c;
+        color: white;
+        border: 1px solid #e7ab3c;
+        pointer-events: none;
+    }
+
+    .pagination .not-event {
+        pointer-events: none;
+    }
+
+    .pagination a:hover:not(.active) {
+        background-color: #ddd;
+    }
+</style>
 <!-- Breadcrumb Section Begin -->
 <div class="breacrumb-section">
     <div class="container">
@@ -24,20 +57,23 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
+                <form action=""></form>
+                @if($parentCategory == 0)
                 <div class="filter-widget">
                     <h4 class="fw-title">Danh Mục</h4>
                     <ul class="fw-brand-check">
-                        @foreach($categories as $category)
+                        @foreach($categories as $cat)
                         <div class="bc-item">
                             <label>
-                                {{ $category->name }}
-                                <input type="checkbox" id="bc-polo" name="category_id" value="{{ $category->id }}">
+                                {{ $cat->name }}
+                                <input type="checkbox" id="bc-polo" name="category_id" value="{{ $cat->id }}">
                                 <span class="checkmark"></span>
                             </label>
                         </div>
                         @endforeach
                     </ul>
                 </div>
+                @endif
                 <div class="filter-widget">
                     <h4 class="fw-title">Brand</h4>
                     <div class="fw-brand-check">
@@ -108,7 +144,7 @@
                 </div> -->
             </div>
             <div class="col-lg-9 order-1 order-lg-2">
-                <div class="product-show-option">
+                <!-- <div class="product-show-option">
                     <div class="row">
                         <div class="col-lg-7 col-md-7">
                             <div class="select-option">
@@ -124,7 +160,7 @@
                             <p>Show 01- 09 Of 36 Product</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="product-list">
                     <div class="row rowCategory">
                         @foreach($products as $product)
@@ -150,7 +186,7 @@
                                     </ul>
                                 </li>
                                 <div class="pi-text">
-                                    <div class="catagory-name">{{ $product->category->name }}</div>
+                                    <div class="catagory-name">{{ $product->cat_name }}</div>
                                     <a href="{{ url('products/'.$product->slug) }}">
                                         <h5>{{ $product->name }}</h5>
                                     </a>
@@ -164,14 +200,19 @@
                         </div>
                         @endforeach
                     </div>
-                    {{ $products->links() }}
                 </div>
-                <!-- <div class="loading-more">
-                    <i class="icon_loading"></i>
-                    <a href="#">
-                        Loading More
-                    </a>
-                </div> -->
+
+                @if($hasPage == true)
+                <div class="center">
+                    <div class="pagination">
+                        <a href="{{$previousPageUrl}}" class="{{ $currentPage == 1 ? 'not-event' : '' }}">&laquo;</a>
+                        @for($i=1; $i<=$totalPaginate; $i++) <a href="?page={{$i}}" class="{{ $i == $currentPage ? 'active' : ''}}">{{$i}}</a>
+                            @endfor
+                            <a href="{{$nextPageUrl}}" class="{{ $totalPaginate == $currentPage ? 'not-event' : '' }}">&raquo;</a>
+                    </div>
+                </div>
+                @endif
+
             </div>
         </div>
     </div>
@@ -196,7 +237,9 @@
     // });
     $(document).ready(function() {
         $('input').on('click', function() {
-            dataPost = [];
+            let id = '<?php echo $category->id ?>';
+            let parent_id = '<?php echo $category->parent_id ?>';
+            let dataPost = [];
             let categoryID = $('input[name="category_id"]:checked').map(function() {
                 return this.value;
             }).toArray();
@@ -216,8 +259,8 @@
                 return this.value;
             }).toArray();
             dataPost.push(colorID);
-            
-            let tagID = $('input[name="tag_id"]:checked').map(function(){
+
+            let tagID = $('input[name="tag_id"]:checked').map(function() {
                 return this.value;
             }).toArray();
             dataPost.push(tagID);
@@ -226,13 +269,14 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 url: '<?php echo url('categories') ?>',
-                type: 'POST',
+                type: 'GET',
                 dataType: 'JSON',
                 data: {
-                    dataPost
+                    id: id,
+                    parent_id: parent_id,
+                    data: dataPost
                 }
             }).done(function(response) {
-                console.log(response);
                 let i;
                 let html = '';
                 for (i = 0; i < response.length; i++) {
@@ -267,6 +311,7 @@
                     html += '</div>';
                 }
                 $('.rowCategory').html(html);
+                $('.pagination').css('display', 'none');
             })
         })
     })

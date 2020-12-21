@@ -44,7 +44,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('frontend.dashboard');
 // });
-// Route::get('/', [FrontendHomeController::class, 'index'])->name('dashboard');
+Route::get('/', [FrontendHomeController::class, 'index'])->name('dashboard');
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('frontend.dashboard');
@@ -70,7 +70,7 @@ use Illuminate\Support\Facades\Route;
  */
 Route::get('categories/{slug}', [FrontendShopCategoryController::class, 'index']);
 Route::get('categories?tag={slug}', [FrontendShopCategoryController::class, 'index']);
-Route::post('categories', [FrontendShopCategoryController::class, 'filter']);
+Route::get('categories', [FrontendShopCategoryController::class, 'filter']);
 
 /**
  *  Product
@@ -144,147 +144,3 @@ Route::post('addToCart', [PageController::class, 'addToCart']);
 Route::get('/redirect', [LoginAssociationController::class, 'redirectToProvider']);
 Route::get('/callback', [LoginAssociationController::class, 'handleProviderCallback']);
 
-/**
- * -----------------------------------ADMIN-----------------------------------
- */
-// Route::prefix('admin')->name('admin.')->group(function () {
-//     Route::get('login', [AuthLoginController::class, 'showLoginForm']);
-//     Route::post('login', [AuthLoginController::class, 'login'])->name('login');
-
-//     Route::middleware(['auth:admin',])->group(function () {
-//         Route::get('register', [AuthRegisterController::class, 'showRegisterForm']);
-//         Route::post('register', [AuthRegisterController::class, 'register'])->name('register');
-//         Route::get('/', [HomeController::class, 'index'])->name('dashboard');
-//         Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
-//         Route::post('logout', [AuthLoginController::class, 'logout'])->name('logout');
-
-//         /**
-//          * Shop category
-//          */
-//         Route::get('category/list', [ShopCategoryController::class, 'index'])->name('categories');
-//         Route::get('category', [ShopCategoryController::class, 'create']);
-//         Route::get('category/{slug}', [ShopCategoryController::class, 'edit']);
-//         Route::post('category', [ShopCategoryController::class, 'store']);
-//         Route::put('category/{slug}', [ShopCategoryController::class, 'update']);
-//         Route::delete('category/{slug}', [ShopCategoryController::class, 'destroy']);
-
-//         /**
-//          * Shop Brand
-//          */
-//         Route::get('brand/list', [ShopBrandController::class, 'index'])->name('brands');
-//         Route::get('brand', [ShopBrandController::class, 'create']);
-//         Route::get('brand/{slug}', [ShopBrandController::class, 'edit']);
-//         Route::post('brand', [ShopBrandController::class, 'store']);
-//         Route::put('brand/{slug}', [ShopBrandController::class, 'update']);
-//         Route::delete('brand/{slug}', [ShopBrandController::class, 'destroy']);
-
-//         /**
-//          * Size
-//          */
-//         Route::get('size', [ShopSizeController::class, 'index'])->name('sizes');
-//         Route::post('size', [ShopSizeController::class, 'store']);
-//         Route::put('size/{id}', [ShopSizeController::class, 'update']);
-//         Route::delete('size/{id}', [ShopSizeController::class, 'destroy']);
-
-//         /**
-//          * Color
-//          */
-//         Route::get('colors', [ShopColorController::class, 'index'])->name('colors');
-//         Route::post('colors', [ShopColorController::class, 'store']);
-//         Route::put('colors/{id}', [ShopColorController::class, 'update']);
-//         Route::delete('colors/{id}', [ShopColorController::class, 'destroy']);
-
-//         /**
-//          * Shop Product
-//          */
-//         Route::get('products/list', [ShopProductController::class, 'index'])->name('products');
-//         Route::get('products', [ShopProductController::class, 'create']);
-//         Route::get('products/{slug}', [ShopProductController::class, 'edit']);
-//         Route::post('products', [ShopProductController::class, 'store']);
-//         Route::put('products/{slug}', [ShopProductController::class, 'update']);
-//         Route::delete('products/{slug}', [ShopProductController::class, 'destroy']);
-
-//         Route::post('products/{slug}/properties',  [ShopProductController::class, 'storeProperties']);
-//         Route::put('products/{slug}/properties/{id}', [ShopProductController::class, 'updateProperties']);
-//         Route::delete('products/{slug}/properties/{id}',  [ShopProductController::class, 'destroyProperties']);
-
-//         //Route::view('/product/{id}/properties', 'admin.content.shop.product.edit');
-//         /**
-//          * Shop Coupon
-//          */
-//         Route::get('coupon',  [ShopCouponController::class, 'index'])->name('coupons');
-//         Route::post('coupon',  [ShopCouponController::class, 'store']);
-//         Route::put('coupon/{id}',  [ShopCouponController::class, 'update']);
-//         Route::delete('coupon/{id}',  [ShopCouponController::class, 'destroy']);
-
-//         /**
-//          * Shop Order
-//          */
-//         Route::get('orders',  [ShopOrderController::class, 'index'])->name('orders');
-//         Route::post('orders/view',  [ShopOrderController::class, 'viewDetail']);
-//         Route::put('orders/{id}',  [ShopOrderController::class, 'update']);
-//         Route::delete('orders/{id}',  [ShopOrderController::class, 'destroy']);
-
-//         /**
-//          * Tags
-//          */
-//         Route::get('tags', [TagController::class, 'index'])->name('tags');
-//         Route::post('tags', [TagController::class, 'store']);
-//         Route::put('tags/{id}', [TagController::class, 'update']);
-//         Route::delete('tags/{id}', [TagController::class, 'destroy']);
-
-//         Route::prefix('blog')->name('content.')->group(function () {
-//             /**
-//              * Blog Category
-//              */
-//             Route::get('categories', [BlogCategoryController::class, 'index'])->name('categories');
-//             Route::post('categories', [BlogCategoryController::class, 'store']);
-//             Route::put('categories/{slug}', [BlogCategoryController::class, 'update']);
-//             Route::delete('categories/{slug}', [BlogCategoryController::class, 'destroy']);
-
-//             /**
-//              * Blog Post
-//              */
-//             Route::get('posts/list', [BlogPostController::class, 'index'])->name('posts');
-//             Route::get('posts', [BlogPostController::class, 'create']);
-//             Route::get('posts/{slug}', [BlogPostController::class, 'edit']);
-//             Route::post('posts', [BlogPostController::class, 'store']);
-//             Route::put('posts/{slug}', [BlogPostController::class, 'update']);
-//             Route::delete('posts/{slug}', [BlogPostController::class, 'destroy']);
-
-//             /**
-//              * Blog Comment
-//              */
-//             Route::get('comments', [BlogCategoryController::class, 'index'])->name('comments');
-//         });
-
-//         /**
-//          *  Media
-//          */
-//         Route::get('media', function () {
-//             return view('admin.content.media.index');
-//         })->name('medias');
-
-//         /**
-//          *  Banner
-//          */
-//         Route::get('banners/list', [ShopBannerController::class, 'index'])->name('banners');
-//         Route::get('banners', [ShopBannerController::class, 'create']);
-//         Route::get('banners/{slug}', [ShopBannerController::class, 'edit']);
-//         Route::post('banners', [ShopBannerController::class, 'store']);
-//         Route::put('banners/{slug}', [ShopBannerController::class, 'update']);
-//         Route::delete('banners/{slug}', [ShopBannerController::class, 'destroy']);
-
-//         /**
-//          * Admin Other Function
-//          */
-//         Route::get('getSlugs', [AdminController::class, 'getSlug'])->name('getSlugs');
-//         Route::get('newsletters', [AdminController::class, 'getNewsletter'])->name('newsletters');
-//         Route::delete('newsletters', [AdminController::class, 'deleteNewsletter']);
-//         Route::get('contacts', [AdminController::class, 'getContact'])->name('contacts');
-//         Route::get('feedbacks', [AdminController::class, 'getFeedback'])->name('feedbacks');
-//     });
-// });
-// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
-//     \UniSharp\LaravelFilemanager\Lfm::routes();
-// });

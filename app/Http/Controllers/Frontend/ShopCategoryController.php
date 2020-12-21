@@ -22,11 +22,25 @@ class ShopCategoryController extends Controller
 
         $category = ShopCategoryModel::where('slug', $slug)->first();
         $data['category'] = $category;
-
-        $products = ShopProductModel::where('cat_id', $category->id)->paginate(6);
+        
+        $data['parentCategory'] = $category->parent_id;
+        if( $category->parent_id == 0) {
+            $products = DB::table('shop_products AS A')->join('shop_categories AS B', 'A.cat_id', '=', 'B.id')
+            ->select('A.id','A.name', 'A.slug', 'A.images', 'A.priceCore', 'A.priceSale', 'A.new', 'B.name AS cat_name')
+            ->where('B.parent_id', $category->id)->paginate(6);
+        } else {
+            $products = DB::table('shop_products AS A')->join('shop_categories AS B', 'A.cat_id', '=', 'B.id')
+            ->select('A.id', 'A.name', 'A.slug', 'A.images', 'A.priceCore', 'A.priceSale', 'A.new', 'B.name AS cat_name')
+            ->where('cat_id', $category->id)->paginate(6);
+        }
         $data['products'] = $products;
-
-        $categories = ShopCategoryModel::where('parent_id', '!=', '0')->get();
+        $data['totalPaginate'] = $products->lastPage();
+        $data['currentPage'] = $products->currentPage();
+        $data['hasPage'] = $products->hasPages();
+        $data['nextPageUrl'] = $products->nextPageUrl();
+        $data['previousPageUrl'] = $products->previousPageUrl();
+        
+        $categories = ShopCategoryModel::where('parent_id', '!=', '0')->where('parent_id', $category->id)->get();
         $data['categories'] = $categories;
 
         $brands = ShopBrandModel::all();
@@ -46,7 +60,9 @@ class ShopCategoryController extends Controller
 
     public function filter(Request $request)
     {
-        $input = $request->dataPost;
+        $id = $request->id;
+        $parent_id = $request->parent_id;
+        $data = $request->data;
 
         $sql = 'SELECT
         MAX(A.id) AS id, MAX(A.name) AS name, MAX(A.slug) AS slug, MAX(A.images) AS images, MAX(A.priceCore) AS priceCore,
@@ -54,8 +70,8 @@ class ShopCategoryController extends Controller
         MAX(B.id) AS cat_id, MAX(B.name) AS cat_name,
         MAX(C.id) AS brand_id,
         MAX(E.id) as size_id, MAX(E.name) AS size_name,
-        MAX(F.id) as color_id, MAX(F.name) AS color_name, MAX(F.color) AS color
-        -- MAX(G.tag_id) AS tag_id
+        MAX(F.id) as color_id, MAX(F.name) AS color_name, MAX(F.color) AS color,
+        MAX(G.tag_id) AS tag_id
         
         FROM shop_products AS A
         JOIN shop_categories AS B ON A.cat_id = B.id
@@ -63,12 +79,17 @@ class ShopCategoryController extends Controller
         JOIN product_properties AS D ON A.id = D.product_id
         JOIN sizes AS E ON D.size_id = E.id
         JOIN colors AS F ON D.color_id = F.id
-        -- JOIN taggables AS G ON A.id = G.product_id
-        -- JOIN tags AS H ON G.tag_id = H.id
-        WHERE 1=1 ';
+        JOIN taggables AS G ON A.id = G.product_id
+        JOIN tags AS H ON G.tag_id = H.id';
+        if($parent_id == 0) {
+            $sql .= ' WHERE B.parent_id = '.$id;
+        } else {
+            $sql .= ' WHERE B.id = '.$id;
+        }
+        
 
-        if (isset($input)) {
-            foreach ($input as $key => $value) {
+        if (isset($data)) {
+            foreach ($data as $key => $value) {
                 switch ($key) {
                     case 0:
                         $sql .= ' AND ';

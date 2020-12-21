@@ -288,7 +288,14 @@
                 </div>
                 <div class="col-lg-3 text-right col-md-3">
                     <ul class="nav-right">
+
                         <li class="heart-icon">
+                            @if(!Auth::check() && empty(Auth::user()->email_verified_at))
+                            <a href="#myModal" class="proceed-btn" data-toggle="modal" data-target=".bd-example-modal-lg">
+                            <i class="icon_heart_alt"></i>
+                            <span class="countWhislist">0</span>
+                            </a>
+                            @else
                             <?php $wishlists = \App\Models\WishListModel::where('user_id', \Auth::id())->get() ?>
                             <a href="{{ route('wishlist') }}">
                                 <i class="icon_heart_alt"></i>
@@ -334,6 +341,7 @@
                                     </table>
                                 </div>
                             </div>
+                            @endif
                         </li>
                         <li class="cart-icon">
                             <a href="{{ url('cart') }}">
@@ -439,11 +447,11 @@
             </div>
             <nav class="nav-menu mobile-menu">
                 <ul>
-                    <li class="active"><a href="{{ url('/') }}">Home</a></li>
+                    <li class="active"><a href="{{ url('/') }}">Trang chủ</a></li>
                     <li><a href="" id="dLabel" data-toggle="dropdown">Danh mục</a>
                         <ul class="dropdown">
                             <?php
-                            $category = \App\Models\ShopCategoryModel::where('parent_id', '!=',  0)->get();
+                            $category = \App\Models\ShopCategoryModel::where('parent_id', '=',  0)->get();
                             ?>
                             @foreach($category as $category)
                             <li><a href="{{ url('/categories/').'/'.$category->slug }}">{{ $category->name }}</a></li>
@@ -455,7 +463,11 @@
                     <li><a href="#">Shop</a>
                         <ul class="dropdown">
                             <li><a href="{{ route('cart') }}">Giỏ hàng</a></li>
-                            <li><a href="#1">SP Yêu Thích</a></li>
+                            @if(Auth::check() && !empty(Auth::user()->email_verified_at))
+                            <li><a href="{{ route('wishlist') }}">SP Yêu Thích</a></li>
+                            @else
+                            <li><a href="#myModal" data-toggle="modal" data-target=".bd-example-modal-lg">SP Yêu Thích</a></li>
+                            @endif
                             <li><a href="{{ route('faq') }}">Câu hỏi thường gặp</a></li>
                             @if(!Auth::check() || empty(Auth::user()->email_verified_at))
                             <li><a href="{{ route('register') }}">Đăng kí</a></li>

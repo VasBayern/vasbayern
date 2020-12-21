@@ -81,12 +81,12 @@ $('#quickFormAddProperty').validate({
                 '</td>' +
                 '</tr>';
             $('tbody').append(html);
-            Toast.fire({
+            TOAST.fire({
                 icon: 'success',
                 title: SUCCESS[0]
             })
         }).fail(function (response) {
-            Toast.fire({
+            TOAST.fire({
                 icon: 'error',
                 title: ERROR
             })
@@ -144,13 +144,13 @@ $('#quickFormEditProperty').validate({
                 '</td>' +
                 '</tr>';
             $('.tr-' + response.id).html(html);
-            Toast.fire({
+            TOAST.fire({
                 icon: 'success',
                 title: SUCCESS[1]
             })
             $('.modal').modal('hide');
         }).fail(function (response) {
-            Toast.fire({
+            TOAST.fire({
                 icon: 'error',
                 title: ERROR
             })

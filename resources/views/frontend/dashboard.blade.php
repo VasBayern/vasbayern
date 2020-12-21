@@ -97,7 +97,7 @@ Trang chủ
                                 @endif
                                 <ul>
                                     <li class="w-icon"><a href="#1"><i class="fa fa-random"></i></a></li>
-                                    <li class="quick-view"><a href="#" data-toggle="modal" data-target="#modalQuickView{{$product->id}}">+ Xem nhanh</a></li>
+                                    <li class="quick-view"><a href="#" id="quick-view" data-toggle="modal" data-target="#modalQuickView{{$product->id}}" data-id="{{ $product->id }}">+ Xem nhanh</a></li>
                                     <li class="w-icon active"><a href="#{{ url('wishlists') }}" title="Thêm sản phẩm yêu thích" id="add-wish-list"> <i class="icon_heart_alt"></i></a></li>
                                 </ul>
                             </div>
@@ -119,6 +119,21 @@ Trang chủ
                 </div>
             </div>
         </div>
+        <?php
+        $products = \App\Models\ShopProductModel::where('homepage', 1)->orderBy('updated_at', 'DESC')->get();
+        ?>
+        @foreach($products as $product)
+        <!-- Modal: modalQuickView -->
+        <div class="modal fade" id="modalQuickView{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
     </section>
     <!-- Women Banner Section End -->
 
@@ -369,6 +384,25 @@ Trang chủ
                 $(this).addClass('active');
                 $('.product-slider-2').hide();
                 $('.product_2_Slider' + parentId).show();
+            });
+        })
+        $(document).on('click', '#quick-view', function(e) {
+            e.preventDefault();
+            var id = $(this).attr('data-id');
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: '<?php echo url('addToCart') ?>',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    id: id
+                }
+            }).done(function(response) {
+                console.log(response);
+                $('.modal-body').html(response);
+                //$('.modalQuickView').modal('show');
             });
         })
     </script>
