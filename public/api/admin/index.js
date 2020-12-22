@@ -1,47 +1,37 @@
 $(document).ready(function () {
-    admin.common.api.get('dashboard/1', { kindSort: 4, startDate: 'abc' }).then(loadHomePageAdminCallback);
+    $('[data-mask]').inputmask()
+    $('#startDate').datetimepicker({
+        format: 'L',
+        language: "vi",
+        autoclose: true,
+    });
+    $('#endDate').datetimepicker({
+        format: 'L',
+        language: "vi",
+        autoclose: true,
+    });
+    admin.common.api.get('dashboard/2').then(loadHomePageAdminCallback);
 })
+
+
 function loadHomePageAdminCallback(response) {
     console.log(response);
+    let type = response.sort == 1 ? '1 tuần' : (response.sort == 2 ? '1 tháng' : '1 năm');
+    $(".total-revenue").html(float2Vnd(response.revenue));
+    $(".total-user").html(response.countUser);
+    $(".total-product").html(response.countProductSold);
+    $(".total-order").html(response.countOrder);
+    $(".progress-revenue").html('Tăng ' + calculateGrowthRate(response.revenue, response.revenueAgo) + ' % trong ' + type);
+    $(".progress-user").html('Tăng ' + calculateGrowthRate(response.countUser, response.countUserAgo) + ' % trong ' + type);
+    $(".progress-product").html('Tăng ' + calculateGrowthRate(response.countProductSold, response.countProductSoldAgo) + ' % trong ' + type);
+    $(".progress-order").html('Tăng ' + calculateGrowthRate(response.countOrder, response.countOrderAgo) + ' % trong ' + type);
+
+}
+function float2Vnd(value) {
+    return value.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
 }
 
-$(document).ready(function () {
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'bar',
-        data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    })
-})
+function calculateGrowthRate(value, valueAgo) {
+    valueAgo = valueAgo > 0 ? valueAgo : 1;
+    return Math.round(100 * value / valueAgo);
+}

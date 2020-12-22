@@ -51,56 +51,47 @@ class HomeController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $sort = $request->startDate;
-        //$id  1: week, 2: month, 3: year
-        $now = date('Y-m-d H:m:s');
-        $time = ($id == 1) ? date('Y-m-1 00:00:00') : date('Y-1-1 00:00:00');
-        $lastDayAgo = ($id == 1) ? date('Y-m-d 00:00:00', strtotime('last day of last month')) : date('Y-m-d 00:00:00', strtotime('last day of last year'));
-        $firstDayAgo = ($id == 1) ? date('Y-m-d 00:00:00', strtotime('first day of last month')) : date('Y-1-1 00:00:00', strtotime('last year'));
-
-        $countUser = User::countUserByTime($time, $now);
-        $countUserAgo = User::countUserByTime($firstDayAgo, $lastDayAgo);
-        $countOrder = ShopOrderModel::countOrderByTime($time, $now);
-        $countOrderAgo = ShopOrderModel::countOrderByTime($firstDayAgo, $lastDayAgo);
-        $countProductSold = (int) ShopOrderDetailModel::countProductSoldByTime($time, $now);
-        $countProductSoldAgo = (int) ShopOrderDetailModel::countProductSoldByTime($firstDayAgo, $lastDayAgo);
-        $revenue = (int) ShopOrderModel::getTotalRevenue($time, $now);
-        $revenueAgo = (int) ShopOrderModel::getTotalRevenue($firstDayAgo, $lastDayAgo);
-
-        $revenueByTime = ShopOrderModel::getRevenueByTime($time, $now);
-        $revenueByTimeAgo = ShopOrderModel::getRevenueByTime($firstDayAgo, $lastDayAgo);
+        // $revenueByTime = ShopOrderModel::getRevenueByTime($time, $now);
+        // $revenueByTimeAgo = ShopOrderModel::getRevenueByTime($firstDayAgo, $lastDayAgo);
 
         $endTime = date('Y-m-d H:m:s');
         switch ($id) {
             case 1:
-                $startTime = date('Y-m-d 00:00:00');
-                $startTimeAgo = date('Y-m-d 00:00:00', strtotime('first day of last month'));
-                $endTimeAgo = date('Y-m-d 23:59:59', strtotime('last day of last month'));
+                $startTime = date("Y-m-d 00:00:00", strtotime('monday this week'));
+                $startTimeAgo = date('Y-m-d 00:00:00', strtotime('monday last week'));
+                $endTimeAgo = date('Y-m-d 23:59:59', strtotime('sunday last week'));
                 break;
             case 2:
-                $startTime = date("Y-m-d 00:00:00", strtotime('monday this week'));
+                $startTime = date("Y-m-01 00:00:00");
                 $startTimeAgo = date('Y-m-d 00:00:00', strtotime('first day of last month'));
                 $endTimeAgo = date('Y-m-d 23:59:59', strtotime('last day of last month'));
                 break;
             case 3:
-                $startTime = date("Y-m-01 00:00:00");
-                break;
-            case 4:
                 $startTime = date("Y-01-01 00:00:00");
+                $startTimeAgo = date('Y-m-d 00:00:00', strtotime('first day of last year'));
+                $endTimeAgo = date('Y-m-d 23:59:59', strtotime('last day of last year'));
                 break;
             default:
                 break;
         }
-
+        $countUser = User::countUserByTime($startTime, $endTime);
+        $countUserAgo = User::countUserByTime($startTimeAgo, $endTimeAgo);
+        $countOrder = ShopOrderModel::countOrderByTime($startTime, $endTime);
+        $countOrderAgo = ShopOrderModel::countOrderByTime($startTimeAgo, $endTimeAgo);
+        $countProductSold = (int) ShopOrderDetailModel::countProductSoldByTime($startTime, $endTime);
+        $countProductSoldAgo = (int) ShopOrderDetailModel::countProductSoldByTime($startTimeAgo, $endTimeAgo);
+        $revenue = (int) ShopOrderModel::getTotalRevenue($startTime, $endTime);
+        $revenueAgo = (int) ShopOrderModel::getTotalRevenue($startTimeAgo, $endTimeAgo);
         $response = [
-            // 'countUser'         => $countUser,
-            // 'countUserAgo'      => $countUserAgo,
-            // 'countOrder'        => $countOrder,
-            // 'countOrderAgo'     => $countOrderAgo,
-            // 'countProductSold'  => $countProductSold,
-            // 'countProductSoldAgo' => $countProductSoldAgo,
-            // 'revenue'           => $revenue,
-            // 'revenueAgo'        => $revenueAgo,
+            'sort'              => $id,
+            'countUser'         => $countUser,
+            'countUserAgo'      => $countUserAgo,
+            'countOrder'        => $countOrder,
+            'countOrderAgo'     => $countOrderAgo,
+            'countProductSold'  => $countProductSold,
+            'countProductSoldAgo' => $countProductSoldAgo,
+            'revenue'           => $revenue,
+            'revenueAgo'        => $revenueAgo,
             // 'revenueByTime'     => $revenueByTime,
             // 'revenueByTimeAgo'  => $revenueByTimeAgo,
         ];

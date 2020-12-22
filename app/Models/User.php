@@ -90,8 +90,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany('App\Models\BlogPostModel', 'author_id', 'id');
     }
 
-    public static function countUserByTime($time, $now) {
-        $result = User::where('role', 2)->whereBetween('created_at', [$time, $now])->count();
+    public static function countUserByTime($startTime, $endTime) {
+        $result = User::where('role', 2)->whereBetween('created_at', [$startTime, $endTime])->count();
         return $result;
     }
 }

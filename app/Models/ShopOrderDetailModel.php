@@ -20,8 +20,8 @@ class ShopOrderDetailModel extends Model
         return $this->belongsTo('App\Models\ShopProductModel','product_id','id');
     }
     
-    public static function countProductSoldByTime($time, $now) {
-        $result = ShopOrderDetailModel::whereBetween('created_at', [$time, $now])->where('status', 1)->sum('quantity');
+    public static function countProductSoldByTime($startTime, $endTime) {
+        $result = ShopOrderDetailModel::whereBetween('created_at', [$startTime, $endTime])->where('status', 1)->sum('quantity');
         return $result;
     }
 }

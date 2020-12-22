@@ -21,12 +21,15 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('admin_assets/plugins/summernote/summernote-bs4.css')}}">
   <link rel="stylesheet" href="{{asset('css/modalDelete.css')}}">
+  <!-- Date-picker -->
+  <link rel="stylesheet" href="{{asset('admin_assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
   <!-- Toastr-->
-  <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+  <!-- <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
   <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-  {!! Toastr::message() !!}
+  {!! Toastr::message() !!} -->
   <!-- Sweetalert -->
   <script src="{{asset('js/sweetalert2.all.min.js')}}"></script>
+  <!-- ChartJs -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
   <script type="text/javascript">
     var BASE_URL = '{{ URL::to('/') }}';
