@@ -3,6 +3,9 @@
  * @param {*} url 
  * @param {*} data 
  */
+$(document).ready(function(){
+    console.log(BASE_URL);
+})
 function ajaxShowItem(url, data) {
     return admin.common.api.ajaxRequest(url, "GET", data, ajaxShowItem_callback);
 }

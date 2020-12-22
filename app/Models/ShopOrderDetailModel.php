@@ -19,7 +19,7 @@ class ShopOrderDetailModel extends Model
     {
         return $this->belongsTo('App\Models\ShopProductModel','product_id','id');
     }
-
+    
     public static function countProductSoldByTime($time, $now) {
         $result = ShopOrderDetailModel::whereBetween('created_at', [$time, $now])->where('status', 1)->sum('quantity');
         return $result;

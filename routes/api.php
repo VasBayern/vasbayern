@@ -48,8 +48,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('register', [RegisterController::class, 'register'])->name('register');
         //Route::post('logout', [AuthController::class, 'logout'])->name('logout');
         Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-        //Route::get('/', [AdminController::class, 'index'])->name('dashboard');
-        //Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('/', [AdminHomeController::class, 'index'])->name('dashboard');
+        Route::resource('dashboard', AdminHomeController::class)->names(['index' => 'dashboard']);
         /**
          * Category
          */

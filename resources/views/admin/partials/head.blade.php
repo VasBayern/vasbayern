@@ -27,6 +27,11 @@
   {!! Toastr::message() !!}
   <!-- Sweetalert -->
   <script src="{{asset('js/sweetalert2.all.min.js')}}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+  <script type="text/javascript">
+    var BASE_URL = '{{ URL::to('/') }}';
+  </script>
+  <script defer src="{{asset('api/admin/common/api.js')}}"></script>
   <style type="text/css">
     table thead tr th {
       text-align: center;

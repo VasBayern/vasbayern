@@ -12,7 +12,6 @@
     @include('admin.partials.sidebar')
     <!-- Content Wrapper. Contains page content -->
     @yield('content')
-
     <!-- /.content-wrapper -->
 
     <!-- Control Sidebar -->
