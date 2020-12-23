@@ -29,8 +29,7 @@
   {!! Toastr::message() !!} -->
   <!-- Sweetalert -->
   <script src="{{asset('js/sweetalert2.all.min.js')}}"></script>
-  <!-- ChartJs -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
   <script type="text/javascript">
     var BASE_URL = '{{ URL::to('/') }}';
   </script>

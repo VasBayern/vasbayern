@@ -54,14 +54,14 @@ Admin
       <div class="form-group col-sm-2">
         <label style="display:none">Tìm kiếm</label>
         <div class="input-group">
-          <button type="submit" class="btn btn-info">Sign in</button>
+          <button type="submit" class="btn btn-danger" style="margin-top:30px">Tìm kiếm</button>
         </div>
 
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-3 col-sm-6 col-12">
+      <div class="col-md-2 col-sm-6 col-12">
         <div class="info-box bg-info">
           <span class="info-box-icon"><i class="fas fa-funnel-dollar"></i></span>
 
@@ -80,7 +80,7 @@ Admin
         <!-- /.info-box -->
       </div>
       <!-- /.col -->
-      <div class="col-md-3 col-sm-6 col-12">
+      <div class="col-md-2 col-sm-6 col-12">
         <div class="info-box bg-success">
           <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
 
@@ -99,7 +99,7 @@ Admin
         <!-- /.info-box -->
       </div>
       <!-- /.col -->
-      <div class="col-md-3 col-sm-6 col-12">
+      <div class="col-md-2 col-sm-6 col-12">
         <div class="info-box bg-warning">
           <span class="info-box-icon"><i class="fas fa-shopping-bag" style="color: #fff;"></i></span>
 
@@ -118,7 +118,7 @@ Admin
         <!-- /.info-box -->
       </div>
       <!-- /.col -->
-      <div class="col-md-3 col-sm-6 col-12">
+      <div class="col-md-2 col-sm-6 col-12">
         <div class="info-box bg-danger">
           <span class="info-box-icon"><i class="ion ion-person-add"></i></span>
 
@@ -138,6 +138,29 @@ Admin
       </div>
       <!-- /.col -->
     </div>
+
+    <!-- Chart -->
+    <div class="row">
+      <div class="col-md-12">
+        <!-- AREA CHART -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Biểu đồ doanh thu</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart">
+              <canvas id="areaChart" style="min-height: 250px; height: 400px; max-height: 400px; width: 100%;"></canvas>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
     <!--/. container-fluid -->
 </section>
 <!-- /.content -->

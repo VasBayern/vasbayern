@@ -25,6 +25,9 @@
 </script>
 <!-- jquery-validation -->
 <script src="{{asset('admin_assets/plugins/jquery-validation/jquery.validate.min.js')}}"></script>
+<!-- ChartJs -->
+<!-- <script src="{{asset('admin_assets/plugins/chart.js/Chart.min.js')}}"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 <!-- Summernote -->
 <script src="{{asset('admin_assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <!-- File Manager -->

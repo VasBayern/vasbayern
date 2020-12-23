@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\HelperModel;
 use App\Models\ShopOrderDetailModel;
 use App\Models\ShopOrderModel;
 use App\Models\User;
+use DateTime;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -51,25 +53,36 @@ class HomeController extends Controller
      */
     public function show(Request $request, $id)
     {
-        // $revenueByTime = ShopOrderModel::getRevenueByTime($time, $now);
-        // $revenueByTimeAgo = ShopOrderModel::getRevenueByTime($firstDayAgo, $lastDayAgo);
-
-        $endTime = date('Y-m-d H:m:s');
-        switch ($id) {
+        $endTime = date('Y-m-d H:i:s');
+        // 0: day, 1: week, 2: month, 3: year
+        switch ($id) { 
+            case 0:
+                $unitTime = 'hour';
+                $formatTime = 'Y-m-d H';
+                $startTime = date('Y-m-d 00');
+                $startTimeAgo = date('Y-m-d 00', strtotime('-1 day'));
+                $endTimeAgo = date('Y-m-d 23', strtotime('-1 day'));
+                break;
             case 1:
-                $startTime = date("Y-m-d 00:00:00", strtotime('monday this week'));
-                $startTimeAgo = date('Y-m-d 00:00:00', strtotime('monday last week'));
-                $endTimeAgo = date('Y-m-d 23:59:59', strtotime('sunday last week'));
+                $unitTime = 'day';
+                $formatTime = 'Y-m-d';
+                $startTime = date($formatTime, strtotime('monday this week'));
+                $startTimeAgo = date($formatTime, strtotime('monday last week'));
+                $endTimeAgo = date($formatTime, strtotime('sunday last week'));
                 break;
             case 2:
-                $startTime = date("Y-m-01 00:00:00");
-                $startTimeAgo = date('Y-m-d 00:00:00', strtotime('first day of last month'));
-                $endTimeAgo = date('Y-m-d 23:59:59', strtotime('last day of last month'));
+                $unitTime = 'day';
+                $formatTime = 'Y-m-d';
+                $startTime = date("Y-m-01");
+                $startTimeAgo = date($formatTime, strtotime('first day of last month'));
+                $endTimeAgo = date($formatTime, strtotime('last day of last month'));
                 break;
             case 3:
-                $startTime = date("Y-01-01 00:00:00");
-                $startTimeAgo = date('Y-m-d 00:00:00', strtotime('first day of last year'));
-                $endTimeAgo = date('Y-m-d 23:59:59', strtotime('last day of last year'));
+                $unitTime = 'month';
+                $formatTime = 'Y-m';
+                $startTime = date("Y-01");
+                $startTimeAgo = date($formatTime, strtotime('last year January 1st'));
+                $endTimeAgo = date($formatTime, strtotime('last year December 31st'));
                 break;
             default:
                 break;
@@ -82,8 +95,11 @@ class HomeController extends Controller
         $countProductSoldAgo = (int) ShopOrderDetailModel::countProductSoldByTime($startTimeAgo, $endTimeAgo);
         $revenue = (int) ShopOrderModel::getTotalRevenue($startTime, $endTime);
         $revenueAgo = (int) ShopOrderModel::getTotalRevenue($startTimeAgo, $endTimeAgo);
+        $revenueByTime =  ShopOrderModel::getRevenueByTime($startTime, $endTime, $unitTime, $formatTime);
+        $revenueByTimeAgo =  ShopOrderModel::getRevenueByTime($startTimeAgo, $endTimeAgo, $unitTime, $formatTime);
+
         $response = [
-            'sort'              => $id,
+            'sort'              => (int) $id,
             'countUser'         => $countUser,
             'countUserAgo'      => $countUserAgo,
             'countOrder'        => $countOrder,
@@ -92,8 +108,8 @@ class HomeController extends Controller
             'countProductSoldAgo' => $countProductSoldAgo,
             'revenue'           => $revenue,
             'revenueAgo'        => $revenueAgo,
-            // 'revenueByTime'     => $revenueByTime,
-            // 'revenueByTimeAgo'  => $revenueByTimeAgo,
+            'revenueByTime'     => $revenueByTime,
+            'revenueByTimeAgo'  => $revenueByTimeAgo,
         ];
         return response()->json($response);
     }
